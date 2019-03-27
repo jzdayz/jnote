@@ -10,7 +10,8 @@
         <module>ms2</module>
         <module>admin</module>
 		<module>apollo</module>
-	</modules>
+        <module>config</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
