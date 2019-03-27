@@ -46,7 +46,7 @@
 
         <!--<table tableName="pes_cs_chat_session_service_index" domainObjectName="CsChatSessionServiceIndex"/>-->
         <!--<table tableName="pes_cs_duty_record" domainObjectName="CsDutyRecord"/>-->
-        <table  tableName="pes_cs_chat_session" domainObjectName="CsChatSession"/>
+        <table  tableName="pes_cs_chat_session_2019_03" domainObjectName="CsChatSession"/>
 
 
     </context>

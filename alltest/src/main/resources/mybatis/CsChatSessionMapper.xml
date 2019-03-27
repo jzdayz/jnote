@@ -8,6 +8,8 @@
     <result column="date" jdbcType="DATE" property="date" />
     <result column="cs_nick" jdbcType="VARCHAR" property="csNick" />
     <result column="customer" jdbcType="VARCHAR" property="customer" />
+    <result column="session_begin_time" jdbcType="TIMESTAMP" property="sessionBeginTime" />
+    <result column="session_end_time" jdbcType="TIMESTAMP" property="sessionEndTime" />
     <result column="begin_datetime" jdbcType="TIMESTAMP" property="beginDatetime" />
     <result column="end_datetime" jdbcType="TIMESTAMP" property="endDatetime" />
     <result column="reply_datetime" jdbcType="TIMESTAMP" property="replyDatetime" />
@@ -24,6 +26,7 @@
     <result column="is_receive" jdbcType="BIT" property="isReceive" />
     <result column="is_assign" jdbcType="BIT" property="isAssign" />
     <result column="session_duration_time" jdbcType="DOUBLE" property="sessionDurationTime" />
+    <result column="session_receive_duration_time" jdbcType="DOUBLE" property="sessionReceiveDurationTime" />
     <result column="avg_resp_time_first" jdbcType="DOUBLE" property="avgRespTimeFirst" />
     <result column="avg_resp_time" jdbcType="DOUBLE" property="avgRespTime" />
     <result column="cs_chat_num" jdbcType="INTEGER" property="csChatNum" />
@@ -90,9 +93,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, sid, shop_id, date, cs_nick, customer, begin_datetime, end_datetime, reply_datetime, 
-    session_type, is_transfer, is_non_reply, is_slow_resp, is_long_receive, send_eval_num, 
-    eval_num, eval_code, satisfied_eval_num, is_consult, is_receive, is_assign, session_duration_time, 
+    id, sid, shop_id, date, cs_nick, customer, session_begin_time, session_end_time, 
+    begin_datetime, end_datetime, reply_datetime, session_type, is_transfer, is_non_reply, 
+    is_slow_resp, is_long_receive, send_eval_num, eval_num, eval_code, satisfied_eval_num, 
+    is_consult, is_receive, is_assign, session_duration_time, session_receive_duration_time, 
     avg_resp_time_first, avg_resp_time, cs_chat_num, cust_chat_num, receive_start_type, 
     forward_type
   </sql>
@@ -102,7 +106,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from pes_cs_chat_session
+    from pes_cs_chat_session_2019_03
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -113,43 +117,45 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from pes_cs_chat_session
+    from pes_cs_chat_session_2019_03
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from pes_cs_chat_session
+    delete from pes_cs_chat_session_2019_03
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.pes.jd.model.DO.CsChatSessionExample">
-    delete from pes_cs_chat_session
+    delete from pes_cs_chat_session_2019_03
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pes.jd.model.DO.CsChatSession">
-    insert into pes_cs_chat_session (id, sid, shop_id, 
+    insert into pes_cs_chat_session_2019_03 (id, sid, shop_id, 
       date, cs_nick, customer, 
-      begin_datetime, end_datetime, reply_datetime, 
-      session_type, is_transfer, is_non_reply, 
-      is_slow_resp, is_long_receive, send_eval_num, 
-      eval_num, eval_code, satisfied_eval_num, 
-      is_consult, is_receive, is_assign, 
-      session_duration_time, avg_resp_time_first, avg_resp_time, 
-      cs_chat_num, cust_chat_num, receive_start_type, 
-      forward_type)
+      session_begin_time, session_end_time, begin_datetime, 
+      end_datetime, reply_datetime, session_type, 
+      is_transfer, is_non_reply, is_slow_resp, 
+      is_long_receive, send_eval_num, eval_num, 
+      eval_code, satisfied_eval_num, is_consult, 
+      is_receive, is_assign, session_duration_time, 
+      session_receive_duration_time, avg_resp_time_first, 
+      avg_resp_time, cs_chat_num, cust_chat_num, 
+      receive_start_type, forward_type)
     values (#{id,jdbcType=BIGINT}, #{sid,jdbcType=VARCHAR}, #{shopId,jdbcType=BIGINT}, 
       #{date,jdbcType=DATE}, #{csNick,jdbcType=VARCHAR}, #{customer,jdbcType=VARCHAR}, 
-      #{beginDatetime,jdbcType=TIMESTAMP}, #{endDatetime,jdbcType=TIMESTAMP}, #{replyDatetime,jdbcType=TIMESTAMP}, 
-      #{sessionType,jdbcType=BIT}, #{isTransfer,jdbcType=BIT}, #{isNonReply,jdbcType=BIT}, 
-      #{isSlowResp,jdbcType=BIT}, #{isLongReceive,jdbcType=BIT}, #{sendEvalNum,jdbcType=INTEGER}, 
-      #{evalNum,jdbcType=INTEGER}, #{evalCode,jdbcType=INTEGER}, #{satisfiedEvalNum,jdbcType=INTEGER}, 
-      #{isConsult,jdbcType=BIT}, #{isReceive,jdbcType=BIT}, #{isAssign,jdbcType=BIT}, 
-      #{sessionDurationTime,jdbcType=DOUBLE}, #{avgRespTimeFirst,jdbcType=DOUBLE}, #{avgRespTime,jdbcType=DOUBLE}, 
-      #{csChatNum,jdbcType=INTEGER}, #{custChatNum,jdbcType=INTEGER}, #{receiveStartType,jdbcType=BIT}, 
-      #{forwardType,jdbcType=BIT})
+      #{sessionBeginTime,jdbcType=TIMESTAMP}, #{sessionEndTime,jdbcType=TIMESTAMP}, #{beginDatetime,jdbcType=TIMESTAMP}, 
+      #{endDatetime,jdbcType=TIMESTAMP}, #{replyDatetime,jdbcType=TIMESTAMP}, #{sessionType,jdbcType=BIT}, 
+      #{isTransfer,jdbcType=BIT}, #{isNonReply,jdbcType=BIT}, #{isSlowResp,jdbcType=BIT}, 
+      #{isLongReceive,jdbcType=BIT}, #{sendEvalNum,jdbcType=INTEGER}, #{evalNum,jdbcType=INTEGER}, 
+      #{evalCode,jdbcType=INTEGER}, #{satisfiedEvalNum,jdbcType=INTEGER}, #{isConsult,jdbcType=BIT}, 
+      #{isReceive,jdbcType=BIT}, #{isAssign,jdbcType=BIT}, #{sessionDurationTime,jdbcType=DOUBLE}, 
+      #{sessionReceiveDurationTime,jdbcType=DOUBLE}, #{avgRespTimeFirst,jdbcType=DOUBLE}, 
+      #{avgRespTime,jdbcType=DOUBLE}, #{csChatNum,jdbcType=INTEGER}, #{custChatNum,jdbcType=INTEGER}, 
+      #{receiveStartType,jdbcType=BIT}, #{forwardType,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.pes.jd.model.DO.CsChatSession">
-    insert into pes_cs_chat_session
+    insert into pes_cs_chat_session_2019_03
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -168,6 +174,12 @@
       </if>
       <if test="customer != null">
         customer,
+      </if>
+      <if test="sessionBeginTime != null">
+        session_begin_time,
+      </if>
+      <if test="sessionEndTime != null">
+        session_end_time,
       </if>
       <if test="beginDatetime != null">
         begin_datetime,
@@ -217,6 +229,9 @@
       <if test="sessionDurationTime != null">
         session_duration_time,
       </if>
+      <if test="sessionReceiveDurationTime != null">
+        session_receive_duration_time,
+      </if>
       <if test="avgRespTimeFirst != null">
         avg_resp_time_first,
       </if>
@@ -254,6 +269,12 @@
       </if>
       <if test="customer != null">
         #{customer,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionBeginTime != null">
+        #{sessionBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sessionEndTime != null">
+        #{sessionEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="beginDatetime != null">
         #{beginDatetime,jdbcType=TIMESTAMP},
@@ -303,6 +324,9 @@
       <if test="sessionDurationTime != null">
         #{sessionDurationTime,jdbcType=DOUBLE},
       </if>
+      <if test="sessionReceiveDurationTime != null">
+        #{sessionReceiveDurationTime,jdbcType=DOUBLE},
+      </if>
       <if test="avgRespTimeFirst != null">
         #{avgRespTimeFirst,jdbcType=DOUBLE},
       </if>
@@ -324,13 +348,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pes.jd.model.DO.CsChatSessionExample" resultType="java.lang.Long">
-    select count(*) from pes_cs_chat_session
+    select count(*) from pes_cs_chat_session_2019_03
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update pes_cs_chat_session
+    update pes_cs_chat_session_2019_03
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -349,6 +373,12 @@
       </if>
       <if test="record.customer != null">
         customer = #{record.customer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionBeginTime != null">
+        session_begin_time = #{record.sessionBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sessionEndTime != null">
+        session_end_time = #{record.sessionEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.beginDatetime != null">
         begin_datetime = #{record.beginDatetime,jdbcType=TIMESTAMP},
@@ -398,6 +428,9 @@
       <if test="record.sessionDurationTime != null">
         session_duration_time = #{record.sessionDurationTime,jdbcType=DOUBLE},
       </if>
+      <if test="record.sessionReceiveDurationTime != null">
+        session_receive_duration_time = #{record.sessionReceiveDurationTime,jdbcType=DOUBLE},
+      </if>
       <if test="record.avgRespTimeFirst != null">
         avg_resp_time_first = #{record.avgRespTimeFirst,jdbcType=DOUBLE},
       </if>
@@ -422,13 +455,15 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update pes_cs_chat_session
+    update pes_cs_chat_session_2019_03
     set id = #{record.id,jdbcType=BIGINT},
       sid = #{record.sid,jdbcType=VARCHAR},
       shop_id = #{record.shopId,jdbcType=BIGINT},
       date = #{record.date,jdbcType=DATE},
       cs_nick = #{record.csNick,jdbcType=VARCHAR},
       customer = #{record.customer,jdbcType=VARCHAR},
+      session_begin_time = #{record.sessionBeginTime,jdbcType=TIMESTAMP},
+      session_end_time = #{record.sessionEndTime,jdbcType=TIMESTAMP},
       begin_datetime = #{record.beginDatetime,jdbcType=TIMESTAMP},
       end_datetime = #{record.endDatetime,jdbcType=TIMESTAMP},
       reply_datetime = #{record.replyDatetime,jdbcType=TIMESTAMP},
@@ -445,6 +480,7 @@
       is_receive = #{record.isReceive,jdbcType=BIT},
       is_assign = #{record.isAssign,jdbcType=BIT},
       session_duration_time = #{record.sessionDurationTime,jdbcType=DOUBLE},
+      session_receive_duration_time = #{record.sessionReceiveDurationTime,jdbcType=DOUBLE},
       avg_resp_time_first = #{record.avgRespTimeFirst,jdbcType=DOUBLE},
       avg_resp_time = #{record.avgRespTime,jdbcType=DOUBLE},
       cs_chat_num = #{record.csChatNum,jdbcType=INTEGER},
@@ -456,7 +492,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pes.jd.model.DO.CsChatSession">
-    update pes_cs_chat_session
+    update pes_cs_chat_session_2019_03
     <set>
       <if test="sid != null">
         sid = #{sid,jdbcType=VARCHAR},
@@ -472,6 +508,12 @@
       </if>
       <if test="customer != null">
         customer = #{customer,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionBeginTime != null">
+        session_begin_time = #{sessionBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sessionEndTime != null">
+        session_end_time = #{sessionEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="beginDatetime != null">
         begin_datetime = #{beginDatetime,jdbcType=TIMESTAMP},
@@ -521,6 +563,9 @@
       <if test="sessionDurationTime != null">
         session_duration_time = #{sessionDurationTime,jdbcType=DOUBLE},
       </if>
+      <if test="sessionReceiveDurationTime != null">
+        session_receive_duration_time = #{sessionReceiveDurationTime,jdbcType=DOUBLE},
+      </if>
       <if test="avgRespTimeFirst != null">
         avg_resp_time_first = #{avgRespTimeFirst,jdbcType=DOUBLE},
       </if>
@@ -543,12 +588,14 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pes.jd.model.DO.CsChatSession">
-    update pes_cs_chat_session
+    update pes_cs_chat_session_2019_03
     set sid = #{sid,jdbcType=VARCHAR},
       shop_id = #{shopId,jdbcType=BIGINT},
       date = #{date,jdbcType=DATE},
       cs_nick = #{csNick,jdbcType=VARCHAR},
       customer = #{customer,jdbcType=VARCHAR},
+      session_begin_time = #{sessionBeginTime,jdbcType=TIMESTAMP},
+      session_end_time = #{sessionEndTime,jdbcType=TIMESTAMP},
       begin_datetime = #{beginDatetime,jdbcType=TIMESTAMP},
       end_datetime = #{endDatetime,jdbcType=TIMESTAMP},
       reply_datetime = #{replyDatetime,jdbcType=TIMESTAMP},
@@ -565,6 +612,7 @@
       is_receive = #{isReceive,jdbcType=BIT},
       is_assign = #{isAssign,jdbcType=BIT},
       session_duration_time = #{sessionDurationTime,jdbcType=DOUBLE},
+      session_receive_duration_time = #{sessionReceiveDurationTime,jdbcType=DOUBLE},
       avg_resp_time_first = #{avgRespTimeFirst,jdbcType=DOUBLE},
       avg_resp_time = #{avgRespTime,jdbcType=DOUBLE},
       cs_chat_num = #{csChatNum,jdbcType=INTEGER},

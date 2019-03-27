@@ -2,10 +2,6 @@ package com.example.jnote;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.io.Closer;
-import com.pes.jd.mapper.ReportPropertyMapper;
-import com.pes.jd.model.DO.ReportProperty;
-import com.pes.jd.model.DO.ReportPropertyExample;
 import okhttp3.*;
 import okhttp3.EventListener;
 import org.apache.ibatis.ognl.MemberAccess;
@@ -22,29 +18,23 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ResolvableType;
-import org.springframework.util.StreamUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.Nullable;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.json.stream.JsonParser;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringReader;
 import java.lang.reflect.Member;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.nio.charset.Charset;
 import java.util.*;
 
 @SpringBootApplication
@@ -63,10 +53,6 @@ public class JnoteApplication {
 		System.out.println(context.getEnvironment().getProperty("aa.bb"));
 		final Map<String, A> bean = context.getBeansOfType(A.class);
 		System.out.println(bean);
-
-		final ReportPropertyMapper bean1 = context.getBean(ReportPropertyMapper.class);
-		final List<ReportProperty> reportProperties = bean1.selectByExample(new ReportPropertyExample());
-		System.out.println(reportProperties);
 
 
 
@@ -224,8 +210,8 @@ public class JnoteApplication {
 		final SpringApplication springApplication = new SpringApplication(JnoteApplication.class);
 		springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
 		final ConfigurableApplicationContext context = springApplication.run(new String[]{});
-		final ReportPropertyMapper bean = context.getBean(ReportPropertyMapper.class);
-		final List<ReportProperty> reportProperties = bean.selectByExample(new ReportPropertyExample());
+//		final ReportPropertyMapper bean = context.getBean(ReportPropertyMapper.class);
+//		final List<ReportProperty> reportProperties = bean.selectByExample(new ReportPropertyExample());
 	}
 
 	@Test

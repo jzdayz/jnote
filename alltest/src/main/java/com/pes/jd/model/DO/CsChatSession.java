@@ -15,6 +15,10 @@ public class CsChatSession {
 
     private String customer;
 
+    private Date sessionBeginTime;
+
+    private Date sessionEndTime;
+
     private Date beginDatetime;
 
     private Date endDatetime;
@@ -46,6 +50,8 @@ public class CsChatSession {
     private Boolean isAssign;
 
     private Double sessionDurationTime;
+
+    private Double sessionReceiveDurationTime;
 
     private Double avgRespTimeFirst;
 
@@ -105,6 +111,22 @@ public class CsChatSession {
 
     public void setCustomer(String customer) {
         this.customer = customer == null ? null : customer.trim();
+    }
+
+    public Date getSessionBeginTime() {
+        return sessionBeginTime;
+    }
+
+    public void setSessionBeginTime(Date sessionBeginTime) {
+        this.sessionBeginTime = sessionBeginTime;
+    }
+
+    public Date getSessionEndTime() {
+        return sessionEndTime;
+    }
+
+    public void setSessionEndTime(Date sessionEndTime) {
+        this.sessionEndTime = sessionEndTime;
     }
 
     public Date getBeginDatetime() {
@@ -233,6 +255,14 @@ public class CsChatSession {
 
     public void setSessionDurationTime(Double sessionDurationTime) {
         this.sessionDurationTime = sessionDurationTime;
+    }
+
+    public Double getSessionReceiveDurationTime() {
+        return sessionReceiveDurationTime;
+    }
+
+    public void setSessionReceiveDurationTime(Double sessionReceiveDurationTime) {
+        this.sessionReceiveDurationTime = sessionReceiveDurationTime;
     }
 
     public Double getAvgRespTimeFirst() {

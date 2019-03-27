@@ -522,6 +522,126 @@ public class CsChatSessionExample {
             return (Criteria) this;
         }
 
+        public Criteria andSessionBeginTimeIsNull() {
+            addCriterion("session_begin_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeIsNotNull() {
+            addCriterion("session_begin_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeEqualTo(Date value) {
+            addCriterion("session_begin_time =", value, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeNotEqualTo(Date value) {
+            addCriterion("session_begin_time <>", value, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeGreaterThan(Date value) {
+            addCriterion("session_begin_time >", value, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("session_begin_time >=", value, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeLessThan(Date value) {
+            addCriterion("session_begin_time <", value, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeLessThanOrEqualTo(Date value) {
+            addCriterion("session_begin_time <=", value, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeIn(List<Date> values) {
+            addCriterion("session_begin_time in", values, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeNotIn(List<Date> values) {
+            addCriterion("session_begin_time not in", values, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeBetween(Date value1, Date value2) {
+            addCriterion("session_begin_time between", value1, value2, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionBeginTimeNotBetween(Date value1, Date value2) {
+            addCriterion("session_begin_time not between", value1, value2, "sessionBeginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeIsNull() {
+            addCriterion("session_end_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeIsNotNull() {
+            addCriterion("session_end_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeEqualTo(Date value) {
+            addCriterion("session_end_time =", value, "sessionEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeNotEqualTo(Date value) {
+            addCriterion("session_end_time <>", value, "sessionEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeGreaterThan(Date value) {
+            addCriterion("session_end_time >", value, "sessionEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("session_end_time >=", value, "sessionEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeLessThan(Date value) {
+            addCriterion("session_end_time <", value, "sessionEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeLessThanOrEqualTo(Date value) {
+            addCriterion("session_end_time <=", value, "sessionEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeIn(List<Date> values) {
+            addCriterion("session_end_time in", values, "sessionEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeNotIn(List<Date> values) {
+            addCriterion("session_end_time not in", values, "sessionEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeBetween(Date value1, Date value2) {
+            addCriterion("session_end_time between", value1, value2, "sessionEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionEndTimeNotBetween(Date value1, Date value2) {
+            addCriterion("session_end_time not between", value1, value2, "sessionEndTime");
+            return (Criteria) this;
+        }
+
         public Criteria andBeginDatetimeIsNull() {
             addCriterion("begin_datetime is null");
             return (Criteria) this;
@@ -1479,6 +1599,66 @@ public class CsChatSessionExample {
 
         public Criteria andSessionDurationTimeNotBetween(Double value1, Double value2) {
             addCriterion("session_duration_time not between", value1, value2, "sessionDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeIsNull() {
+            addCriterion("session_receive_duration_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeIsNotNull() {
+            addCriterion("session_receive_duration_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeEqualTo(Double value) {
+            addCriterion("session_receive_duration_time =", value, "sessionReceiveDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeNotEqualTo(Double value) {
+            addCriterion("session_receive_duration_time <>", value, "sessionReceiveDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeGreaterThan(Double value) {
+            addCriterion("session_receive_duration_time >", value, "sessionReceiveDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeGreaterThanOrEqualTo(Double value) {
+            addCriterion("session_receive_duration_time >=", value, "sessionReceiveDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeLessThan(Double value) {
+            addCriterion("session_receive_duration_time <", value, "sessionReceiveDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeLessThanOrEqualTo(Double value) {
+            addCriterion("session_receive_duration_time <=", value, "sessionReceiveDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeIn(List<Double> values) {
+            addCriterion("session_receive_duration_time in", values, "sessionReceiveDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeNotIn(List<Double> values) {
+            addCriterion("session_receive_duration_time not in", values, "sessionReceiveDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeBetween(Double value1, Double value2) {
+            addCriterion("session_receive_duration_time between", value1, value2, "sessionReceiveDurationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionReceiveDurationTimeNotBetween(Double value1, Double value2) {
+            addCriterion("session_receive_duration_time not between", value1, value2, "sessionReceiveDurationTime");
             return (Criteria) this;
         }
 
