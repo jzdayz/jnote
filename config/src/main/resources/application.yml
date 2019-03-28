@@ -1,0 +1,14 @@
+server:
+  port: 9003
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        composite:
+          -   search-locations: classpath:/config/
+              type: native
+  profiles:
+    active: composite
