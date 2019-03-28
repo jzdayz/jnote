@@ -2,11 +2,14 @@ package com.sql;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.sql.Connection;
+import java.util.Random;
+import java.util.concurrent.*;
 
 public class Test {
     public static void main(String[] args) throws Exception{
@@ -29,6 +32,38 @@ public class Test {
         Thread.sleep(1000100);
 
 
+    }
+
+    @org.junit.Test
+    public void testSynchronousQueue() throws InterruptedException {
+        SynchronousQueue synchronousQueue = new SynchronousQueue();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                2,2,1, TimeUnit.DAYS,new LinkedBlockingQueue<>()
+        );
+        threadPoolExecutor.execute(()->{
+            while (true){
+                String s = RandomStringUtils.random(2);
+                System.out.println(String.format("\n 生产东西：%s \n ",s));
+                try {
+                    synchronousQueue.put(s);
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        threadPoolExecutor.execute(()->{
+            while (true){
+                try {
+                    System.out.println(String.format("\n消费：%s\n",synchronousQueue.take()));
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Thread.sleep(Integer.MAX_VALUE);
     }
 
 
