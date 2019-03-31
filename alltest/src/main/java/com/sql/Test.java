@@ -8,29 +8,69 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.sql.Connection;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.LockSupport;
 
 public class Test {
     public static void main(String[] args) throws Exception{
 
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://auzblog.com:3306");
-        config.setUsername("root");
-        config.setPassword("jkljkljkl");
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.setRegisterMbeans(true);
-        HikariDataSource ds = new HikariDataSource(config);
+//        HikariConfig config = new HikariConfig();
+//        config.setJdbcUrl("jdbc:mysql://auzblog.com:3306");
+//        config.setUsername("root");
+//        config.setPassword("jkljkljkl");
+//        config.setMaximumPoolSize(1);
+//        config.addDataSourceProperty("cachePrepStmts", "true");
+//        config.addDataSourceProperty("prepStmtCacheSize", "250");
+//        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+//        config.setRegisterMbeans(true);
+//        HikariDataSource ds = new HikariDataSource(config);
+//
+//
+//        final Connection connection = ds.getConnection();
+//        connection.close();
+//
+//        final Connection connection1 = ds.getConnection();
+//
+//
+//
+//        Thread.sleep(1000100);
 
+        new Test().show();
+    }
 
-        final Connection connection = ds.getConnection();
+    public void show(){
+        AtomicBoolean bb = new AtomicBoolean(false);
+        Thread t = new Thread(() -> {
+            while (true){
+                try {
+                    Thread.sleep(1500);
+                    System.out.println("111111");
+                    if (bb.get()){
+                        System.out.println("暂停开始");
+                        LockSupport.park();
+                        System.out.println("暂停结束");
+                        bb.set(false);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
 
-
-
-        Thread.sleep(1000100);
-
+        Scanner scanner = new Scanner(System.in);
+        while (true){
+            final String next = scanner.next();
+            if (Objects.equals(next,"stop")){
+                bb.set(true);
+            }else if (Objects.equals(next,"start")){
+                LockSupport.unpark(t);
+            }
+        }
 
     }
 
