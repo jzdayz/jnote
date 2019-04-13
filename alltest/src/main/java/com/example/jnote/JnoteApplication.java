@@ -2,12 +2,38 @@ package com.example.jnote;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pes.jd.mapper.CsChatSessionMapper;
+import com.pes.jd.model.DO.CsChatSession;
+import com.pes.jd.model.DO.CsChatSessionExample;
+import com.sun.deploy.net.proxy.ProxyUtils;
 import okhttp3.*;
 import okhttp3.EventListener;
+import org.apache.ibatis.cursor.Cursor;
+import org.apache.ibatis.executor.BatchResult;
+import org.apache.ibatis.executor.CachingExecutor;
+import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.executor.SimpleExecutor;
+import org.apache.ibatis.executor.statement.PreparedStatementHandler;
+import org.apache.ibatis.executor.statement.RoutingStatementHandler;
+import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
+import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.ognl.MemberAccess;
 import org.apache.ibatis.ognl.Ognl;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Invocation;
+import org.apache.ibatis.session.ResultHandler;
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.transaction.Transaction;
 import org.junit.Test;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.AopProxyUtils;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -18,6 +44,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ResolvableType;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,11 +57,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 @SpringBootApplication
@@ -48,14 +78,127 @@ public class JnoteApplication {
 	public static void main(String[] args) {
 		args = new String[]{"--aa.bb=1"};
 		final SpringApplication springApplication = new SpringApplication(JnoteApplication.class);
-		springApplication.setApplicationContextClass(AnnotationConfigServletWebServerApplicationContext.class);
+		springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
 		final ConfigurableApplicationContext context = springApplication.run(args);
-		System.out.println(context.getEnvironment().getProperty("aa.bb"));
-		final Map<String, A> bean = context.getBeansOfType(A.class);
-		System.out.println(bean);
+//		System.out.println(context.getEnvironment().getProperty("aa.bb"));
+//		final Map<String, A> bean = context.getBeansOfType(A.class);
+//		System.out.println(bean);
+
+		SqlSessionFactory bean = context.getBean(SqlSessionFactory.class);
+		org.apache.ibatis.session.Configuration configuration = bean.getConfiguration();
+		configuration.addInterceptor(new Interceptor() {
+
+			private  final Logger LOGGER = LoggerFactory.getLogger(JnoteApplication.class);
+			@Override
+			public Object intercept(Invocation invocation) throws Throwable {
+				return invocation;
+			}
+
+			@Override
+			public Object plugin(Object target) {
+				if (target instanceof CachingExecutor){
+					CachingExecutor executor = (CachingExecutor) target;
+					Transaction transaction = executor.getTransaction();
+					try {
+
+						class CustomSimpleExecutor extends SimpleExecutor{
+
+							public CustomSimpleExecutor(org.apache.ibatis.session.Configuration configuration, Transaction transaction) {
+								super(configuration, transaction);
+							}
+							@Override
+							public int doUpdate(MappedStatement ms, Object parameter) throws SQLException {
+								Statement stmt = null;
+								try {
+									org.apache.ibatis.session.Configuration configuration = ms.getConfiguration();
+									StatementHandler handler = configuration.newStatementHandler(this, ms, parameter, RowBounds.DEFAULT, null, null);
+									stmt = prepareStatement(handler, ms.getStatementLog());
+									return handler.update(stmt);
+								} finally {
+									closeStatement(stmt);
+								}
+							}
+
+							@Override
+							public <E> List<E> doQuery(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+								Statement stmt = null;
+								try {
+									org.apache.ibatis.session.Configuration configuration = ms.getConfiguration();
+									StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
+									stmt = prepareStatement(handler, ms.getStatementLog());
+									return handler.query(stmt, resultHandler);
+								} finally {
+									closeStatement(stmt);
+								}
+							}
+
+							@Override
+							protected <E> Cursor<E> doQueryCursor(MappedStatement ms, Object parameter, RowBounds rowBounds, BoundSql boundSql) throws SQLException {
+								org.apache.ibatis.session.Configuration configuration = ms.getConfiguration();
+								StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, null, boundSql);
+								Statement stmt = prepareStatement(handler, ms.getStatementLog());
+								stmt.closeOnCompletion();
+								return handler.queryCursor(stmt);
+							}
+
+							@Override
+							public List<BatchResult> doFlushStatements(boolean isRollback) {
+								return Collections.emptyList();
+							}
+
+							private Statement prepareStatement(StatementHandler handler, Log statementLog) throws SQLException {
+								Statement stmt;
+								java.sql.Connection connection = getConnection(statementLog);
+								stmt = handler.prepare(connection, transaction.getTimeout());
+								handler.parameterize(stmt);
+								if (java.lang.reflect.Proxy.isProxyClass(stmt.getClass())){
+									Field h = null;
+									try {
+										h = stmt.getClass().getSuperclass().getDeclaredField("h");
+										h.setAccessible(true);
+										Object o = h.get(stmt);
+										System.out.println(((PreparedStatementLogger) o).getPreparedStatement().toString());
+									} catch (Exception e) {
+									}
 
 
 
+								}
+
+								return stmt;
+							}
+
+						}
+
+						Field delegate = target.getClass().getDeclaredField("delegate");
+						ReflectionUtils.makeAccessible(delegate);
+						if (delegate.get(target).getClass().equals(SimpleExecutor.class))
+						target = new CachingExecutor(new CustomSimpleExecutor(configuration,transaction));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				return target;
+			}
+
+			@Override
+			public void setProperties(Properties properties) {
+
+			}
+		});
+
+
+		CsChatSessionMapper bean1 = context.getBean(CsChatSessionMapper.class);
+		CsChatSessionExample example = new CsChatSessionExample();
+		example.createCriteria().andAvgRespTimeBetween(1D,2D);
+		List<CsChatSession> csChatSessions = bean1.selectByExample(example);
+
+
+
+
+
+		System.out.println(csChatSessions);
+		context.close();
 
 	}
 
