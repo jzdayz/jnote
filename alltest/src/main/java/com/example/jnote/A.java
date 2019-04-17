@@ -1,22 +1,16 @@
 package com.example.jnote;
 
 import org.springframework.boot.jdbc.DatabaseDriver;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
+import org.springframework.stereotype.Component;
 
-public class A {
-    public void show(){
-        a();
-    }
-
-
-
-    private void a(){
-        System.out.println("AAAA");
-    }
-
-    public static void main(String[] args) {
-
-
-        DatabaseDriver.fromJdbcUrl("jdbc:mysql://182.254.131.140/pes_jd_sub1?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true");
-
+@Component
+public class A implements EnvironmentAware {
+    @Override
+    public void setEnvironment(Environment environment) {
+        final boolean dev = environment.acceptsProfiles(Profiles.of("!(aa|prod)&dev"));
+        System.out.println(dev);
     }
 }

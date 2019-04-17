@@ -100,12 +100,6 @@ public class JnoteApplication {
 
 	}
 
-	@Bean
-	@ConditionalOnMissingBean(BBB.class)
-	public A a(){
-		return new A();
-	}
-
 	@Test
 	public void testShell() throws Exception{
 		String shell = "\n" +
@@ -500,20 +494,6 @@ public class JnoteApplication {
 		System.out.println("\n\n\n");
 	}
 
-	@Test
-	public void testb(){
-		aa();
-	}
-
-	public void aa(String... i){
-		if (i.length == 0){
-			i = new String[]{"shopId","b"};
-		}
-		ab(i);
-	}
-	public void ab(String... strings){
-		System.out.println();
-	}
 
 
 }
