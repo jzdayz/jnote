@@ -46,10 +46,7 @@ public class SqlConfigurationCustomizer implements ConfigurationCustomizer, Envi
 
     @Override
     public void customize(Configuration configuration) {
-//        boolean enable = Arrays.asList(environment.getActiveProfiles()).contains("dev");
-//        if (enable) {
-            configuration.addInterceptor(new PrintSqlInterceptor(configuration));
-//        }
+        configuration.addInterceptor(new PrintSqlInterceptor(configuration));
     }
 
     @Override

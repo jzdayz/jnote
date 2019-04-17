@@ -96,6 +96,11 @@ public class JnoteApplication {
 		example.createCriteria().andAvgRespTimeBetween(1D,2D);
 		List<CsChatSession> csChatSessions = bean1.selectByExample(example);
 		System.out.println(csChatSessions);
+
+
+		final AwareTest bean =
+				context.getBean(AwareTest.class);
+
 		context.close();
 
 	}
