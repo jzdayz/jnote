@@ -3,8 +3,10 @@ package com.example.jnote;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pes.jd.mapper.CsChatSessionMapper;
+import com.pes.jd.mapper.PesReportCategoryMapper;
 import com.pes.jd.model.DO.CsChatSession;
 import com.pes.jd.model.DO.CsChatSessionExample;
+import com.pes.jd.model.DO.PesReportCategory;
 import com.sun.deploy.net.proxy.ProxyUtils;
 import okhttp3.*;
 import okhttp3.EventListener;
@@ -89,17 +91,25 @@ public class JnoteApplication {
 //		final Map<String, A> bean = context.getBeansOfType(A.class);
 //		System.out.println(bean);
 
+		PesReportCategory category = new PesReportCategory();
+		category.setName("ssss");
+		category.setStatus((byte) 1);
+		category.setTitle("ssssd");
+		context.getBean(PesReportCategoryMapper.class).insert(category);
+
+		System.out.println(category.getId());
 
 
-		CsChatSessionMapper bean1 = context.getBean(CsChatSessionMapper.class);
-		CsChatSessionExample example = new CsChatSessionExample();
-		example.createCriteria().andAvgRespTimeBetween(1D,2D);
-		List<CsChatSession> csChatSessions = bean1.selectByExample(example);
-		System.out.println(csChatSessions);
 
-
-		final AwareTest bean =
-				context.getBean(AwareTest.class);
+//		CsChatSessionMapper bean1 = context.getBean(CsChatSessionMapper.class);
+//		CsChatSessionExample example = new CsChatSessionExample();
+//		example.createCriteria().andAvgRespTimeBetween(1D,2D);
+//		List<CsChatSession> csChatSessions = bean1.selectByExample(example);
+//		System.out.println(csChatSessions);
+//
+//
+//		final AwareTest bean =
+//				context.getBean(AwareTest.class);
 
 		context.close();
 
