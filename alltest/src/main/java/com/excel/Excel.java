@@ -9,21 +9,104 @@ import com.pes.jd.mapper.PesReportCategoryMapper;
 import com.pes.jd.mapper.PesReportPropertyMapper;
 import com.pes.jd.model.DO.PesReportCategory;
 import com.pes.jd.model.DO.PesReportProperty;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
 public class Excel {
+
+    interface Interceptor<T>{
+        void filter(T t);
+    }
+
+    static class InterceptorChain<T>{
+        private List<Interceptor<T>> interceptors = new ArrayList<>();
+
+        void add(Interceptor<T> interceptor){
+            interceptors.add(interceptor);
+        }
+
+        void filter(T t){
+            if (interceptors==null){
+                return;
+            }
+            for (Interceptor<T> interceptor : interceptors) {
+                interceptor.filter(t);
+            }
+        }
+
+    }
+
+    private InterceptorChain<PesReportProperty> chain = new InterceptorChain<>();
+
+    {
+        /*客服 拦截*/
+        chain.add((x)->{
+            if (x.getType()!=2){
+                return;
+            }
+            if (x.getTitle().startsWith("销售额")&&x.getTitlelong().startsWith("销售额")){
+                x.setTitlelong("销售额");
+                x.setFilterFlag((byte) 1);
+                x.setFilterJson("[{\"id\":1,\"title\":\"扣除退款\",\"property\":\"refund_amount\",\"isFilter\":false},{\"id\":2,\"title\":\"扣除邮费\",\"property\":\"post_fee\",\"isFilter\":false}]");
+                return;
+            }
+            if (x.getTitlelong().startsWith("销售量")&&x.getTitle().startsWith("销售量")){
+                x.setTitlelong("销售量");
+                x.setFilterFlag((byte) 1);
+                x.setFilterJson("[{\"id\":3,\"isFilter\":false,\"title\":\"扣除退款件数\",\"property\":\"refund_product_num\"}]");
+                return;
+            }
+        });
+        /*店铺 拦截*/
+        chain.add((x)->{
+            if (x.getType()!=1){
+                return;
+            }
+            if (x.getTitlelong().startsWith("店铺销售额")){
+                x.setTitlelong("店铺销售额");
+                x.setFilterJson("[{\"id\":5,\"title\":\"扣除退款\",\"property\":\"refund_amount\",\"isFilter\":false},{\"id\":6,\"title\":\"扣除邮费\",\"property\":\"post_fee\",\"isFilter\":false}]");
+                x.setFilterFlag((byte) 1);
+                return;
+            }
+            if (x.getTitlelong().startsWith("店铺销售量")){
+                x.setTitlelong("店铺销售量");
+                x.setFilterJson("[{\"id\":4,\"isFilter\":false,\"title\":\"扣除退款件数\",\"property\":\"refund_product_num\"}]");
+                x.setFilterFlag((byte) 1);
+                return;
+            }
+            if (x.getTitlelong().startsWith("客服销售额")){
+                x.setTitlelong("客服销售额");
+                x.setFilterJson("[{\"id\":8,\"title\":\"扣除退款\",\"property\":\"refund_amount\",\"isFilter\":false},{\"id\":9,\"title\":\"扣除邮费\",\"property\":\"post_fee\",\"isFilter\":false}]");
+                x.setFilterFlag((byte) 1);
+                return;
+            }
+            if (x.getTitlelong().startsWith("客服销售量")){
+                x.setTitlelong("客服销售量");
+                x.setFilterJson("[{\"id\":7,\"isFilter\":false,\"title\":\"扣除退款件数\",\"property\":\"refund_product_num\"}]");
+                x.setFilterFlag((byte) 1);
+                return;
+            }
+            if (x.getTitlelong().startsWith("静默销售额")){
+                x.setTitlelong("静默销售额");
+                x.setFilterJson("[{\"id\":2,\"title\":\"扣除退款\",\"property\":\"refund_amount\",\"isFilter\":false},{\"id\":3,\"title\":\"扣除邮费\",\"property\":\"post_fee\",\"isFilter\":false}]");
+                x.setFilterFlag((byte) 1);
+                return;
+            }
+            if (x.getTitlelong().startsWith("静默销售量")){
+                x.setTitlelong("静默销售量");
+                x.setFilterJson("[{\"id\":1,\"isFilter\":false,\"title\":\"扣除退款件数\",\"property\":\"refund_product_num\"}]");
+                x.setFilterFlag((byte) 1);
+                return;
+            }
+        });
+    }
 
 
     private PesReportCategoryMapper categoryMapper;
@@ -116,7 +199,8 @@ public class Excel {
                 Assert.isTrue(false,"错误类型");
             }
             property.setProperty(declaredField.getName());
-            /*TODO 是否扣除退款*/
+            /*特殊处理*/
+            chain.filter(property);
             propertyMapper.insert(property);
         }
     }
@@ -125,6 +209,15 @@ public class Excel {
 
     @PostConstruct
     public void init(){
-//        doImport(Type.CS);
+        System.out.println("是否导入数据？(y/n)");
+        Scanner in = new Scanner(System.in);
+        final String next = in.next();
+        if (
+                Objects.equals(next,"Y")||
+                        Objects.equals(next,"y")||
+                        Objects.equals(next,"YES")||
+                        Objects.equals(next,"yes")
+        )
+        doImport(Type.CS);
     }
 }
