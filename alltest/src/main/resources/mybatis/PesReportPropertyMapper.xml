@@ -110,7 +110,7 @@
     insert into pes_report_property (id, category_id, title, 
       titleLong, property, filter_flag, 
       filter_json, source, status, 
-      type, desc)
+      type, `desc`)
     values (#{id,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
       #{titlelong,jdbcType=VARCHAR}, #{property,jdbcType=VARCHAR}, #{filterFlag,jdbcType=TINYINT}, 
       #{filterJson,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
