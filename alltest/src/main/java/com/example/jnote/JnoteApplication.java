@@ -59,9 +59,13 @@ import javax.annotation.Nullable;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.stream.JsonParser;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.PushBuilder;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.lang.reflect.Member;
 import java.math.BigDecimal;
@@ -83,7 +87,7 @@ public class JnoteApplication {
 	public static void main(String[] args) {
 		args = new String[]{"--aa.bb=1"};
 		final SpringApplication springApplication = new SpringApplication(JnoteApplication.class);
-		springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
+//		springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
 		final ConfigurableApplicationContext context = springApplication.run(args);
 //		System.out.println(context.getEnvironment().getProperty("aa.bb"));
 //		final Map<String, A> bean = context.getBeansOfType(A.class);
@@ -111,6 +115,20 @@ public class JnoteApplication {
 
 //		context.close();
 
+	}
+
+
+	@RequestMapping("/h2")
+	public void testH2(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		PushBuilder pushBuilder = request.newPushBuilder();
+		if (pushBuilder!=null) {
+			pushBuilder.path("/a.png").addHeader("content-type", "image/png").push();
+			try(PrintWriter respWriter = response.getWriter()){
+				respWriter.write("<html>" +
+						"<img src='/a.png'>" +
+						"</html>");
+			}
+		}
 	}
 
 	@Test
