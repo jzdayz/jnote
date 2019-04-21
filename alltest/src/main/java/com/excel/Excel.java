@@ -8,9 +8,11 @@ import com.google.common.io.Closer;
 import com.pes.jd.mapper.PesReportCategoryMapper;
 import com.pes.jd.mapper.PesReportPropertyMapper;
 import com.pes.jd.model.DO.PesReportCategory;
+import com.pes.jd.model.DO.PesReportCategoryExample;
 import com.pes.jd.model.DO.PesReportProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
@@ -117,21 +119,61 @@ public class Excel {
         this.propertyMapper = propertyMapper;
     }
 
+    public String trim(String str){
+
+        Set<Character> exclude = new HashSet(
+                Arrays.asList((char)160)
+        );
+
+        final char[] value = str.toCharArray();
+        int len = value.length;
+        int st = 0;
+        char[] val = value;
+
+        while ((st < len) && (val[st] <= ' '
+                || exclude.contains(val[st]))) {
+            st++;
+        }
+        while ((st < len) && (val[len - 1] <= ' '
+                || exclude.contains(val[len - 1]))) {
+            len--;
+        }
+        return ((st > 0) || (len < value.length)) ? str.substring(st, len) : str;
+    }
+
     public void doImport(Type type) {
-        String location = "/Users/huqingfeng/Downloads/店铺、客服字段-2019-04-17.xlsx";
+        Integer sheetNo = 2;
+        Class doClass = CsPerformanceVo.class;
+        if (Objects.equals(type,Type.SHOP)){
+            sheetNo = 1;
+            doClass = ShopPerformanceBO.class;
+        }
+        String location = "/Users/huqingfeng/Downloads/店铺、客服字段-2019-04-18.xlsx";
         List<List<String>> res = new ArrayList<>();
         try (
                 Closer closer = Closer.create()
         ){
             final FileInputStream in = closer.register(new FileInputStream(location));
-            EasyExcelFactory.readBySax(in, new Sheet(2, 0),
+            EasyExcelFactory.readBySax(in, new Sheet(sheetNo, 0),
                     new AnalysisEventListener(){
 
                         private String type;
 
+                        private boolean first = true;
+
                         @Override
                         public void invoke(Object object, AnalysisContext context) {
+                            // 第一行跳过
+                            if (first){
+                                first=!first;
+                                return;
+                            }
                             List<String> row = (List<String>) object;
+                            for (int i = 0; i < row.size(); i++) {
+                                final String clo = row.get(i);
+                                if (clo!=null)
+                                row.set(i, trim(clo));
+                            }
                             if (type == null||row.get(0)!=null){
                                 type = row.get(0);
                             }
@@ -143,13 +185,15 @@ public class Excel {
                         public void doAfterAllAnalysed(AnalysisContext context) {
 
                         }
+
                     });
-        }catch (Exception e){e.printStackTrace();}
-        final Map<String, List<List<String>>> longValMap
+        }catch (Exception e){throw new RuntimeException(e);}
+        // 根据长字段名 分组
+        final Map<String, List<List<String>>> excelLongValMap
                 = res.stream().collect(Collectors.groupingBy(k -> k.get(1)));
         // check
-        if (res.size()!=longValMap.size()){
-            for (List<List<String>> value : longValMap.values()) {
+        if (res.size()!=excelLongValMap.size()){
+            for (List<List<String>> value : excelLongValMap.values()) {
                 if(value.size()>1){
                     System.out.println(("重复的长字段名"));
                     for (List<String> strLst : value) {
@@ -162,7 +206,6 @@ public class Excel {
             }
             return;
         }
-        // TODO 删除所有的数据
         // 类别
         final String[] catLst = res.stream().map(k -> k.get(0)).collect(Collectors.toSet()).toArray(new String[0]);
         // 类别对应的ID
@@ -172,25 +215,51 @@ public class Excel {
             category.setName(cat);
             category.setStatus((byte) 1);
             category.setTitle(cat);
-            categoryMapper.insert(category);
+            final PesReportCategoryExample pesReportCategoryExample = new PesReportCategoryExample();
+            pesReportCategoryExample.createCriteria().andNameEqualTo(cat).andTitleEqualTo(cat);
+            final List<PesReportCategory> pesReportCategories = categoryMapper.selectByExample(pesReportCategoryExample);
+            if (CollectionUtils.isEmpty(pesReportCategories)) {
+                categoryMapper.insert(category);
+            }else {
+                final PesReportCategory categ = pesReportCategories.get(0);
+                if (pesReportCategories.size()>1){
+                    throw new RuntimeException( String.format("重复的类别：%s", category.getName()));
+                }
+                category = categ;
+            }
             catId.put(category.getName(), (category.getId()));
         }
 
+        // 长字段名的map
+        final Map<String, Field> longNameMap = Arrays.stream(doClass.getDeclaredFields())
+                .filter(k -> k.getDeclaredAnnotation(Property.class) != null)
+                .collect(Collectors.toMap(k -> {
+                    final Property annotation = k.getDeclaredAnnotation(Property.class);
+                    // 长字段名
+                    final String value = annotation.value();
+                    return trim(value);
+                }, v -> v,(x,y)->{
+                    throw new IllegalStateException(String.format(
+                            "Duplicate key1: %s key2: %s",x.getName(),y.getName()
+                    ));
+                }));
         // 导入property
-        final Field[] declaredFields = CsPerformanceVo.class.getDeclaredFields();
-        for (Field declaredField : declaredFields) {
-            final Property annotation = declaredField.getAnnotation(Property.class);
-            if (annotation==null)return;
-            // 长字段名
-            final String value = annotation.value();
-            final List<String> row = longValMap.get(value).get(0)/*一直都是一个元素*/;
+        excelLongValMap.forEach((key,value)->{
+            // 同样长字段名
+            final Field field = longNameMap.get(key);
+            if(field == null){
+                throw new RuntimeException(
+                        String.format("excel 找不到对应的字段  长字段名：%s",key)
+                );
+            }
+            // excel 对应的一行
+            final List<String> excelRow = value.get(0);
             PesReportProperty property = new PesReportProperty();
-            final String cat = row.get(0);
-            property.setCategoryId(catId.get(cat));
-            property.setTitlelong(value);
-            property.setTitle(row.get(2));
-            property.setDesc(row.get(3));
-            property.setSource(row.get(4));
+            property.setCategoryId(catId.get(excelRow.get(0)));
+            property.setTitlelong(excelRow.get(1));
+            property.setTitle(excelRow.get(2));
+            property.setDesc(excelRow.get(3));
+            property.setSource(excelRow.get(4));
             if (type == Type.CS){
                 property.setType((byte) 2);
             }else if (type == Type.SHOP){
@@ -198,11 +267,14 @@ public class Excel {
             }else {
                 Assert.isTrue(false,"错误类型");
             }
-            property.setProperty(declaredField.getName());
+            property.setProperty(field.getName());
+            property.setFilterFlag((byte) 0);
+            property.setStatus((byte) 1);
             /*特殊处理*/
             chain.filter(property);
             propertyMapper.insert(property);
-        }
+        });
+
     }
     enum Type{SHOP,CS}
 
@@ -210,14 +282,8 @@ public class Excel {
     @PostConstruct
     public void init(){
         System.out.println("是否导入数据？(y/n)");
-        Scanner in = new Scanner(System.in);
-        final String next = in.next();
-        if (
-                Objects.equals(next,"Y")||
-                        Objects.equals(next,"y")||
-                        Objects.equals(next,"YES")||
-                        Objects.equals(next,"yes")
-        )
         doImport(Type.CS);
+        doImport(Type.SHOP);
+        System.out.println("导入数据完成");
     }
 }

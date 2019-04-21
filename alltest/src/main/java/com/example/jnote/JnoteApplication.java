@@ -72,7 +72,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com")
 @RestController
 @MapperScan("com.pes.jd.mapper")
 public class JnoteApplication {
@@ -89,13 +89,13 @@ public class JnoteApplication {
 //		final Map<String, A> bean = context.getBeansOfType(A.class);
 //		System.out.println(bean);
 
-		PesReportCategory category = new PesReportCategory();
-		category.setName("ssss");
-		category.setStatus((byte) 1);
-		category.setTitle("ssssd");
-		context.getBean(PesReportCategoryMapper.class).insert(category);
-
-		System.out.println(category.getId());
+//		PesReportCategory category = new PesReportCategory();
+//		category.setName("ssss");
+//		category.setStatus((byte) 1);
+//		category.setTitle("ssssd");
+//		context.getBean(PesReportCategoryMapper.class).insert(category);
+//
+//		System.out.println(category.getId());
 
 
 
@@ -109,7 +109,7 @@ public class JnoteApplication {
 //		final AwareTest bean =
 //				context.getBean(AwareTest.class);
 
-		context.close();
+//		context.close();
 
 	}
 
