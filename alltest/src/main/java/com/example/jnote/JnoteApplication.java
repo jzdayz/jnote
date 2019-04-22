@@ -1,6 +1,11 @@
 package com.example.jnote;
 
+import com.codahale.metrics.Meter;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.health.HealthCheckRegistry;
 import com.codahale.metrics.servlets.AdminServlet;
+import com.codahale.metrics.servlets.HealthCheckServlet;
+import com.codahale.metrics.servlets.MetricsServlet;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pes.jd.mapper.CsChatSessionMapper;
@@ -61,10 +66,12 @@ import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.Nullable;
+import javax.annotation.Resource;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.stream.JsonParser;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -126,16 +133,36 @@ public class JnoteApplication  {
 	}
 
 	@Bean
-	public ServletRegistrationBean servletRegistrationBean(ApplicationContext applicationContext) throws Exception{
+	public HealthCheckRegistry healthCheckRegistry(){
+		return new HealthCheckRegistry();
+	}
+
+	@Bean
+	public MetricRegistry metricRegistry(){
+		return new MetricRegistry();
+	}
+
+	@Bean
+	public ServletRegistrationBean servletRegistrationBean(
+			ServletContext servletContext,
+			HealthCheckRegistry healthCheckRegistry,
+			MetricRegistry metricRegistry){
+		servletContext.setAttribute(HealthCheckServlet.HEALTH_CHECK_REGISTRY,healthCheckRegistry);
+		servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY,metricRegistry);
 		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
 		servletRegistrationBean.setServlet(new AdminServlet());
-		servletRegistrationBean.addUrlMappings("/admin/*");
+		servletRegistrationBean.addUrlMappings("/custom/*");
 		return servletRegistrationBean;
 	}
 
 
+	@Resource
+	private MetricRegistry MetricRegistry;
+
 	@RequestMapping("/h2")
 	public void testH2(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		Meter rate = MetricRegistry.meter("h2 rate");
+		rate.mark();
 		PushBuilder pushBuilder = request.newPushBuilder();
 		if (pushBuilder!=null) {
 			pushBuilder.path("/a.png").addHeader("content-type", "image/png").push();
