@@ -1,7 +1,11 @@
 package com.sql;
 
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.health.HealthCheck;
+import com.codahale.metrics.health.HealthCheckRegistry;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.metrics.dropwizard.CodaHaleMetricsTracker;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.management.MBeanServer;
@@ -18,28 +22,43 @@ import java.util.concurrent.locks.LockSupport;
 public class Test {
     public static void main(String[] args) throws Exception{
 
-//        HikariConfig config = new HikariConfig();
-//        config.setJdbcUrl("jdbc:mysql://auzblog.com:3306");
-//        config.setUsername("root");
-//        config.setPassword("jkljkljkl");
-//        config.setMaximumPoolSize(1);
-//        config.addDataSourceProperty("cachePrepStmts", "true");
-//        config.addDataSourceProperty("prepStmtCacheSize", "250");
-//        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-//        config.setRegisterMbeans(true);
-//        HikariDataSource ds = new HikariDataSource(config);
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://auzblog.com:3306");
+        config.setUsername("root");
+        config.setPassword("jkljkljkl");
+        config.setMaximumPoolSize(1);
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.setRegisterMbeans(true);
+        HealthCheckRegistry healthCheckRegistry = new HealthCheckRegistry();
+        config.setHealthCheckRegistry(healthCheckRegistry);
+        MetricRegistry metricRegistry = new MetricRegistry();
+        config.setMetricRegistry(metricRegistry);
+
+        HikariDataSource ds = new HikariDataSource(config);
+
+
+        metricRegistry.getHistograms();
+
+        final HealthCheck.Result result = healthCheckRegistry.runHealthCheck("HikariPool-1.pool.ConnectivityCheck");
+        System.out.println(result);
+
+
 //
 //
-//        final Connection connection = ds.getConnection();
+        final Connection connection = ds.getConnection();
+
+
 //        connection.close();
 //
 //        final Connection connection1 = ds.getConnection();
 //
 //
 //
-//        Thread.sleep(1000100);
+        Thread.sleep(1000100);
 
-        new Test().show();
+//        new Test().show();
     }
 
     public void show(){

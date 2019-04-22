@@ -1,5 +1,6 @@
 package com.example.jnote;
 
+import com.codahale.metrics.servlets.AdminServlet;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pes.jd.mapper.CsChatSessionMapper;
@@ -43,7 +44,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -53,12 +57,15 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.Nullable;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.stream.JsonParser;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletRegistration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.PushBuilder;
@@ -79,7 +86,8 @@ import java.util.*;
 @SpringBootApplication(scanBasePackages = "com")
 @RestController
 @MapperScan("com.pes.jd.mapper")
-public class JnoteApplication {
+@ServletComponentScan("com.example.jnote")
+public class JnoteApplication  {
 
 	/**
 	 *  test condition
@@ -115,6 +123,14 @@ public class JnoteApplication {
 
 //		context.close();
 
+	}
+
+	@Bean
+	public ServletRegistrationBean servletRegistrationBean(ApplicationContext applicationContext) throws Exception{
+		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+		servletRegistrationBean.setServlet(new AdminServlet());
+		servletRegistrationBean.addUrlMappings("/admin/*");
+		return servletRegistrationBean;
 	}
 
 
