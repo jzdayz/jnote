@@ -36,6 +36,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.Transaction;
 import org.junit.Test;
+import org.marmelo.dropwizard.metrics.servlets.MetricsUIServlet;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,6 +144,11 @@ public class JnoteApplication  {
 	}
 
 	@Bean
+	public ServletRegistrationBean metricsUIServlet(){
+		return new ServletRegistrationBean(new MetricsUIServlet(),"/admin/*");
+	}
+
+	@Bean
 	public ServletRegistrationBean servletRegistrationBean(
 			ServletContext servletContext,
 			HealthCheckRegistry healthCheckRegistry,
@@ -151,7 +157,7 @@ public class JnoteApplication  {
 		servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY,metricRegistry);
 		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
 		servletRegistrationBean.setServlet(new AdminServlet());
-		servletRegistrationBean.addUrlMappings("/custom/*");
+		servletRegistrationBean.addUrlMappings("/*");
 		return servletRegistrationBean;
 	}
 

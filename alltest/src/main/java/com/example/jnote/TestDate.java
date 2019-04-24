@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.ibatis.mapping.ResultSetType;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -41,6 +42,12 @@ public class TestDate {
         public void setName(String name) {
             this.name = name;
         }
+    }
+
+    @Test
+    public void testEnum(){
+        final ResultSetType forward_only = ResultSetType.valueOf("FORWARD_ONLY");
+        System.out.println(forward_only);
     }
 
     @Test

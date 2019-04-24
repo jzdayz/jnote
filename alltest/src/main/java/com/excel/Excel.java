@@ -108,6 +108,31 @@ public class Excel {
                 return;
             }
         });
+        /*所有字段的'点此'*/
+        chain.add((x)->{
+
+            String baseRule = "<a href=\"#/system-management/system-settings/performance-settings?tab=0\">点此设置</a>";
+            String baseRuleSearch = "<a href=\"#/system-management/system-settings/performance-settings?tab=0\">点此查看设置</a>";
+            String receiveFilterRule = "<a href=\"#/system-management/system-settings/performance-settings?tab=2\">点此设置</a>";
+            String receiveFilterSearchRule = "<a href=\"#/system-management/system-settings/performance-settings?tab=2\">点此查看设置</a>";
+
+            // 特征识别 调到接待过滤
+            if (x.getDesc().contains("接待过滤规则")){
+                x.setDesc(x.getDesc()
+                        .replace("点此设置",receiveFilterRule));
+                x.setDesc(x.getDesc()
+                        .replace("点此查看设置",receiveFilterSearchRule));
+                return;
+            }
+
+            // 默认是调到基本的规则
+            x.setDesc(x.getDesc()
+                    .replace("点此设置",baseRule));
+            x.setDesc(x.getDesc()
+                    .replace("点此查看设置",baseRuleSearch));
+
+
+        });
     }
 
 
@@ -148,7 +173,7 @@ public class Excel {
             sheetNo = 1;
             doClass = ShopPerformanceBO.class;
         }
-        String location = "/Users/huqingfeng/Downloads/店铺、客服字段-2019-04-18.xlsx";
+        String location = "/Users/huqingfeng/Downloads/im.xlsx";
         List<List<String>> res = new ArrayList<>();
         try (
                 Closer closer = Closer.create()
@@ -281,9 +306,9 @@ public class Excel {
 
     @PostConstruct
     public void init(){
-        System.out.println("是否导入数据？(y/n)");
-        doImport(Type.CS);
-        doImport(Type.SHOP);
-        System.out.println("导入数据完成");
+//        System.out.println("是否导入数据？(y/n)");
+//        doImport(Type.CS);
+//        doImport(Type.SHOP);
+//        System.out.println("导入数据完成");
     }
 }
