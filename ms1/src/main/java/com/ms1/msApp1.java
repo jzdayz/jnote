@@ -1,14 +1,22 @@
 package com.ms1;
 
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.DistributionSummary;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.search.RequiredSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sun.rmi.transport.ObjectTable;
 
 import javax.annotation.Resource;
 
@@ -27,6 +35,25 @@ public class msApp1 {
     public Object hello(){
         return ms2.ms2();
     }
+
+
+    @GetMapping("/ping")
+    public Object ping(){
+        return "pong";
+    }
+
+    @Autowired
+    private MeterRegistry meterRegistry;
+
+    @GetMapping("getStr")
+    public Object getStr(){
+        final Counter getStr = meterRegistry.counter("HTTP调用","getStr","总数");
+        getStr.increment();
+        final DistributionSummary summary = meterRegistry.summary("HTTP调用", "getStr", "QPS");
+        summary.record(1);
+        return "AA";
+    }
+
 
     @Autowired
     private  Ms2 ms2;
