@@ -12,13 +12,13 @@ management:
       exposure:
         include: '*'
 server:
-  port: 9002
+  port: @eureka.port@
 spring:
   boot:
     admin:
       client:
         enabled: '@spring.boot.admin.enable@'
-        url: http://localhost:9002
+        url: @spring.boot.admin.address@
   zipkin:
-    base-url: http://localhost:9091
+    base-url: @zipkin.address@
     enabled: '@zipkin.enable@'

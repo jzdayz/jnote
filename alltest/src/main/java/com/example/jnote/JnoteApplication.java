@@ -61,6 +61,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ResolvableType;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.ServletConfigAware;
@@ -157,8 +158,35 @@ public class JnoteApplication  {
 		servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY,metricRegistry);
 		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
 		servletRegistrationBean.setServlet(new AdminServlet());
-		servletRegistrationBean.addUrlMappings("/*");
+		servletRegistrationBean.addUrlMappings("/sys/*");
 		return servletRegistrationBean;
+	}
+
+	@GetMapping(AdminServlet.DEFAULT_HEALTHCHECK_URI)
+	public void health(HttpServletResponse response,HttpServletRequest request){
+		response.setStatus(302);
+		response.addHeader("location", "/sys"+AdminServlet.DEFAULT_HEALTHCHECK_URI);
+	}
+
+	@GetMapping(AdminServlet.DEFAULT_METRICS_URI)
+	public void metrics(HttpServletResponse response,HttpServletRequest request){
+		response.setStatus(302);
+		response.addHeader("location", "/sys"+AdminServlet.DEFAULT_METRICS_URI);
+	}
+	@GetMapping(AdminServlet.DEFAULT_PING_URI)
+	public void ping(HttpServletResponse response,HttpServletRequest request){
+		response.setStatus(302);
+		response.addHeader("location", "/sys"+AdminServlet.DEFAULT_PING_URI);
+	}
+	@GetMapping(AdminServlet.DEFAULT_THREADS_URI)
+	public void threads(HttpServletResponse response,HttpServletRequest request){
+		response.setStatus(302);
+		response.addHeader("location", "/sys"+AdminServlet.DEFAULT_THREADS_URI);
+	}
+	@GetMapping(AdminServlet.DEFAULT_CPU_PROFILE_URI)
+	public void profile(HttpServletResponse response,HttpServletRequest request){
+		response.setStatus(302);
+		response.addHeader("location", "/sys"+AdminServlet.DEFAULT_CPU_PROFILE_URI);
 	}
 
 

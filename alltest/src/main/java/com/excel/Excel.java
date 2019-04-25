@@ -83,7 +83,8 @@ public class Excel {
                 x.setFilterFlag((byte) 1);
                 return;
             }
-            if (x.getTitlelong().startsWith("客服销售额")){
+
+            if (x.getTitlelong().startsWith("客服销售额")&&!x.getTitlelong().endsWith("占比")){
                 x.setTitlelong("客服销售额");
                 x.setFilterJson("[{\"id\":8,\"title\":\"扣除退款\",\"property\":\"refund_amount\",\"isFilter\":false},{\"id\":9,\"title\":\"扣除邮费\",\"property\":\"post_fee\",\"isFilter\":false}]");
                 x.setFilterFlag((byte) 1);
@@ -95,7 +96,7 @@ public class Excel {
                 x.setFilterFlag((byte) 1);
                 return;
             }
-            if (x.getTitlelong().startsWith("静默销售额")){
+            if (x.getTitlelong().startsWith("静默销售额")&&!x.getTitlelong().endsWith("占比")){
                 x.setTitlelong("静默销售额");
                 x.setFilterJson("[{\"id\":2,\"title\":\"扣除退款\",\"property\":\"refund_amount\",\"isFilter\":false},{\"id\":3,\"title\":\"扣除邮费\",\"property\":\"post_fee\",\"isFilter\":false}]");
                 x.setFilterFlag((byte) 1);
