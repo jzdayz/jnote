@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//@Component
+@Component
 public class Excel {
 
     interface Interceptor<T>{
@@ -174,7 +174,7 @@ public class Excel {
             sheetNo = 1;
             doClass = ShopPerformanceBO.class;
         }
-        String location = "/Users/huqingfeng/Downloads/im.xlsx";
+        String location = "/Users/huqingfeng/Downloads/imi.xlsx";
         List<List<String>> res = new ArrayList<>();
         try (
                 Closer closer = Closer.create()
@@ -275,7 +275,7 @@ public class Excel {
             final Field field = longNameMap.get(key);
             if(field == null){
                 throw new RuntimeException(
-                        String.format("excel 找不到对应的字段  长字段名：%s",key)
+                        String.format("excel 找不到对应的字段  长字段名：%s   类型：%s",key,type)
                 );
             }
             // excel 对应的一行
@@ -307,9 +307,9 @@ public class Excel {
 
     @PostConstruct
     public void init(){
-//        System.out.println("是否导入数据？(y/n)");
-//        doImport(Type.CS);
-//        doImport(Type.SHOP);
-//        System.out.println("导入数据完成");
+        System.out.println("是否导入数据？(y/n)");
+        doImport(Type.CS);
+        doImport(Type.SHOP);
+        System.out.println("导入数据完成");
     }
 }

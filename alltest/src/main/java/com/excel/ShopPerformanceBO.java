@@ -1,5 +1,6 @@
 package com.excel;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * 店铺绩效BO
@@ -7,6 +8,7 @@ package com.excel;
  * @author wenhui
  * @create 2019-01-23 10:46
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShopPerformanceBO {
 
     /*-------------------销售数据----------------------*/

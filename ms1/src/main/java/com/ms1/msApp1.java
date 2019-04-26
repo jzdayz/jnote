@@ -5,6 +5,8 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.search.RequiredSearch;
+import org.apache.commons.lang3.reflect.MethodUtils;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,12 +15,16 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.HandlerMethod;
 import sun.rmi.transport.ObjectTable;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Method;
 
 @RestController
 @SpringBootApplication
@@ -26,6 +32,7 @@ import javax.annotation.Resource;
 public class msApp1 {
     public static void main(String[] args) {
         SpringApplication.run(msApp1.class,args);
+        System.out.println();
     }
 
     @Resource
@@ -34,6 +41,18 @@ public class msApp1 {
     @RequestMapping("/ms1")
     public Object hello(){
         return ms2.ms2();
+    }
+
+    @Bean("/testbeanurl")
+    public Object handler(msApp1 msApp1) throws Exception{
+        final Method testUrl = com.ms1.msApp1.class.getDeclaredMethod("testUrl", String.class);
+        ReflectionUtils.makeAccessible(testUrl);
+        return new HandlerMethod(msApp1,testUrl);
+    }
+
+    @ResponseBody
+    public Object testUrl(String name){
+        return name;
     }
 
 

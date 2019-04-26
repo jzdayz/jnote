@@ -50,7 +50,7 @@ public class CsPerformanceVo {
     @Property(value = "询单→付款转化率", direct = true)
     private Double queryToFinalPaid;
 
-    @Property(value = "销售客单价（元/件）", direct = true)
+    @Property(value = "销售客单价（元/人）", direct = true)
     private Double saleGuestAvgAmount;
 
     @Property(value = "出库金额")

@@ -12,6 +12,8 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
@@ -41,6 +43,8 @@ public class Test {
 
         metricRegistry.getHistograms();
 
+
+
         final HealthCheck.Result result = healthCheckRegistry.runHealthCheck("HikariPool-1.pool.ConnectivityCheck");
         System.out.println(result);
 
@@ -48,6 +52,15 @@ public class Test {
 //
 //
         final Connection connection = ds.getConnection();
+
+        final PreparedStatement preparedStatement = connection.prepareStatement("   select 1   ");
+
+        preparedStatement.execute();
+
+        final ResultSet resultSet = preparedStatement.getResultSet();
+
+
+        System.out.println();
 
 
 //        connection.close();
