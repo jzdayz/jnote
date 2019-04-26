@@ -56,6 +56,9 @@ public class msApp1 {
     }
 
 
+
+
+
     @GetMapping("/ping")
     public Object ping(){
         return "pong";
