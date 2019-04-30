@@ -1,7 +1,5 @@
 package com.excel;
 
-import org.apache.catalina.startup.Tomcat;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 
 /**
  * @author huqingfeng
@@ -9,6 +7,5 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
  */
 public class TestTomcat {
     public static void main(String[] args) {
-        Tomcat tomcat = new Tomcat();
     }
 }

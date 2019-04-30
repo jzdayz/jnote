@@ -1,5 +1,9 @@
 package com.example.jnote;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
@@ -13,6 +17,7 @@ import com.pes.jd.mapper.PesReportCategoryMapper;
 import com.pes.jd.model.DO.CsChatSession;
 import com.pes.jd.model.DO.CsChatSessionExample;
 import com.pes.jd.model.DO.PesReportCategory;
+import com.pes.jd.model.DO.PesReportCategoryExample;
 import okhttp3.*;
 import okhttp3.EventListener;
 import org.apache.ibatis.cursor.Cursor;
@@ -42,6 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aop.support.AopUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -49,6 +55,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -58,6 +65,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.ResolvableType;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
@@ -69,6 +77,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.stream.JsonParser;
@@ -80,6 +89,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.PushBuilder;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
@@ -96,7 +106,16 @@ import java.util.*;
 @RestController
 @MapperScan("com.pes.jd.mapper")
 @ServletComponentScan("com.example.jnote")
-public class JnoteApplication  {
+public class JnoteApplication implements InitializingBean {
+
+	/**
+	 * SQL执行效率插件
+	 */
+	@Bean
+	@Profile({"dev","test"})// 设置 dev test 环境开启
+	public PerformanceInterceptor performanceInterceptor() {
+		return new PerformanceInterceptor();
+	}
 
 	/**
 	 *  test condition
@@ -106,33 +125,101 @@ public class JnoteApplication  {
 		final SpringApplication springApplication = new SpringApplication(JnoteApplication.class);
 //		springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
 		final ConfigurableApplicationContext context = springApplication.run(args);
-//		System.out.println(context.getEnvironment().getProperty("aa.bb"));
-//		final Map<String, A> bean = context.getBeansOfType(A.class);
-//		System.out.println(bean);
-
-//		PesReportCategory category = new PesReportCategory();
-//		category.setName("ssss");
-//		category.setStatus((byte) 1);
-//		category.setTitle("ssssd");
-//		context.getBean(PesReportCategoryMapper.class).insert(category);
-//
-//		System.out.println(category.getId());
 
 
-
-//		CsChatSessionMapper bean1 = context.getBean(CsChatSessionMapper.class);
-//		CsChatSessionExample example = new CsChatSessionExample();
-//		example.createCriteria().andAvgRespTimeBetween(1D,2D);
-//		List<CsChatSession> csChatSessions = bean1.selectByExample(example);
-//		System.out.println(csChatSessions);
-//
-//
-//		final AwareTest bean =
-//				context.getBean(AwareTest.class);
-
-//		context.close();
+		final PesReportCategoryMapper mapper = context.getBean(PesReportCategoryMapper.class);
+		Page<PesReportCategory> page = new Page<>();
+		QueryWrapper<PesReportCategory> query = new QueryWrapper<>();
+		query.lambda().between(PesReportCategory::getId,15,20);
+		mapper.selectPage(page, query);
+		System.out.println(page.getRecords());
 
 	}
+
+	@Inject
+	private ConfigurationPropertiesBindingPostProcessor configurationPropertiesBindingPostProcessor;
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		TestProperty property = new TestProperty();
+		final Object o = configurationPropertiesBindingPostProcessor
+				.postProcessBeforeInitialization(property, "testProperty");
+		System.out.println(o);
+	}
+
+	@Bean
+	@ConfigurationProperties(prefix = "ss.ad")
+	public TestProperty testProperty(){
+		return new TestProperty();
+	}
+
+
+	private static class TestProperty{
+
+		private String name;
+
+		private String age;
+
+		private static class Mode{
+			private String modeName;
+
+			public String getModeName() {
+				return modeName;
+			}
+
+			public void setModeName(String modeName) {
+				this.modeName = modeName;
+			}
+
+			@Override
+			public String toString() {
+				return new StringJoiner(", ", Mode.class.getSimpleName() + "[", "]")
+						.add("modeName='" + modeName + "'")
+						.toString();
+			}
+		}
+
+		private Mode mode;
+
+		public Mode getMode() {
+			return mode;
+		}
+
+		public void setMode(Mode mode) {
+			this.mode = mode;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getAge() {
+			return age;
+		}
+
+		public void setAge(String age) {
+			this.age = age;
+		}
+
+		@Override
+		public String toString() {
+			return new StringJoiner(", ", TestProperty.class.getSimpleName() + "[", "]")
+					.add("name='" + name + "'")
+					.add("age='" + age + "'")
+					.add("mode=" + mode)
+					.toString();
+		}
+	}
+
+
+
+
+
+
 
 	@Bean
 	public HealthCheckRegistry healthCheckRegistry(){
@@ -231,6 +318,7 @@ public class JnoteApplication  {
 		final ResolvableType resolvableType = ResolvableType.forClass(TestMap.class);
 		System.out.println();
 	}
+
 
 	private  static class TestMap extends AbstractMap<String,Object>{
 

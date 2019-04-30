@@ -3,6 +3,7 @@ package com.pes.jd.model.DO;
 import java.util.Date;
 
 public class CsTypeDay {
+
     private Long id;
 
     private Long shopId;

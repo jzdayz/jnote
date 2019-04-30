@@ -1,5 +1,6 @@
 package com.example.jnote;
 
+import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.executor.BatchResult;
 import org.apache.ibatis.executor.CachingExecutor;
@@ -15,7 +16,6 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.transaction.Transaction;
-import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.EnvironmentAware;

@@ -1,5 +1,7 @@
 package com.pes.jd.model.DO;
 
+import java.util.StringJoiner;
+
 public class PesReportCategory {
     private Long id;
 
@@ -39,5 +41,16 @@ public class PesReportCategory {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", PesReportCategory.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .add("title='" + title + "'")
+                .add("status=" + status)
+                .toString();
     }
 }
