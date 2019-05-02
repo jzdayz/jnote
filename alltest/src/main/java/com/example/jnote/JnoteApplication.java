@@ -2,6 +2,7 @@ package com.example.jnote;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codahale.metrics.Meter;
@@ -14,10 +15,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pes.jd.mapper.CsChatSessionMapper;
 import com.pes.jd.mapper.PesReportCategoryMapper;
-import com.pes.jd.model.DO.CsChatSession;
-import com.pes.jd.model.DO.CsChatSessionExample;
-import com.pes.jd.model.DO.PesReportCategory;
-import com.pes.jd.model.DO.PesReportCategoryExample;
+import com.pes.jd.mapper.UserMapper;
+import com.pes.jd.model.DO.*;
 import okhttp3.*;
 import okhttp3.EventListener;
 import org.apache.ibatis.cursor.Cursor;
@@ -114,7 +113,10 @@ public class JnoteApplication implements InitializingBean {
 	@Bean
 	@Profile({"dev","test"})// 设置 dev test 环境开启
 	public PerformanceInterceptor performanceInterceptor() {
-		return new PerformanceInterceptor();
+		final PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
+		performanceInterceptor.setWriteInLog(true);
+		performanceInterceptor.setMaxTime(3000L);
+		return performanceInterceptor;
 	}
 
 	/**
@@ -127,13 +129,23 @@ public class JnoteApplication implements InitializingBean {
 		final ConfigurableApplicationContext context = springApplication.run(args);
 
 
-		final PesReportCategoryMapper mapper = context.getBean(PesReportCategoryMapper.class);
-		Page<PesReportCategory> page = new Page<>();
-		QueryWrapper<PesReportCategory> query = new QueryWrapper<>();
-		query.lambda().between(PesReportCategory::getId,15,20);
-		mapper.selectPage(page, query);
-		System.out.println(page.getRecords());
+		final UserMapper mapper = context.getBean(UserMapper.class);
 
+		final List<User> users = mapper.selectList(null);
+
+		final User user = users.get(0);
+
+		user.setName("FUCK");
+
+		new Scanner(System.in).next();
+
+		mapper.updateById(user);
+
+	}
+
+	@Bean
+	public OptimisticLockerInterceptor optimisticLockerInterceptor(){
+		return new OptimisticLockerInterceptor();
 	}
 
 	@Inject
