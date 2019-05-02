@@ -1,8 +1,10 @@
 package com.pes.jd.model.DO;
 
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import java.util.StringJoiner;
 
-public class PesReportCategory {
+public class PesReportCategory extends Model<PesReportCategory> {
     private Long id;
 
     private String name;

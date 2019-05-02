@@ -128,12 +128,7 @@ public class JnoteApplication implements InitializingBean {
 
 
 		final PesReportCategoryMapper mapper = context.getBean(PesReportCategoryMapper.class);
-		Page<PesReportCategory> page = new Page<>();
-		QueryWrapper<PesReportCategory> query = new QueryWrapper<>();
-		query.lambda().between(PesReportCategory::getId,15,20);
-		mapper.selectPage(page, query);
-		System.out.println(page.getRecords());
-
+		List<PesReportCategory> pesReportCategories = mapper.selectList(null);
 	}
 
 	@Inject
