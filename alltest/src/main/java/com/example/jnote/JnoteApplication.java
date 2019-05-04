@@ -207,18 +207,18 @@ public class JnoteApplication implements InitializingBean {
 		return new ServletRegistrationBean(new MetricsUIServlet(),"/admin/*");
 	}
 
-	@Bean
-	public ServletRegistrationBean servletRegistrationBean(
-			ServletContext servletContext,
-			HealthCheckRegistry healthCheckRegistry,
-			MetricRegistry metricRegistry){
-		servletContext.setAttribute(HealthCheckServlet.HEALTH_CHECK_REGISTRY,healthCheckRegistry);
-		servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY,metricRegistry);
-		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
-		servletRegistrationBean.setServlet(new AdminServlet());
-		servletRegistrationBean.addUrlMappings("/sys/*");
-		return servletRegistrationBean;
-	}
+//	@Bean
+//	public ServletRegistrationBean servletRegistrationBean(
+//			ServletContext servletContext,
+//			HealthCheckRegistry healthCheckRegistry,
+//			MetricRegistry metricRegistry){
+//		servletContext.setAttribute(HealthCheckServlet.HEALTH_CHECK_REGISTRY,healthCheckRegistry);
+//		servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY,metricRegistry);
+//		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+//		servletRegistrationBean.setServlet(new AdminServlet());
+//		servletRegistrationBean.addUrlMappings("/sys/*");
+//		return servletRegistrationBean;
+//	}
 
 	@GetMapping(AdminServlet.DEFAULT_HEALTHCHECK_URI)
 	public void health(HttpServletResponse response,HttpServletRequest request){
