@@ -34,11 +34,11 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.35.Final</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.netty</groupId>-->
+<!--            <artifactId>netty-all</artifactId>-->
+<!--            <version>4.1.35.Final</version>-->
+<!--        </dependency>-->
 
 
 
@@ -98,6 +98,10 @@
             <groupId>org.marmelo.dropwizard</groupId>
             <artifactId>dropwizard-metrics-ui</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-tcnative-boringssl-static</artifactId>
         </dependency>
 
 <!--        <dependency>-->

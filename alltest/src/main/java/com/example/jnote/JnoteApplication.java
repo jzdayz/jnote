@@ -283,6 +283,11 @@ public class JnoteApplication implements InitializingBean {
 
 	}
 
+	@RequestMapping("/tt")
+	public String tt(){
+		return "TT";
+	}
+
 	@Test
 	public void testResolverable(){
 		Map<String,Integer> map = new HashMap<>();

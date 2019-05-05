@@ -7,6 +7,10 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.handler.codec.ReplayingDecoder;
+
+import java.util.List;
 
 public class DiscardServer {
     
@@ -26,12 +30,14 @@ public class DiscardServer {
              .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
-                     ch.pipeline().addLast(new DiscardServerHandler());
+                     ch.pipeline()
+                             .addLast(new DiscardServerHandler())
+                     .addLast(new ToIntegerDecoder());
                  }
              })
              .option(ChannelOption.SO_BACKLOG, 128)          // (5)
              .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
-    
+
             // Bind and start to accept incoming connections.
             ChannelFuture f = b.bind(port).sync(); // (7)
     
@@ -68,7 +74,8 @@ public class DiscardServer {
             // Discard the received data silently.
 //            ((ByteBuf) msg).release(); // (3)
             ctx.write(msg); // (1)
-            ctx.flush(); // (2)
+//            ctx.flush(); // (2)
+            ctx.fireChannelRead(msg);
         }
 
         @Override
@@ -82,6 +89,28 @@ public class DiscardServer {
             // Close the connection when an exception is raised.
             cause.printStackTrace();
             ctx.close();
+        }
+    }
+
+    public class ToIntegerDecoder2 extends ReplayingDecoder<Void> {   //1
+
+        @Override
+        public void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out)
+                throws Exception {
+            final int e = in.readInt();
+            System.out.println(e);
+            out.add(e);  //2
+        }
+    }
+
+    public class ToIntegerDecoder extends ByteToMessageDecoder {  //1
+
+        @Override
+        public void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out)
+                throws Exception {
+            final int e = in.readInt();
+            System.out.println(e);
+            out.add(e);  //3
         }
     }
 
