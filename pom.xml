@@ -9,7 +9,6 @@
 		<module>eureka</module>
         <module>ms2</module>
         <module>admin</module>
-		<module>apollo</module>
         <module>config</module>
     </modules>
 	<parent>
@@ -37,6 +36,13 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>javax.cache</groupId>
+			<artifactId>cache-api</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>javax.json</groupId>
 			<artifactId>javax.json-api</artifactId>
@@ -77,21 +83,17 @@
 
 
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-web</artifactId>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--						<groupId>org.springframework.boot</groupId>-->
+<!--						<artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-undertow</artifactId>
-		</dependency>
 
 
 		<dependency>

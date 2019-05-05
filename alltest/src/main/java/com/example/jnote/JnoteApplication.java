@@ -1,10 +1,7 @@
 package com.example.jnote;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
@@ -13,65 +10,33 @@ import com.codahale.metrics.servlets.HealthCheckServlet;
 import com.codahale.metrics.servlets.MetricsServlet;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pes.jd.mapper.CsChatSessionMapper;
-import com.pes.jd.mapper.PesReportCategoryMapper;
 import com.pes.jd.mapper.UserMapper;
 import com.pes.jd.model.DO.*;
 import okhttp3.*;
 import okhttp3.EventListener;
-import org.apache.ibatis.cursor.Cursor;
-import org.apache.ibatis.executor.BatchResult;
-import org.apache.ibatis.executor.CachingExecutor;
-import org.apache.ibatis.executor.Executor;
-import org.apache.ibatis.executor.SimpleExecutor;
-import org.apache.ibatis.executor.statement.PreparedStatementHandler;
-import org.apache.ibatis.executor.statement.RoutingStatementHandler;
-import org.apache.ibatis.executor.statement.StatementHandler;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.ognl.MemberAccess;
 import org.apache.ibatis.ognl.Ognl;
-import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.plugin.Invocation;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.transaction.Transaction;
 import org.junit.Test;
 import org.marmelo.dropwizard.metrics.servlets.MetricsUIServlet;
 import org.mybatis.spring.annotation.MapperScan;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.aop.framework.AopProxyUtils;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.ResolvableType;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.Nullable;
@@ -80,15 +45,12 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.stream.JsonParser;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.PushBuilder;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
@@ -97,8 +59,6 @@ import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 @SpringBootApplication(scanBasePackages = "com")
@@ -131,15 +91,14 @@ public class JnoteApplication implements InitializingBean {
 
 		final UserMapper mapper = context.getBean(UserMapper.class);
 
-		final List<User> users = mapper.selectList(null);
+		final List<UserDO> userDOS = mapper.selectList(null);
 
-		final User user = users.get(0);
+		final UserDO userDO = userDOS.get(0);
+		userDO.setName("BBBB");
 
-		user.setName("FUCK");
 
-		new Scanner(System.in).next();
-
-		mapper.updateById(user);
+		boolean b = userDO.updateById();
+		System.out.println("update : "+b);
 
 	}
 
@@ -248,18 +207,18 @@ public class JnoteApplication implements InitializingBean {
 		return new ServletRegistrationBean(new MetricsUIServlet(),"/admin/*");
 	}
 
-	@Bean
-	public ServletRegistrationBean servletRegistrationBean(
-			ServletContext servletContext,
-			HealthCheckRegistry healthCheckRegistry,
-			MetricRegistry metricRegistry){
-		servletContext.setAttribute(HealthCheckServlet.HEALTH_CHECK_REGISTRY,healthCheckRegistry);
-		servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY,metricRegistry);
-		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
-		servletRegistrationBean.setServlet(new AdminServlet());
-		servletRegistrationBean.addUrlMappings("/sys/*");
-		return servletRegistrationBean;
-	}
+//	@Bean
+//	public ServletRegistrationBean servletRegistrationBean(
+//			ServletContext servletContext,
+//			HealthCheckRegistry healthCheckRegistry,
+//			MetricRegistry metricRegistry){
+//		servletContext.setAttribute(HealthCheckServlet.HEALTH_CHECK_REGISTRY,healthCheckRegistry);
+//		servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY,metricRegistry);
+//		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+//		servletRegistrationBean.setServlet(new AdminServlet());
+//		servletRegistrationBean.addUrlMappings("/sys/*");
+//		return servletRegistrationBean;
+//	}
 
 	@GetMapping(AdminServlet.DEFAULT_HEALTHCHECK_URI)
 	public void health(HttpServletResponse response,HttpServletRequest request){
