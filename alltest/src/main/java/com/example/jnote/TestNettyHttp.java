@@ -1,16 +1,20 @@
 package com.example.jnote;
 
-import com.server.DiscardServer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.MessageToMessageCodec;
 import io.netty.handler.codec.http.*;
+import javax.net.ssl.SSLContext;
+import io.netty.handler.ssl.SslHandler;
+import io.netty.handler.stream.ChunkedStream;
+import io.netty.handler.stream.ChunkedWriteHandler;
 
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.security.NoSuchAlgorithmException;
 
 public class TestNettyHttp {
     public static void main(String[] args) {
@@ -20,7 +24,9 @@ public class TestNettyHttp {
             ServerBootstrap b = new ServerBootstrap(); // (2)
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class) // (3)
-                    .childHandler(new HttpAggregatorInitializer())
+                    .childHandler(new ZeroCopyWriteHandlerInitializer(
+                            new File("/Users/huqingfeng/Documents/doc/jnote/log.log")
+                    ))
                     .option(ChannelOption.SO_BACKLOG, 128)          // (5)
                     .childOption(ChannelOption.SO_KEEPALIVE, false); // (6)
 
@@ -31,13 +37,18 @@ public class TestNettyHttp {
             // In this example, this does not happen, but you can do that to gracefully
             // shut down your server.
             f.channel().closeFuture().sync();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
     }
+
+
+    /**
+     *  http test
+     */
     public static  class HttpAggregatorInitializer extends ChannelInitializer<Channel> {
 
         @Override
@@ -67,6 +78,65 @@ public class TestNettyHttp {
             }
         }
 
+    }
+
+    /**
+     *  file test
+     */
+    public  static  class ChunkedWriteHandlerInitializer extends ChannelInitializer<Channel> {
+        private final File file;
+        private final SSLContext sslCtx;
+
+        public ChunkedWriteHandlerInitializer(File file, SSLContext sslCtx) {
+            this.file = file;
+            this.sslCtx = sslCtx;
+        }
+
+        @Override
+        protected void initChannel(Channel ch) throws Exception {
+            ChannelPipeline pipeline = ch.pipeline();
+//            pipeline.addLast(new SslHandler(sslCtx.createSSLEngine())); //1
+            pipeline.addLast(new ChunkedWriteHandler());//2
+            pipeline.addLast(new WriteStreamHandler());//3
+        }
+
+        public final class WriteStreamHandler extends ChannelInboundHandlerAdapter {  //4
+
+            @Override
+            public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                super.channelActive(ctx);
+                ctx.writeAndFlush(new ChunkedStream(new FileInputStream(file)));
+            }
+        }
+    }
+
+    /**
+     *  file zero copy test
+     */
+    public  static  class ZeroCopyWriteHandlerInitializer extends ChannelInitializer<Channel> {
+
+        private final File file;
+
+        public ZeroCopyWriteHandlerInitializer(File file) {
+            this.file = file;
+        }
+
+        @Override
+        protected void initChannel(Channel ch) throws Exception {
+            ChannelPipeline pipeline = ch.pipeline();
+            pipeline.addLast(new WriteStreamHandler());//3
+        }
+
+        public final class WriteStreamHandler extends ChannelInboundHandlerAdapter {  //4
+
+            @Override
+            public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                super.channelActive(ctx);
+                FileInputStream in = new FileInputStream(file); //1
+                FileRegion region = new DefaultFileRegion(in.getChannel(), 0, file.length());
+                ctx.writeAndFlush(region);
+            }
+        }
     }
 
 

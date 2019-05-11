@@ -26,6 +26,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.bind.BindResult;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
+import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -34,6 +38,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.ResolvableType;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,6 +92,19 @@ public class JnoteApplication implements InitializingBean {
 		final SpringApplication springApplication = new SpringApplication(JnoteApplication.class);
 //		springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
 		final ConfigurableApplicationContext context = springApplication.run(args);
+
+		final ConfigurableEnvironment environment = context.getEnvironment();
+		Binder binder = Binder.get(environment);
+
+		Bindable<Map<String, Map>> bin = Bindable
+				.mapOf(String.class, Map.class);
+		ConfigurationPropertyName md = ConfigurationPropertyName
+				.of("class");
+
+
+		final Map<String, Map> bind = binder.bind(md, bin).orElseGet(Collections::emptyMap);
+
+		System.out.println(bind);
 
 
 		final UserMapper mapper = context.getBean(UserMapper.class);

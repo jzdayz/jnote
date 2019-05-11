@@ -5,5 +5,8 @@ import org.springframework.stereotype.Component;
 public class TestWebFlux {
 
 
+    public static void main(String[] args) {
+        System.out.println();
+    }
 
 }
