@@ -39,7 +39,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -51,6 +53,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.stream.JsonParser;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.PushBuilder;
@@ -65,6 +68,8 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.*;
+
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @SpringBootApplication(scanBasePackages = "com")
 @RestController
@@ -106,18 +111,23 @@ public class JnoteApplication implements InitializingBean {
 
 		System.out.println(bind);
 
+//
+//		final UserMapper mapper = context.getBean(UserMapper.class);
+//
+//		final List<UserDO> userDOS = mapper.selectList(null);
+//
+//		final UserDO userDO = userDOS.get(0);
+//		userDO.setName("BBBB");
+//
+//
+//		boolean b = userDO.updateById();
+//		System.out.println("update : "+b);
 
-		final UserMapper mapper = context.getBean(UserMapper.class);
+	}
 
-		final List<UserDO> userDOS = mapper.selectList(null);
-
-		final UserDO userDO = userDOS.get(0);
-		userDO.setName("BBBB");
-
-
-		boolean b = userDO.updateById();
-		System.out.println("update : "+b);
-
+	@PostMapping(value = "/test")
+	public  Object test(String name,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		return "HELLO";
 	}
 
 	@Bean
