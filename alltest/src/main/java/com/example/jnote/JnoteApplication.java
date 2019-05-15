@@ -1,5 +1,7 @@
 package com.example.jnote;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.codahale.metrics.Meter;
@@ -10,8 +12,10 @@ import com.codahale.metrics.servlets.HealthCheckServlet;
 import com.codahale.metrics.servlets.MetricsServlet;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pes.jd.mapper.ShopGoodsSkuAssociativeMapper;
 import com.pes.jd.mapper.UserMapper;
 import com.pes.jd.model.DO.*;
+import com.pes.jd.model.DTO.ShopGoodsSkuAssociativeDTO;
 import okhttp3.*;
 import okhttp3.EventListener;
 import org.apache.ibatis.ognl.MemberAccess;
@@ -110,6 +114,12 @@ public class JnoteApplication implements InitializingBean {
 		final Map<String, Map> bind = binder.bind(md, bin).orElseGet(Collections::emptyMap);
 
 		System.out.println(bind);
+
+		final ShopGoodsSkuAssociativeMapper bean = context.getBean(ShopGoodsSkuAssociativeMapper.class);
+
+
+		final List<ShopGoodsSkuAssociativeDTO> res = bean.selectList(null);
+		System.out.println(res);
 
 //
 //		final UserMapper mapper = context.getBean(UserMapper.class);

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pes.jd.mapper.ShopRecommendSkuMapper">
+  <resultMap id="ShopRecommendSkuDO" type="com.pes.jd.model.DO.ShopRecommendSkuDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+  </resultMap>
+  <resultMap id="ShopRecommendSkuDTO" type="com.pes.jd.model.DTO.ShopRecommendSkuDTO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shop_id, sku_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ShopRecommendSkuDO">
+    select 
+    <include refid="Base_Column_List" />
+    from pes_shop_recommend_sku
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pes_shop_recommend_sku
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pes.jd.model.DO.ShopRecommendSkuDO">
+    insert into pes_shop_recommend_sku (id, shop_id, sku_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pes.jd.model.DO.ShopRecommendSkuDO">
+    insert into pes_shop_recommend_sku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pes.jd.model.DO.ShopRecommendSkuDO">
+    update pes_shop_recommend_sku
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        sku_id = #{skuId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pes.jd.model.DO.ShopRecommendSkuDO">
+    update pes_shop_recommend_sku
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      sku_id = #{skuId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
