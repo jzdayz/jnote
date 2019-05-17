@@ -115,11 +115,11 @@ public class JnoteApplication implements InitializingBean {
 
 		System.out.println(bind);
 
-		final ShopGoodsSkuAssociativeMapper bean = context.getBean(ShopGoodsSkuAssociativeMapper.class);
-
-
-		final List<ShopGoodsSkuAssociativeDTO> res = bean.selectList(null);
-		System.out.println(res);
+//		final ShopGoodsSkuAssociativeMapper bean = context.getBean(ShopGoodsSkuAssociativeMapper.class);
+//
+//
+//		final List<ShopGoodsSkuAssociativeDTO> res = bean.selectList(null);
+//		System.out.println(res);
 
 //
 //		final UserMapper mapper = context.getBean(UserMapper.class);
@@ -133,6 +133,12 @@ public class JnoteApplication implements InitializingBean {
 //		boolean b = userDO.updateById();
 //		System.out.println("update : "+b);
 
+	}
+
+
+	@PostMapping(value = "/test_form")
+	public Object testForm(String name){
+		return name;
 	}
 
 	@PostMapping(value = "/test")
