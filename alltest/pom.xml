@@ -33,6 +33,15 @@
             <artifactId>spring-boot-loader</artifactId>
         </dependency>
 
+
+        <!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-core -->
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.2.8.RELEASE</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
