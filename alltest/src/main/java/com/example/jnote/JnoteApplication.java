@@ -1,5 +1,7 @@
 package com.example.jnote;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.codahale.metrics.Meter;
@@ -10,8 +12,10 @@ import com.codahale.metrics.servlets.HealthCheckServlet;
 import com.codahale.metrics.servlets.MetricsServlet;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pes.jd.mapper.ShopGoodsSkuAssociativeMapper;
 import com.pes.jd.mapper.UserMapper;
 import com.pes.jd.model.DO.*;
+import com.pes.jd.model.DTO.ShopGoodsSkuAssociativeDTO;
 import okhttp3.*;
 import okhttp3.EventListener;
 import org.apache.ibatis.ognl.MemberAccess;
@@ -39,7 +43,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -51,6 +57,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.stream.JsonParser;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.PushBuilder;
@@ -65,6 +72,8 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.*;
+
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @SpringBootApplication(scanBasePackages = "com")
 @RestController
@@ -106,18 +115,35 @@ public class JnoteApplication implements InitializingBean {
 
 		System.out.println(bind);
 
+//		final ShopGoodsSkuAssociativeMapper bean = context.getBean(ShopGoodsSkuAssociativeMapper.class);
+//
+//
+//		final List<ShopGoodsSkuAssociativeDTO> res = bean.selectList(null);
+//		System.out.println(res);
 
-		final UserMapper mapper = context.getBean(UserMapper.class);
+//
+//		final UserMapper mapper = context.getBean(UserMapper.class);
+//
+//		final List<UserDO> userDOS = mapper.selectList(null);
+//
+//		final UserDO userDO = userDOS.get(0);
+//		userDO.setName("BBBB");
+//
+//
+//		boolean b = userDO.updateById();
+//		System.out.println("update : "+b);
 
-		final List<UserDO> userDOS = mapper.selectList(null);
-
-		final UserDO userDO = userDOS.get(0);
-		userDO.setName("BBBB");
+	}
 
 
-		boolean b = userDO.updateById();
-		System.out.println("update : "+b);
+	@PostMapping(value = "/test_form")
+	public Object testForm(String name){
+		return name;
+	}
 
+	@PostMapping(value = "/test")
+	public  Object test(String name,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		return "HELLO";
 	}
 
 	@Bean
