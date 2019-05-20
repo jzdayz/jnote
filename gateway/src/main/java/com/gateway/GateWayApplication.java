@@ -15,6 +15,7 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,13 +35,18 @@ public class GateWayApplication implements BeanFactoryAware {
 	}
 
 	@RequestMapping(value = "/anything/a")
-	public Object test(String name){
-		return "TEST";
+	public Object test(@ModelAttribute(binding = false) B b){
+		return b==null;
 	}
 
     @RequestMapping(value = "/anything/b")
-    public Object test1(String name){
+    public Object test1(String[] name){
         return "TEST1";
+    }
+
+    class B{
+        public B() {
+        }
     }
 
 	private BeanFactory beanFactory;
@@ -80,20 +86,20 @@ public class GateWayApplication implements BeanFactoryAware {
         return exchange-> Mono.just("sss");
     }
 
-    @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route("limit_route", r -> r
-                        .path("/aa/**")
-                        .filters(f -> f.requestRateLimiter(c -> {
-                            c.setRateLimiter(beanFactory.getBean(Custom.class));
-                            c.setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
-                        })
-                        )
-                        .uri("http://localhost:8080/anything/a"))
-                .route("host_route", r -> r.path("/a/**").filters(f -> f.stripPrefix(1)).uri("http://localhost:8081"))
-
-                .build();
-    }
+//    @Bean
+//    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+//        return builder.routes()
+//                .route("limit_route", r -> r
+//                        .path("/aa/**")
+//                        .filters(f -> f.requestRateLimiter(c -> {
+//                            c.setRateLimiter(beanFactory.getBean(Custom.class));
+//                            c.setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
+//                        })
+//                        )
+//                        .uri("http://localhost:8080/anything/a"))
+//                .route("host_route", r -> r.path("/a/**").filters(f -> f.stripPrefix(1)).uri("http://localhost:8081"))
+//
+//                .build();
+//    }
 
 }

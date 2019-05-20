@@ -33,7 +33,7 @@ public class msApp1 {
     private Environment environment;
 
     @RequestMapping("/ms1")
-    public Object hello(){
+    public Object hello(String[] name){
         return ms2.ms2();
     }
 
