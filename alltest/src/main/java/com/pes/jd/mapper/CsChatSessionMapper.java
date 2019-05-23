@@ -5,7 +5,7 @@ import com.pes.jd.model.DO.CsChatSessionExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface CsChatSessionMapper {
+public interface CsChatSessionMapper extends BaseMapper<CsChatSession> {
     long countByExample(CsChatSessionExample example);
 
     int deleteByExample(CsChatSessionExample example);

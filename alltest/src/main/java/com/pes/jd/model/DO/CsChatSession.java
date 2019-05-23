@@ -1,7 +1,10 @@
 package com.pes.jd.model.DO;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
+@TableName("pes_cs_chat_session_2019_05")
 public class CsChatSession {
     private Long id;
 
