@@ -136,8 +136,6 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 
-        
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -149,8 +147,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
-        
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
