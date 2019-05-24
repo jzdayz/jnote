@@ -1,5 +1,6 @@
 package com.example.jnote;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.core.parser.SqlInfo;
@@ -70,6 +71,8 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.*;
 
+//import static com.example.jnote.CustomSqlInjector.TABLE_NAME_PLACE_HOLDER;
+
 @SpringBootApplication(scanBasePackages = "com")
 @RestController
 @MapperScan("com.pes.jd.mapper")
@@ -89,40 +92,12 @@ public class JnoteApplication implements InitializingBean {
         return performanceInterceptor;
     }
 
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        final PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        paginationInterceptor.setSqlParserList(Arrays.asList((ISqlParser) (metaObject, sql) -> {
-            final Object value = metaObject.getValue("delegate.parameterHandler.parameterObject");
-            if (!(value instanceof Map)) {
-                return null;
-            }
-            Map args = (Map) value;
-            final Collection<String> tables = new TableNameParser(sql).tables();
-            if (!CollectionUtils.isEmpty(tables)) {
-                boolean update = false;
-                String originSql = sql;
-                final Object tableName = args.get(BaseMapper.TABLE_NAME);
-                if (tables.size() > 1) {
-                    // 只支持单表
-                    return null;
-                }
-                for (String table : tables) {
-                    final String tableNam = String.valueOf(tableName);
-                    if (tableNam == null) {
-                        return null;
-                    }
-                    // 特征实现是最好的
-                    originSql = sql.replaceAll(table, tableNam);
-                    update = true;
-                }
-                if (update)
-                    return SqlInfo.newInstance().setSql(originSql);
-            }
-            return null;
-        }));
-        return paginationInterceptor;
-    }
+//    @Bean
+//    public PaginationInterceptor paginationInterceptor(DynamicTableParser dynamicTableParser) {
+//        final PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+//        paginationInterceptor.setSqlParserList(Arrays.asList(dynamicTableParser));
+//        return paginationInterceptor;
+//    }
 
     /**
      * test condition
