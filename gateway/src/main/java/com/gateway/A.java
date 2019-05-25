@@ -1,9 +1,15 @@
 package com.gateway;
 
+import org.junit.Test;
+import org.springframework.cloud.gateway.handler.predicate.PathRoutePredicateFactory;
+import org.springframework.cloud.gateway.support.ConfigurationUtils;
+import org.springframework.core.convert.support.DefaultConversionService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ☞ 🏀
@@ -18,5 +24,15 @@ public class A {
     @FunctionalInterface
     interface B{
        Mono<Object> get();
+    }
+
+    @Test
+    public void show(){
+        Map<String,Object> properties = new HashMap<>();
+        properties.put("Host","http://baidu.com");
+        Object config = new PathRoutePredicateFactory.Config();
+        ConfigurationUtils.bind(config, properties, "",
+                "patterns", null, new DefaultConversionService());
+        System.out.println(config);
     }
 }
