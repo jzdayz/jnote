@@ -21,10 +21,12 @@ import okhttp3.*;
 import okhttp3.EventListener;
 import org.apache.ibatis.ognl.MemberAccess;
 import org.apache.ibatis.ognl.Ognl;
+import org.apache.ibatis.plugin.Interceptor;
 import org.junit.Test;
 import org.marmelo.dropwizard.metrics.servlets.MetricsUIServlet;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -92,12 +94,18 @@ public class JnoteApplication implements InitializingBean {
         return performanceInterceptor;
     }
 
-//    @Bean
-//    public PaginationInterceptor paginationInterceptor(DynamicTableParser dynamicTableParser) {
-//        final PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-//        paginationInterceptor.setSqlParserList(Arrays.asList(dynamicTableParser));
-//        return paginationInterceptor;
-//    }
+    @Bean
+    public PaginationInterceptor paginationInterceptor(DynamicTableParser dynamicTableParser) {
+        final PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        paginationInterceptor.setSqlParserList(Arrays.asList(dynamicTableParser));
+        return paginationInterceptor;
+    }
+
+    @Bean
+    public Object aa(ObjectProvider<Interceptor[]> interceptors){
+        interceptors.getObject();
+        return new Object();
+    }
 
     /**
      * test condition
