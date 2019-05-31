@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pes.jd.mapper.PesMenuResourceMapper">
+  <resultMap id="BaseResultMap" type="com.pes.jd.model.DO.PesMenuResource">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="is_default" jdbcType="BIT" property="isDefault" />
+    <result column="is_personal_data" jdbcType="BIT" property="isPersonalData" />
+    <result column="is_cs_team_data" jdbcType="BIT" property="isCsTeamData" />
+    <result column="is_shop_data" jdbcType="BIT" property="isShopData" />
+    <result column="is_shop_multiple_data" jdbcType="BIT" property="isShopMultipleData" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, title, name, sort, parent_id, note, is_default, is_personal_data, is_cs_team_data, 
+    is_shop_data, is_shop_multiple_data, shop_id
+  </sql>
+  <select id="selectByExample" parameterType="com.pes.jd.model.DO.PesMenuResourceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pes_menu_resource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pes_menu_resource
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pes_menu_resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pes.jd.model.DO.PesMenuResourceExample">
+    delete from pes_menu_resource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pes.jd.model.DO.PesMenuResource">
+    insert into pes_menu_resource (id, title, name, 
+      sort, parent_id, note, 
+      is_default, is_personal_data, is_cs_team_data, 
+      is_shop_data, is_shop_multiple_data, shop_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, 
+      #{isDefault,jdbcType=BIT}, #{isPersonalData,jdbcType=BIT}, #{isCsTeamData,jdbcType=BIT}, 
+      #{isShopData,jdbcType=BIT}, #{isShopMultipleData,jdbcType=BIT}, #{shopId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pes.jd.model.DO.PesMenuResource">
+    insert into pes_menu_resource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="isDefault != null">
+        is_default,
+      </if>
+      <if test="isPersonalData != null">
+        is_personal_data,
+      </if>
+      <if test="isCsTeamData != null">
+        is_cs_team_data,
+      </if>
+      <if test="isShopData != null">
+        is_shop_data,
+      </if>
+      <if test="isShopMultipleData != null">
+        is_shop_multiple_data,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=BIT},
+      </if>
+      <if test="isPersonalData != null">
+        #{isPersonalData,jdbcType=BIT},
+      </if>
+      <if test="isCsTeamData != null">
+        #{isCsTeamData,jdbcType=BIT},
+      </if>
+      <if test="isShopData != null">
+        #{isShopData,jdbcType=BIT},
+      </if>
+      <if test="isShopMultipleData != null">
+        #{isShopMultipleData,jdbcType=BIT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pes.jd.model.DO.PesMenuResourceExample" resultType="java.lang.Long">
+    select count(*) from pes_menu_resource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pes_menu_resource
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDefault != null">
+        is_default = #{record.isDefault,jdbcType=BIT},
+      </if>
+      <if test="record.isPersonalData != null">
+        is_personal_data = #{record.isPersonalData,jdbcType=BIT},
+      </if>
+      <if test="record.isCsTeamData != null">
+        is_cs_team_data = #{record.isCsTeamData,jdbcType=BIT},
+      </if>
+      <if test="record.isShopData != null">
+        is_shop_data = #{record.isShopData,jdbcType=BIT},
+      </if>
+      <if test="record.isShopMultipleData != null">
+        is_shop_multiple_data = #{record.isShopMultipleData,jdbcType=BIT},
+      </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pes_menu_resource
+    set id = #{record.id,jdbcType=BIGINT},
+      title = #{record.title,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      note = #{record.note,jdbcType=VARCHAR},
+      is_default = #{record.isDefault,jdbcType=BIT},
+      is_personal_data = #{record.isPersonalData,jdbcType=BIT},
+      is_cs_team_data = #{record.isCsTeamData,jdbcType=BIT},
+      is_shop_data = #{record.isShopData,jdbcType=BIT},
+      is_shop_multiple_data = #{record.isShopMultipleData,jdbcType=BIT},
+      shop_id = #{record.shopId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pes.jd.model.DO.PesMenuResource">
+    update pes_menu_resource
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        is_default = #{isDefault,jdbcType=BIT},
+      </if>
+      <if test="isPersonalData != null">
+        is_personal_data = #{isPersonalData,jdbcType=BIT},
+      </if>
+      <if test="isCsTeamData != null">
+        is_cs_team_data = #{isCsTeamData,jdbcType=BIT},
+      </if>
+      <if test="isShopData != null">
+        is_shop_data = #{isShopData,jdbcType=BIT},
+      </if>
+      <if test="isShopMultipleData != null">
+        is_shop_multiple_data = #{isShopMultipleData,jdbcType=BIT},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pes.jd.model.DO.PesMenuResource">
+    update pes_menu_resource
+    set title = #{title,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=BIT},
+      is_personal_data = #{isPersonalData,jdbcType=BIT},
+      is_cs_team_data = #{isCsTeamData,jdbcType=BIT},
+      is_shop_data = #{isShopData,jdbcType=BIT},
+      is_shop_multiple_data = #{isShopMultipleData,jdbcType=BIT},
+      shop_id = #{shopId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
