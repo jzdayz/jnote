@@ -1,10 +1,7 @@
 package com.example.jnote;
 
 import com.google.common.collect.Lists;
-import com.pes.jd.model.DTO.ShopGoodsSkuLabelDTO;
-
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class A {
