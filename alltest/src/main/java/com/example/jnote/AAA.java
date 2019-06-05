@@ -12,7 +12,7 @@ public class AAA {
     public static void main(String[] args) {
         Lock lock = new ReentrantLock();
 
-        Condition condition = new ReentrantLock().newCondition();
+        Condition condition = lock.newCondition();
 
         Thread thread = new Thread(() -> {
             try {
