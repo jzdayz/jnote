@@ -10,6 +10,7 @@ public class AQS {
     private Integer integer;
 
     public Integer getInteger() {
+        System.out.println(this);
         return integer;
     }
 
@@ -22,6 +23,7 @@ public class AQS {
     public class Condi{
 
         public Integer get(){
+            System.out.println(this);
             return getInteger();
         }
 
