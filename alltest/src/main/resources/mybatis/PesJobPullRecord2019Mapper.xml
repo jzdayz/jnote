@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pes.jd.mapper.PesJobPullRecord2019Mapper">
+  <resultMap id="BaseResultMap" type="com.pes.jd.model.DO.PesJobPullRecord2019">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="result" jdbcType="BIT" property="result" />
+    <result column="chat_peer_flag" jdbcType="BIT" property="chatPeerFlag" />
+    <result column="shop_category_flag" jdbcType="BIT" property="shopCategoryFlag" />
+    <result column="shop_sku_flag" jdbcType="BIT" property="shopSkuFlag" />
+    <result column="shop_good_flag" jdbcType="BIT" property="shopGoodFlag" />
+    <result column="shop_dsr_flag" jdbcType="BIT" property="shopDsrFlag" />
+    <result column="no_pay_order_flag" jdbcType="BIT" property="noPayOrderFlag" />
+    <result column="order_created_flag" jdbcType="BIT" property="orderCreatedFlag" />
+    <result column="order_modify_flag" jdbcType="BIT" property="orderModifyFlag" />
+    <result column="order_presale_flag" jdbcType="BIT" property="orderPresaleFlag" />
+    <result column="order_evaluation_flag" jdbcType="BIT" property="orderEvaluationFlag" />
+    <result column="shop_pv_uv_flag" jdbcType="BIT" property="shopPvUvFlag" />
+    <result column="order_refund_apply_flag" jdbcType="BIT" property="orderRefundApplyFlag" />
+    <result column="order_refund_check_flag" jdbcType="BIT" property="orderRefundCheckFlag" />
+    <result column="asc_order_refund_apply_flag" jdbcType="BIT" property="ascOrderRefundApplyFlag" />
+    <result column="asc_order_refund_check_flag" jdbcType="BIT" property="ascOrderRefundCheckFlag" />
+    <result column="leave_msg_flag" jdbcType="BIT" property="leaveMsgFlag" />
+    <result column="cs_send_eval_flag" jdbcType="BIT" property="csSendEvalFlag" />
+    <result column="update_cs_eval_flag" jdbcType="BIT" property="updateCsEvalFlag" />
+    <result column="cs_eval_flag" jdbcType="BIT" property="csEvalFlag" />
+    <result column="order_remark_flag" jdbcType="BIT" property="orderRemarkFlag" />
+    <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    <result column="msg" jdbcType="VARCHAR" property="msg" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, shop_id, date, result, chat_peer_flag, shop_category_flag, shop_sku_flag, shop_good_flag, 
+    shop_dsr_flag, no_pay_order_flag, order_created_flag, order_modify_flag, order_presale_flag, 
+    order_evaluation_flag, shop_pv_uv_flag, order_refund_apply_flag, order_refund_check_flag, 
+    asc_order_refund_apply_flag, asc_order_refund_check_flag, leave_msg_flag, cs_send_eval_flag, 
+    update_cs_eval_flag, cs_eval_flag, order_remark_flag, modified, msg
+  </sql>
+  <select id="selectByExample" parameterType="com.pes.jd.model.DO.PesJobPullRecord2019Example" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pes_job_pull_record_2019
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pes_job_pull_record_2019
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pes_job_pull_record_2019
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pes.jd.model.DO.PesJobPullRecord2019Example">
+    delete from pes_job_pull_record_2019
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pes.jd.model.DO.PesJobPullRecord2019">
+    insert into pes_job_pull_record_2019 (id, shop_id, date, 
+      result, chat_peer_flag, shop_category_flag, 
+      shop_sku_flag, shop_good_flag, shop_dsr_flag, 
+      no_pay_order_flag, order_created_flag, order_modify_flag, 
+      order_presale_flag, order_evaluation_flag, shop_pv_uv_flag, 
+      order_refund_apply_flag, order_refund_check_flag, asc_order_refund_apply_flag, 
+      asc_order_refund_check_flag, leave_msg_flag, cs_send_eval_flag, 
+      update_cs_eval_flag, cs_eval_flag, order_remark_flag, 
+      modified, msg)
+    values (#{id,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{date,jdbcType=DATE}, 
+      #{result,jdbcType=BIT}, #{chatPeerFlag,jdbcType=BIT}, #{shopCategoryFlag,jdbcType=BIT}, 
+      #{shopSkuFlag,jdbcType=BIT}, #{shopGoodFlag,jdbcType=BIT}, #{shopDsrFlag,jdbcType=BIT}, 
+      #{noPayOrderFlag,jdbcType=BIT}, #{orderCreatedFlag,jdbcType=BIT}, #{orderModifyFlag,jdbcType=BIT}, 
+      #{orderPresaleFlag,jdbcType=BIT}, #{orderEvaluationFlag,jdbcType=BIT}, #{shopPvUvFlag,jdbcType=BIT}, 
+      #{orderRefundApplyFlag,jdbcType=BIT}, #{orderRefundCheckFlag,jdbcType=BIT}, #{ascOrderRefundApplyFlag,jdbcType=BIT}, 
+      #{ascOrderRefundCheckFlag,jdbcType=BIT}, #{leaveMsgFlag,jdbcType=BIT}, #{csSendEvalFlag,jdbcType=BIT}, 
+      #{updateCsEvalFlag,jdbcType=BIT}, #{csEvalFlag,jdbcType=BIT}, #{orderRemarkFlag,jdbcType=BIT}, 
+      #{modified,jdbcType=TIMESTAMP}, #{msg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pes.jd.model.DO.PesJobPullRecord2019">
+    insert into pes_job_pull_record_2019
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+      <if test="chatPeerFlag != null">
+        chat_peer_flag,
+      </if>
+      <if test="shopCategoryFlag != null">
+        shop_category_flag,
+      </if>
+      <if test="shopSkuFlag != null">
+        shop_sku_flag,
+      </if>
+      <if test="shopGoodFlag != null">
+        shop_good_flag,
+      </if>
+      <if test="shopDsrFlag != null">
+        shop_dsr_flag,
+      </if>
+      <if test="noPayOrderFlag != null">
+        no_pay_order_flag,
+      </if>
+      <if test="orderCreatedFlag != null">
+        order_created_flag,
+      </if>
+      <if test="orderModifyFlag != null">
+        order_modify_flag,
+      </if>
+      <if test="orderPresaleFlag != null">
+        order_presale_flag,
+      </if>
+      <if test="orderEvaluationFlag != null">
+        order_evaluation_flag,
+      </if>
+      <if test="shopPvUvFlag != null">
+        shop_pv_uv_flag,
+      </if>
+      <if test="orderRefundApplyFlag != null">
+        order_refund_apply_flag,
+      </if>
+      <if test="orderRefundCheckFlag != null">
+        order_refund_check_flag,
+      </if>
+      <if test="ascOrderRefundApplyFlag != null">
+        asc_order_refund_apply_flag,
+      </if>
+      <if test="ascOrderRefundCheckFlag != null">
+        asc_order_refund_check_flag,
+      </if>
+      <if test="leaveMsgFlag != null">
+        leave_msg_flag,
+      </if>
+      <if test="csSendEvalFlag != null">
+        cs_send_eval_flag,
+      </if>
+      <if test="updateCsEvalFlag != null">
+        update_cs_eval_flag,
+      </if>
+      <if test="csEvalFlag != null">
+        cs_eval_flag,
+      </if>
+      <if test="orderRemarkFlag != null">
+        order_remark_flag,
+      </if>
+      <if test="modified != null">
+        modified,
+      </if>
+      <if test="msg != null">
+        msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=BIT},
+      </if>
+      <if test="chatPeerFlag != null">
+        #{chatPeerFlag,jdbcType=BIT},
+      </if>
+      <if test="shopCategoryFlag != null">
+        #{shopCategoryFlag,jdbcType=BIT},
+      </if>
+      <if test="shopSkuFlag != null">
+        #{shopSkuFlag,jdbcType=BIT},
+      </if>
+      <if test="shopGoodFlag != null">
+        #{shopGoodFlag,jdbcType=BIT},
+      </if>
+      <if test="shopDsrFlag != null">
+        #{shopDsrFlag,jdbcType=BIT},
+      </if>
+      <if test="noPayOrderFlag != null">
+        #{noPayOrderFlag,jdbcType=BIT},
+      </if>
+      <if test="orderCreatedFlag != null">
+        #{orderCreatedFlag,jdbcType=BIT},
+      </if>
+      <if test="orderModifyFlag != null">
+        #{orderModifyFlag,jdbcType=BIT},
+      </if>
+      <if test="orderPresaleFlag != null">
+        #{orderPresaleFlag,jdbcType=BIT},
+      </if>
+      <if test="orderEvaluationFlag != null">
+        #{orderEvaluationFlag,jdbcType=BIT},
+      </if>
+      <if test="shopPvUvFlag != null">
+        #{shopPvUvFlag,jdbcType=BIT},
+      </if>
+      <if test="orderRefundApplyFlag != null">
+        #{orderRefundApplyFlag,jdbcType=BIT},
+      </if>
+      <if test="orderRefundCheckFlag != null">
+        #{orderRefundCheckFlag,jdbcType=BIT},
+      </if>
+      <if test="ascOrderRefundApplyFlag != null">
+        #{ascOrderRefundApplyFlag,jdbcType=BIT},
+      </if>
+      <if test="ascOrderRefundCheckFlag != null">
+        #{ascOrderRefundCheckFlag,jdbcType=BIT},
+      </if>
+      <if test="leaveMsgFlag != null">
+        #{leaveMsgFlag,jdbcType=BIT},
+      </if>
+      <if test="csSendEvalFlag != null">
+        #{csSendEvalFlag,jdbcType=BIT},
+      </if>
+      <if test="updateCsEvalFlag != null">
+        #{updateCsEvalFlag,jdbcType=BIT},
+      </if>
+      <if test="csEvalFlag != null">
+        #{csEvalFlag,jdbcType=BIT},
+      </if>
+      <if test="orderRemarkFlag != null">
+        #{orderRemarkFlag,jdbcType=BIT},
+      </if>
+      <if test="modified != null">
+        #{modified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msg != null">
+        #{msg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pes.jd.model.DO.PesJobPullRecord2019Example" resultType="java.lang.Long">
+    select count(*) from pes_job_pull_record_2019
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pes_job_pull_record_2019
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=BIGINT},
+      </if>
+      <if test="record.date != null">
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.result != null">
+        result = #{record.result,jdbcType=BIT},
+      </if>
+      <if test="record.chatPeerFlag != null">
+        chat_peer_flag = #{record.chatPeerFlag,jdbcType=BIT},
+      </if>
+      <if test="record.shopCategoryFlag != null">
+        shop_category_flag = #{record.shopCategoryFlag,jdbcType=BIT},
+      </if>
+      <if test="record.shopSkuFlag != null">
+        shop_sku_flag = #{record.shopSkuFlag,jdbcType=BIT},
+      </if>
+      <if test="record.shopGoodFlag != null">
+        shop_good_flag = #{record.shopGoodFlag,jdbcType=BIT},
+      </if>
+      <if test="record.shopDsrFlag != null">
+        shop_dsr_flag = #{record.shopDsrFlag,jdbcType=BIT},
+      </if>
+      <if test="record.noPayOrderFlag != null">
+        no_pay_order_flag = #{record.noPayOrderFlag,jdbcType=BIT},
+      </if>
+      <if test="record.orderCreatedFlag != null">
+        order_created_flag = #{record.orderCreatedFlag,jdbcType=BIT},
+      </if>
+      <if test="record.orderModifyFlag != null">
+        order_modify_flag = #{record.orderModifyFlag,jdbcType=BIT},
+      </if>
+      <if test="record.orderPresaleFlag != null">
+        order_presale_flag = #{record.orderPresaleFlag,jdbcType=BIT},
+      </if>
+      <if test="record.orderEvaluationFlag != null">
+        order_evaluation_flag = #{record.orderEvaluationFlag,jdbcType=BIT},
+      </if>
+      <if test="record.shopPvUvFlag != null">
+        shop_pv_uv_flag = #{record.shopPvUvFlag,jdbcType=BIT},
+      </if>
+      <if test="record.orderRefundApplyFlag != null">
+        order_refund_apply_flag = #{record.orderRefundApplyFlag,jdbcType=BIT},
+      </if>
+      <if test="record.orderRefundCheckFlag != null">
+        order_refund_check_flag = #{record.orderRefundCheckFlag,jdbcType=BIT},
+      </if>
+      <if test="record.ascOrderRefundApplyFlag != null">
+        asc_order_refund_apply_flag = #{record.ascOrderRefundApplyFlag,jdbcType=BIT},
+      </if>
+      <if test="record.ascOrderRefundCheckFlag != null">
+        asc_order_refund_check_flag = #{record.ascOrderRefundCheckFlag,jdbcType=BIT},
+      </if>
+      <if test="record.leaveMsgFlag != null">
+        leave_msg_flag = #{record.leaveMsgFlag,jdbcType=BIT},
+      </if>
+      <if test="record.csSendEvalFlag != null">
+        cs_send_eval_flag = #{record.csSendEvalFlag,jdbcType=BIT},
+      </if>
+      <if test="record.updateCsEvalFlag != null">
+        update_cs_eval_flag = #{record.updateCsEvalFlag,jdbcType=BIT},
+      </if>
+      <if test="record.csEvalFlag != null">
+        cs_eval_flag = #{record.csEvalFlag,jdbcType=BIT},
+      </if>
+      <if test="record.orderRemarkFlag != null">
+        order_remark_flag = #{record.orderRemarkFlag,jdbcType=BIT},
+      </if>
+      <if test="record.modified != null">
+        modified = #{record.modified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.msg != null">
+        msg = #{record.msg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pes_job_pull_record_2019
+    set id = #{record.id,jdbcType=BIGINT},
+      shop_id = #{record.shopId,jdbcType=BIGINT},
+      date = #{record.date,jdbcType=DATE},
+      result = #{record.result,jdbcType=BIT},
+      chat_peer_flag = #{record.chatPeerFlag,jdbcType=BIT},
+      shop_category_flag = #{record.shopCategoryFlag,jdbcType=BIT},
+      shop_sku_flag = #{record.shopSkuFlag,jdbcType=BIT},
+      shop_good_flag = #{record.shopGoodFlag,jdbcType=BIT},
+      shop_dsr_flag = #{record.shopDsrFlag,jdbcType=BIT},
+      no_pay_order_flag = #{record.noPayOrderFlag,jdbcType=BIT},
+      order_created_flag = #{record.orderCreatedFlag,jdbcType=BIT},
+      order_modify_flag = #{record.orderModifyFlag,jdbcType=BIT},
+      order_presale_flag = #{record.orderPresaleFlag,jdbcType=BIT},
+      order_evaluation_flag = #{record.orderEvaluationFlag,jdbcType=BIT},
+      shop_pv_uv_flag = #{record.shopPvUvFlag,jdbcType=BIT},
+      order_refund_apply_flag = #{record.orderRefundApplyFlag,jdbcType=BIT},
+      order_refund_check_flag = #{record.orderRefundCheckFlag,jdbcType=BIT},
+      asc_order_refund_apply_flag = #{record.ascOrderRefundApplyFlag,jdbcType=BIT},
+      asc_order_refund_check_flag = #{record.ascOrderRefundCheckFlag,jdbcType=BIT},
+      leave_msg_flag = #{record.leaveMsgFlag,jdbcType=BIT},
+      cs_send_eval_flag = #{record.csSendEvalFlag,jdbcType=BIT},
+      update_cs_eval_flag = #{record.updateCsEvalFlag,jdbcType=BIT},
+      cs_eval_flag = #{record.csEvalFlag,jdbcType=BIT},
+      order_remark_flag = #{record.orderRemarkFlag,jdbcType=BIT},
+      modified = #{record.modified,jdbcType=TIMESTAMP},
+      msg = #{record.msg,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pes.jd.model.DO.PesJobPullRecord2019">
+    update pes_job_pull_record_2019
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=BIT},
+      </if>
+      <if test="chatPeerFlag != null">
+        chat_peer_flag = #{chatPeerFlag,jdbcType=BIT},
+      </if>
+      <if test="shopCategoryFlag != null">
+        shop_category_flag = #{shopCategoryFlag,jdbcType=BIT},
+      </if>
+      <if test="shopSkuFlag != null">
+        shop_sku_flag = #{shopSkuFlag,jdbcType=BIT},
+      </if>
+      <if test="shopGoodFlag != null">
+        shop_good_flag = #{shopGoodFlag,jdbcType=BIT},
+      </if>
+      <if test="shopDsrFlag != null">
+        shop_dsr_flag = #{shopDsrFlag,jdbcType=BIT},
+      </if>
+      <if test="noPayOrderFlag != null">
+        no_pay_order_flag = #{noPayOrderFlag,jdbcType=BIT},
+      </if>
+      <if test="orderCreatedFlag != null">
+        order_created_flag = #{orderCreatedFlag,jdbcType=BIT},
+      </if>
+      <if test="orderModifyFlag != null">
+        order_modify_flag = #{orderModifyFlag,jdbcType=BIT},
+      </if>
+      <if test="orderPresaleFlag != null">
+        order_presale_flag = #{orderPresaleFlag,jdbcType=BIT},
+      </if>
+      <if test="orderEvaluationFlag != null">
+        order_evaluation_flag = #{orderEvaluationFlag,jdbcType=BIT},
+      </if>
+      <if test="shopPvUvFlag != null">
+        shop_pv_uv_flag = #{shopPvUvFlag,jdbcType=BIT},
+      </if>
+      <if test="orderRefundApplyFlag != null">
+        order_refund_apply_flag = #{orderRefundApplyFlag,jdbcType=BIT},
+      </if>
+      <if test="orderRefundCheckFlag != null">
+        order_refund_check_flag = #{orderRefundCheckFlag,jdbcType=BIT},
+      </if>
+      <if test="ascOrderRefundApplyFlag != null">
+        asc_order_refund_apply_flag = #{ascOrderRefundApplyFlag,jdbcType=BIT},
+      </if>
+      <if test="ascOrderRefundCheckFlag != null">
+        asc_order_refund_check_flag = #{ascOrderRefundCheckFlag,jdbcType=BIT},
+      </if>
+      <if test="leaveMsgFlag != null">
+        leave_msg_flag = #{leaveMsgFlag,jdbcType=BIT},
+      </if>
+      <if test="csSendEvalFlag != null">
+        cs_send_eval_flag = #{csSendEvalFlag,jdbcType=BIT},
+      </if>
+      <if test="updateCsEvalFlag != null">
+        update_cs_eval_flag = #{updateCsEvalFlag,jdbcType=BIT},
+      </if>
+      <if test="csEvalFlag != null">
+        cs_eval_flag = #{csEvalFlag,jdbcType=BIT},
+      </if>
+      <if test="orderRemarkFlag != null">
+        order_remark_flag = #{orderRemarkFlag,jdbcType=BIT},
+      </if>
+      <if test="modified != null">
+        modified = #{modified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msg != null">
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pes.jd.model.DO.PesJobPullRecord2019">
+    update pes_job_pull_record_2019
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      date = #{date,jdbcType=DATE},
+      result = #{result,jdbcType=BIT},
+      chat_peer_flag = #{chatPeerFlag,jdbcType=BIT},
+      shop_category_flag = #{shopCategoryFlag,jdbcType=BIT},
+      shop_sku_flag = #{shopSkuFlag,jdbcType=BIT},
+      shop_good_flag = #{shopGoodFlag,jdbcType=BIT},
+      shop_dsr_flag = #{shopDsrFlag,jdbcType=BIT},
+      no_pay_order_flag = #{noPayOrderFlag,jdbcType=BIT},
+      order_created_flag = #{orderCreatedFlag,jdbcType=BIT},
+      order_modify_flag = #{orderModifyFlag,jdbcType=BIT},
+      order_presale_flag = #{orderPresaleFlag,jdbcType=BIT},
+      order_evaluation_flag = #{orderEvaluationFlag,jdbcType=BIT},
+      shop_pv_uv_flag = #{shopPvUvFlag,jdbcType=BIT},
+      order_refund_apply_flag = #{orderRefundApplyFlag,jdbcType=BIT},
+      order_refund_check_flag = #{orderRefundCheckFlag,jdbcType=BIT},
+      asc_order_refund_apply_flag = #{ascOrderRefundApplyFlag,jdbcType=BIT},
+      asc_order_refund_check_flag = #{ascOrderRefundCheckFlag,jdbcType=BIT},
+      leave_msg_flag = #{leaveMsgFlag,jdbcType=BIT},
+      cs_send_eval_flag = #{csSendEvalFlag,jdbcType=BIT},
+      update_cs_eval_flag = #{updateCsEvalFlag,jdbcType=BIT},
+      cs_eval_flag = #{csEvalFlag,jdbcType=BIT},
+      order_remark_flag = #{orderRemarkFlag,jdbcType=BIT},
+      modified = #{modified,jdbcType=TIMESTAMP},
+      msg = #{msg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

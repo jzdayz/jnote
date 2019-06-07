@@ -72,6 +72,11 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+
 
 
 		<!-- https://mvnrepository.com/artifact/org.pcollections/pcollections -->
@@ -87,19 +92,15 @@
             <artifactId>spring-retry</artifactId>
         </dependency>
 
-
-
-
-
-
-
-
 		<dependency>
 			<groupId>javax.money</groupId>
 			<artifactId>money-api</artifactId>
-			<version>1.0.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>javax.transaction-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>

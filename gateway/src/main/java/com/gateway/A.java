@@ -29,7 +29,7 @@ public class A {
     @Test
     public void show(){
         Map<String,Object> properties = new HashMap<>();
-        properties.put("Host","http://baidu.com");
+        properties.put("patterns","/baidu");
         Object config = new PathRoutePredicateFactory.Config();
         ConfigurationUtils.bind(config, properties, "",
                 "patterns", null, new DefaultConversionService());
