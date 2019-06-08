@@ -1,1 +1,1 @@
-org.springframework.context.ApplicationListener=com.example.jnote.TestApplicationListener
+org.springframework.context.ApplicationListener=com.spring.framework.TestApplicationListener
