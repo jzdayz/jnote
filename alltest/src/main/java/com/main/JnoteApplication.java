@@ -4,16 +4,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.codahale.metrics.servlets.AdminServlet;
-import com.data.mbp.DynamicTableParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pes.jd.mapper.CsChatSessionMapper;
-import com.pes.jd.model.DO.CsChatSession;
+import com.pes.jd.mapper.PesMenuResourceMapper;
+import com.pes.jd.model.DO.PesMenuResourceExample;
 import okhttp3.*;
 import okhttp3.EventListener;
 import org.apache.ibatis.ognl.MemberAccess;
@@ -23,15 +21,13 @@ import org.marmelo.dropwizard.metrics.servlets.MetricsUIServlet;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.context.properties.bind.Binder;
-import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -40,6 +36,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,12 +85,12 @@ public class JnoteApplication implements InitializingBean {
         return performanceInterceptor;
     }
 
-    @Bean
-    public PaginationInterceptor paginationInterceptor(DynamicTableParser dynamicTableParser) {
-        final PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        paginationInterceptor.setSqlParserList(Arrays.asList(dynamicTableParser));
-        return paginationInterceptor;
-    }
+//    @Bean
+//    public PaginationInterceptor paginationInterceptor(DynamicTableParser dynamicTableParser) {
+//        final PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+//        paginationInterceptor.setSqlParserList(Arrays.asList(dynamicTableParser));
+//        return paginationInterceptor;
+//    }
 
     @Bean
     public Object aa(ObjectProvider<Interceptor[]> interceptors){
@@ -111,17 +108,17 @@ public class JnoteApplication implements InitializingBean {
         final ConfigurableApplicationContext context = springApplication.run(args);
 
         final ConfigurableEnvironment environment = context.getEnvironment();
-        Binder binder = Binder.get(environment);
-
-        Bindable<Map<String, Map>> bin = Bindable
-                .mapOf(String.class, Map.class);
-        ConfigurationPropertyName md = ConfigurationPropertyName
-                .of("class");
-
-
-        final Map<String, Map> bind = binder.bind(md, bin).orElseGet(Collections::emptyMap);
-
-        System.out.println(bind);
+//        Binder binder = Binder.get(environment);
+//
+//        Bindable<Map<String, Map>> bin = Bindable
+//                .mapOf(String.class, Map.class);
+//        ConfigurationPropertyName md = ConfigurationPropertyName
+//                .of("class");
+//
+//
+//        final Map<String, Map> bind = binder.bind(md, bin).orElseGet(Collections::emptyMap);
+//
+//        System.out.println(bind);
 
 //		final ShopGoodsSkuAssociativeMapper bean = context.getBean(ShopGoodsSkuAssociativeMapper.class);
 //
@@ -142,16 +139,28 @@ public class JnoteApplication implements InitializingBean {
 //		System.out.println("update : "+b);
 
 
-        final CsChatSessionMapper bean = context.getBean(CsChatSessionMapper.class);
-
-        IPage<CsChatSession> iPage = new Page<>();
-        iPage.setCurrent(1);
-        iPage.setPages(1);
-        bean.selectPage(iPage, null,"pes_jd_sub_01.pes_cs_chat_session_2019_05");
+//        final CsChatSessionMapper bean = context.getBean(CsChatSessionMapper.class);
+//
+//        IPage<CsChatSession> iPage = new Page<>();
+//        iPage.setCurrent(1);
+//        iPage.setPages(1);
+//        bean.selectPage(iPage, null,"pes_jd_sub_01.pes_cs_chat_session_2019_05");
 
 //        System.out.println(iPage.getRecords());
 
+        JnoteApplication bean = context.getBean(JnoteApplication.class);
+        bean.testTransaction();
 
+
+
+    }
+
+    @Autowired
+    private PesMenuResourceMapper pesMenuResourceMapper;
+
+    @Transactional(rollbackFor = Exception.class)
+    public void testTransaction(){
+        pesMenuResourceMapper.selectByExample(new PesMenuResourceExample());
     }
 
 

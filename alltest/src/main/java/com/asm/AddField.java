@@ -59,5 +59,6 @@ public class AddField extends ClassVisitor {
         byte[] newClass = classWriter.toByteArray();
         File newFile = new File(output, "A1.class");
         new FileOutputStream(newFile).write(newClass);
+
     }
 }
