@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pes.jd.mapper.CsChatSessionServiceIndexTempMapper">
+  <resultMap id="CsChatSessionServiceIndexTempDO" type="com.pes.jd.model.DO.CsChatSessionServiceIndexTempDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="cs_nick" jdbcType="VARCHAR" property="csNick" />
+    <result column="consult_session_num" jdbcType="INTEGER" property="consultSessionNum" />
+    <result column="receive_session_num" jdbcType="INTEGER" property="receiveSessionNum" />
+    <result column="receive_session_duration_time" jdbcType="DOUBLE" property="receiveSessionDurationTime" />
+    <result column="direct_receive_session_num" jdbcType="INTEGER" property="directReceiveSessionNum" />
+    <result column="forward_in_session_num" jdbcType="INTEGER" property="forwardInSessionNum" />
+    <result column="forward_out_session_num" jdbcType="INTEGER" property="forwardOutSessionNum" />
+    <result column="cust_consult_session_num" jdbcType="INTEGER" property="custConsultSessionNum" />
+    <result column="cs_to_cust_session_num" jdbcType="INTEGER" property="csToCustSessionNum" />
+    <result column="chat_num" jdbcType="INTEGER" property="chatNum" />
+    <result column="cust_chat_num" jdbcType="INTEGER" property="custChatNum" />
+    <result column="cs_chat_num" jdbcType="INTEGER" property="csChatNum" />
+    <result column="cs_word_num" jdbcType="INTEGER" property="csWordNum" />
+    <result column="avg_cs_msg_session_num" jdbcType="DOUBLE" property="avgCsMsgSessionNum" />
+    <result column="max_receive_session_num" jdbcType="INTEGER" property="maxReceiveSessionNum" />
+    <result column="non_reply_session_num" jdbcType="INTEGER" property="nonReplySessionNum" />
+    <result column="leave_msg_session_num" jdbcType="INTEGER" property="leaveMsgSessionNum" />
+    <result column="leave_msg_receive_session_num" jdbcType="INTEGER" property="leaveMsgReceiveSessionNum" />
+    <result column="slow_resp_session_num" jdbcType="INTEGER" property="slowRespSessionNum" />
+    <result column="long_resp_session_num" jdbcType="INTEGER" property="longRespSessionNum" />
+    <result column="avg_resp_time_first" jdbcType="DOUBLE" property="avgRespTimeFirst" />
+    <result column="avg_resp_time" jdbcType="DOUBLE" property="avgRespTime" />
+    <result column="avg_session_duration_time" jdbcType="DOUBLE" property="avgSessionDurationTime" />
+    <result column="avg_resp_in_quick_time" jdbcType="INTEGER" property="avgRespInQuickTime" />
+    <result column="session_num" jdbcType="INTEGER" property="sessionNum" />
+    <result column="avg_resp_time_first_count" jdbcType="DOUBLE" property="avgRespTimeFirstCount" />
+    <result column="session_duration_time_count" jdbcType="DOUBLE" property="sessionDurationTimeCount" />
+    <result column="session_bout_time_count" jdbcType="DOUBLE" property="sessionBoutTimeCount" />
+    <result column="session_bout_count" jdbcType="DOUBLE" property="sessionBoutCount" />
+  </resultMap>
+    <resultMap id="CsChatSessionServiceIndexTempDTO" type="com.pes.jd.model.DTO.CsChatSessionServiceIndexTempDTO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+        <result column="date" jdbcType="DATE" property="date" />
+        <result column="cs_nick" jdbcType="VARCHAR" property="csNick" />
+        <result column="consult_session_num" jdbcType="INTEGER" property="consultSessionNum" />
+        <result column="receive_session_num" jdbcType="INTEGER" property="receiveSessionNum" />
+        <result column="receive_session_duration_time" jdbcType="DOUBLE" property="receiveSessionDurationTime" />
+        <result column="direct_receive_session_num" jdbcType="INTEGER" property="directReceiveSessionNum" />
+        <result column="forward_in_session_num" jdbcType="INTEGER" property="forwardInSessionNum" />
+        <result column="forward_out_session_num" jdbcType="INTEGER" property="forwardOutSessionNum" />
+        <result column="cust_consult_session_num" jdbcType="INTEGER" property="custConsultSessionNum" />
+        <result column="cs_to_cust_session_num" jdbcType="INTEGER" property="csToCustSessionNum" />
+        <result column="chat_num" jdbcType="INTEGER" property="chatNum" />
+        <result column="cust_chat_num" jdbcType="INTEGER" property="custChatNum" />
+        <result column="cs_chat_num" jdbcType="INTEGER" property="csChatNum" />
+        <result column="cs_word_num" jdbcType="INTEGER" property="csWordNum" />
+        <result column="avg_cs_msg_session_num" jdbcType="DOUBLE" property="avgCsMsgSessionNum" />
+        <result column="max_receive_session_num" jdbcType="INTEGER" property="maxReceiveSessionNum" />
+        <result column="non_reply_session_num" jdbcType="INTEGER" property="nonReplySessionNum" />
+        <result column="leave_msg_session_num" jdbcType="INTEGER" property="leaveMsgSessionNum" />
+        <result column="leave_msg_receive_session_num" jdbcType="INTEGER" property="leaveMsgReceiveSessionNum" />
+        <result column="slow_resp_session_num" jdbcType="INTEGER" property="slowRespSessionNum" />
+        <result column="long_resp_session_num" jdbcType="INTEGER" property="longRespSessionNum" />
+        <result column="avg_resp_time_first" jdbcType="DOUBLE" property="avgRespTimeFirst" />
+        <result column="avg_resp_time" jdbcType="DOUBLE" property="avgRespTime" />
+        <result column="avg_session_duration_time" jdbcType="DOUBLE" property="avgSessionDurationTime" />
+        <result column="avg_resp_in_quick_time" jdbcType="INTEGER" property="avgRespInQuickTime" />
+        <result column="session_num" jdbcType="INTEGER" property="sessionNum" />
+        <result column="avg_resp_time_first_count" jdbcType="DOUBLE" property="avgRespTimeFirstCount" />
+        <result column="session_duration_time_count" jdbcType="DOUBLE" property="sessionDurationTimeCount" />
+        <result column="session_bout_time_count" jdbcType="DOUBLE" property="sessionBoutTimeCount" />
+        <result column="session_bout_count" jdbcType="DOUBLE" property="sessionBoutCount" />
+    </resultMap>
+  <sql id="Base_Column_List">
+    id, shop_id, date, cs_nick, consult_session_num, receive_session_num, receive_session_duration_time, 
+    direct_receive_session_num, forward_in_session_num, forward_out_session_num, cust_consult_session_num, 
+    cs_to_cust_session_num, chat_num, cust_chat_num, cs_chat_num, cs_word_num, avg_cs_msg_session_num, 
+    max_receive_session_num, non_reply_session_num, leave_msg_session_num, leave_msg_receive_session_num, 
+    slow_resp_session_num, long_resp_session_num, avg_resp_time_first, avg_resp_time, 
+    avg_session_duration_time, avg_resp_in_quick_time, session_num, avg_resp_time_first_count, 
+    session_duration_time_count, session_bout_time_count, session_bout_count
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="CsChatSessionServiceIndexTempDO">
+    select 
+    <include refid="Base_Column_List" />
+    from pes_cs_chat_session_service_index_temp
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pes_cs_chat_session_service_index_temp
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pes.jd.model.DO.CsChatSessionServiceIndexTempDO">
+    insert into pes_cs_chat_session_service_index_temp (id, shop_id, date, 
+      cs_nick, consult_session_num, receive_session_num, 
+      receive_session_duration_time, direct_receive_session_num, 
+      forward_in_session_num, forward_out_session_num, 
+      cust_consult_session_num, cs_to_cust_session_num, 
+      chat_num, cust_chat_num, cs_chat_num, 
+      cs_word_num, avg_cs_msg_session_num, max_receive_session_num, 
+      non_reply_session_num, leave_msg_session_num, 
+      leave_msg_receive_session_num, slow_resp_session_num, 
+      long_resp_session_num, avg_resp_time_first, avg_resp_time, 
+      avg_session_duration_time, avg_resp_in_quick_time, 
+      session_num, avg_resp_time_first_count, session_duration_time_count, 
+      session_bout_time_count, session_bout_count)
+    values (#{id,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{date,jdbcType=DATE}, 
+      #{csNick,jdbcType=VARCHAR}, #{consultSessionNum,jdbcType=INTEGER}, #{receiveSessionNum,jdbcType=INTEGER}, 
+      #{receiveSessionDurationTime,jdbcType=DOUBLE}, #{directReceiveSessionNum,jdbcType=INTEGER}, 
+      #{forwardInSessionNum,jdbcType=INTEGER}, #{forwardOutSessionNum,jdbcType=INTEGER}, 
+      #{custConsultSessionNum,jdbcType=INTEGER}, #{csToCustSessionNum,jdbcType=INTEGER}, 
+      #{chatNum,jdbcType=INTEGER}, #{custChatNum,jdbcType=INTEGER}, #{csChatNum,jdbcType=INTEGER}, 
+      #{csWordNum,jdbcType=INTEGER}, #{avgCsMsgSessionNum,jdbcType=DOUBLE}, #{maxReceiveSessionNum,jdbcType=INTEGER}, 
+      #{nonReplySessionNum,jdbcType=INTEGER}, #{leaveMsgSessionNum,jdbcType=INTEGER}, 
+      #{leaveMsgReceiveSessionNum,jdbcType=INTEGER}, #{slowRespSessionNum,jdbcType=INTEGER}, 
+      #{longRespSessionNum,jdbcType=INTEGER}, #{avgRespTimeFirst,jdbcType=DOUBLE}, #{avgRespTime,jdbcType=DOUBLE}, 
+      #{avgSessionDurationTime,jdbcType=DOUBLE}, #{avgRespInQuickTime,jdbcType=INTEGER}, 
+      #{sessionNum,jdbcType=INTEGER}, #{avgRespTimeFirstCount,jdbcType=DOUBLE}, #{sessionDurationTimeCount,jdbcType=DOUBLE}, 
+      #{sessionBoutTimeCount,jdbcType=DOUBLE}, #{sessionBoutCount,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pes.jd.model.DO.CsChatSessionServiceIndexTempDO">
+    insert into pes_cs_chat_session_service_index_temp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="csNick != null">
+        cs_nick,
+      </if>
+      <if test="consultSessionNum != null">
+        consult_session_num,
+      </if>
+      <if test="receiveSessionNum != null">
+        receive_session_num,
+      </if>
+      <if test="receiveSessionDurationTime != null">
+        receive_session_duration_time,
+      </if>
+      <if test="directReceiveSessionNum != null">
+        direct_receive_session_num,
+      </if>
+      <if test="forwardInSessionNum != null">
+        forward_in_session_num,
+      </if>
+      <if test="forwardOutSessionNum != null">
+        forward_out_session_num,
+      </if>
+      <if test="custConsultSessionNum != null">
+        cust_consult_session_num,
+      </if>
+      <if test="csToCustSessionNum != null">
+        cs_to_cust_session_num,
+      </if>
+      <if test="chatNum != null">
+        chat_num,
+      </if>
+      <if test="custChatNum != null">
+        cust_chat_num,
+      </if>
+      <if test="csChatNum != null">
+        cs_chat_num,
+      </if>
+      <if test="csWordNum != null">
+        cs_word_num,
+      </if>
+      <if test="avgCsMsgSessionNum != null">
+        avg_cs_msg_session_num,
+      </if>
+      <if test="maxReceiveSessionNum != null">
+        max_receive_session_num,
+      </if>
+      <if test="nonReplySessionNum != null">
+        non_reply_session_num,
+      </if>
+      <if test="leaveMsgSessionNum != null">
+        leave_msg_session_num,
+      </if>
+      <if test="leaveMsgReceiveSessionNum != null">
+        leave_msg_receive_session_num,
+      </if>
+      <if test="slowRespSessionNum != null">
+        slow_resp_session_num,
+      </if>
+      <if test="longRespSessionNum != null">
+        long_resp_session_num,
+      </if>
+      <if test="avgRespTimeFirst != null">
+        avg_resp_time_first,
+      </if>
+      <if test="avgRespTime != null">
+        avg_resp_time,
+      </if>
+      <if test="avgSessionDurationTime != null">
+        avg_session_duration_time,
+      </if>
+      <if test="avgRespInQuickTime != null">
+        avg_resp_in_quick_time,
+      </if>
+      <if test="sessionNum != null">
+        session_num,
+      </if>
+      <if test="avgRespTimeFirstCount != null">
+        avg_resp_time_first_count,
+      </if>
+      <if test="sessionDurationTimeCount != null">
+        session_duration_time_count,
+      </if>
+      <if test="sessionBoutTimeCount != null">
+        session_bout_time_count,
+      </if>
+      <if test="sessionBoutCount != null">
+        session_bout_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="csNick != null">
+        #{csNick,jdbcType=VARCHAR},
+      </if>
+      <if test="consultSessionNum != null">
+        #{consultSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveSessionNum != null">
+        #{receiveSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveSessionDurationTime != null">
+        #{receiveSessionDurationTime,jdbcType=DOUBLE},
+      </if>
+      <if test="directReceiveSessionNum != null">
+        #{directReceiveSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="forwardInSessionNum != null">
+        #{forwardInSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="forwardOutSessionNum != null">
+        #{forwardOutSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="custConsultSessionNum != null">
+        #{custConsultSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="csToCustSessionNum != null">
+        #{csToCustSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="chatNum != null">
+        #{chatNum,jdbcType=INTEGER},
+      </if>
+      <if test="custChatNum != null">
+        #{custChatNum,jdbcType=INTEGER},
+      </if>
+      <if test="csChatNum != null">
+        #{csChatNum,jdbcType=INTEGER},
+      </if>
+      <if test="csWordNum != null">
+        #{csWordNum,jdbcType=INTEGER},
+      </if>
+      <if test="avgCsMsgSessionNum != null">
+        #{avgCsMsgSessionNum,jdbcType=DOUBLE},
+      </if>
+      <if test="maxReceiveSessionNum != null">
+        #{maxReceiveSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="nonReplySessionNum != null">
+        #{nonReplySessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="leaveMsgSessionNum != null">
+        #{leaveMsgSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="leaveMsgReceiveSessionNum != null">
+        #{leaveMsgReceiveSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="slowRespSessionNum != null">
+        #{slowRespSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="longRespSessionNum != null">
+        #{longRespSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="avgRespTimeFirst != null">
+        #{avgRespTimeFirst,jdbcType=DOUBLE},
+      </if>
+      <if test="avgRespTime != null">
+        #{avgRespTime,jdbcType=DOUBLE},
+      </if>
+      <if test="avgSessionDurationTime != null">
+        #{avgSessionDurationTime,jdbcType=DOUBLE},
+      </if>
+      <if test="avgRespInQuickTime != null">
+        #{avgRespInQuickTime,jdbcType=INTEGER},
+      </if>
+      <if test="sessionNum != null">
+        #{sessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="avgRespTimeFirstCount != null">
+        #{avgRespTimeFirstCount,jdbcType=DOUBLE},
+      </if>
+      <if test="sessionDurationTimeCount != null">
+        #{sessionDurationTimeCount,jdbcType=DOUBLE},
+      </if>
+      <if test="sessionBoutTimeCount != null">
+        #{sessionBoutTimeCount,jdbcType=DOUBLE},
+      </if>
+      <if test="sessionBoutCount != null">
+        #{sessionBoutCount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pes.jd.model.DO.CsChatSessionServiceIndexTempDO">
+    update pes_cs_chat_session_service_index_temp
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="csNick != null">
+        cs_nick = #{csNick,jdbcType=VARCHAR},
+      </if>
+      <if test="consultSessionNum != null">
+        consult_session_num = #{consultSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveSessionNum != null">
+        receive_session_num = #{receiveSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveSessionDurationTime != null">
+        receive_session_duration_time = #{receiveSessionDurationTime,jdbcType=DOUBLE},
+      </if>
+      <if test="directReceiveSessionNum != null">
+        direct_receive_session_num = #{directReceiveSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="forwardInSessionNum != null">
+        forward_in_session_num = #{forwardInSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="forwardOutSessionNum != null">
+        forward_out_session_num = #{forwardOutSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="custConsultSessionNum != null">
+        cust_consult_session_num = #{custConsultSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="csToCustSessionNum != null">
+        cs_to_cust_session_num = #{csToCustSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="chatNum != null">
+        chat_num = #{chatNum,jdbcType=INTEGER},
+      </if>
+      <if test="custChatNum != null">
+        cust_chat_num = #{custChatNum,jdbcType=INTEGER},
+      </if>
+      <if test="csChatNum != null">
+        cs_chat_num = #{csChatNum,jdbcType=INTEGER},
+      </if>
+      <if test="csWordNum != null">
+        cs_word_num = #{csWordNum,jdbcType=INTEGER},
+      </if>
+      <if test="avgCsMsgSessionNum != null">
+        avg_cs_msg_session_num = #{avgCsMsgSessionNum,jdbcType=DOUBLE},
+      </if>
+      <if test="maxReceiveSessionNum != null">
+        max_receive_session_num = #{maxReceiveSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="nonReplySessionNum != null">
+        non_reply_session_num = #{nonReplySessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="leaveMsgSessionNum != null">
+        leave_msg_session_num = #{leaveMsgSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="leaveMsgReceiveSessionNum != null">
+        leave_msg_receive_session_num = #{leaveMsgReceiveSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="slowRespSessionNum != null">
+        slow_resp_session_num = #{slowRespSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="longRespSessionNum != null">
+        long_resp_session_num = #{longRespSessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="avgRespTimeFirst != null">
+        avg_resp_time_first = #{avgRespTimeFirst,jdbcType=DOUBLE},
+      </if>
+      <if test="avgRespTime != null">
+        avg_resp_time = #{avgRespTime,jdbcType=DOUBLE},
+      </if>
+      <if test="avgSessionDurationTime != null">
+        avg_session_duration_time = #{avgSessionDurationTime,jdbcType=DOUBLE},
+      </if>
+      <if test="avgRespInQuickTime != null">
+        avg_resp_in_quick_time = #{avgRespInQuickTime,jdbcType=INTEGER},
+      </if>
+      <if test="sessionNum != null">
+        session_num = #{sessionNum,jdbcType=INTEGER},
+      </if>
+      <if test="avgRespTimeFirstCount != null">
+        avg_resp_time_first_count = #{avgRespTimeFirstCount,jdbcType=DOUBLE},
+      </if>
+      <if test="sessionDurationTimeCount != null">
+        session_duration_time_count = #{sessionDurationTimeCount,jdbcType=DOUBLE},
+      </if>
+      <if test="sessionBoutTimeCount != null">
+        session_bout_time_count = #{sessionBoutTimeCount,jdbcType=DOUBLE},
+      </if>
+      <if test="sessionBoutCount != null">
+        session_bout_count = #{sessionBoutCount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pes.jd.model.DO.CsChatSessionServiceIndexTempDO">
+    update pes_cs_chat_session_service_index_temp
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      date = #{date,jdbcType=DATE},
+      cs_nick = #{csNick,jdbcType=VARCHAR},
+      consult_session_num = #{consultSessionNum,jdbcType=INTEGER},
+      receive_session_num = #{receiveSessionNum,jdbcType=INTEGER},
+      receive_session_duration_time = #{receiveSessionDurationTime,jdbcType=DOUBLE},
+      direct_receive_session_num = #{directReceiveSessionNum,jdbcType=INTEGER},
+      forward_in_session_num = #{forwardInSessionNum,jdbcType=INTEGER},
+      forward_out_session_num = #{forwardOutSessionNum,jdbcType=INTEGER},
+      cust_consult_session_num = #{custConsultSessionNum,jdbcType=INTEGER},
+      cs_to_cust_session_num = #{csToCustSessionNum,jdbcType=INTEGER},
+      chat_num = #{chatNum,jdbcType=INTEGER},
+      cust_chat_num = #{custChatNum,jdbcType=INTEGER},
+      cs_chat_num = #{csChatNum,jdbcType=INTEGER},
+      cs_word_num = #{csWordNum,jdbcType=INTEGER},
+      avg_cs_msg_session_num = #{avgCsMsgSessionNum,jdbcType=DOUBLE},
+      max_receive_session_num = #{maxReceiveSessionNum,jdbcType=INTEGER},
+      non_reply_session_num = #{nonReplySessionNum,jdbcType=INTEGER},
+      leave_msg_session_num = #{leaveMsgSessionNum,jdbcType=INTEGER},
+      leave_msg_receive_session_num = #{leaveMsgReceiveSessionNum,jdbcType=INTEGER},
+      slow_resp_session_num = #{slowRespSessionNum,jdbcType=INTEGER},
+      long_resp_session_num = #{longRespSessionNum,jdbcType=INTEGER},
+      avg_resp_time_first = #{avgRespTimeFirst,jdbcType=DOUBLE},
+      avg_resp_time = #{avgRespTime,jdbcType=DOUBLE},
+      avg_session_duration_time = #{avgSessionDurationTime,jdbcType=DOUBLE},
+      avg_resp_in_quick_time = #{avgRespInQuickTime,jdbcType=INTEGER},
+      session_num = #{sessionNum,jdbcType=INTEGER},
+      avg_resp_time_first_count = #{avgRespTimeFirstCount,jdbcType=DOUBLE},
+      session_duration_time_count = #{sessionDurationTimeCount,jdbcType=DOUBLE},
+      session_bout_time_count = #{sessionBoutTimeCount,jdbcType=DOUBLE},
+      session_bout_count = #{sessionBoutCount,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
