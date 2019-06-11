@@ -1,14 +1,20 @@
 package com.ms1;
 
+import com.netflix.appinfo.ApplicationInfoManager;
+import com.netflix.discovery.DiscoveryClient;
+import com.netflix.discovery.shared.LookupService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +25,45 @@ import org.springframework.web.method.HandlerMethod;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collections;
 
 @RestController
 @SpringBootApplication
 @EnableFeignClients
-public class msApp1 {
+public class msApp1 extends  SpringApplication{
     public static void main(String[] args) {
-        SpringApplication.run(msApp1.class,args);
-        System.out.println();
+        SpringApplication sa = new SpringApplication();
+        sa.addPrimarySources(Collections.singletonList(msApp1.class));
+        ConfigurableApplicationContext context = sa.run(args);
+        TestSingleton bean = context.getBean(TestSingleton.class);
+        System.out.println(bean);
+
     }
+
+    @Override
+    protected ConfigurableApplicationContext createApplicationContext() {
+        ConfigurableApplicationContext applicationContext = super.createApplicationContext();
+        AnnotationConfigServletWebServerApplicationContext applicationContext1 = (AnnotationConfigServletWebServerApplicationContext) applicationContext;
+        Jsr330ScopeMetadataResolver jsr = new Jsr330ScopeMetadataResolver();
+        AnnotationScopeMetadataResolver annotationScopeMetadataResolver = new AnnotationScopeMetadataResolver();
+        applicationContext1.setScopeMetadataResolver(definition ->{
+            System.out.println();
+            return null;
+        });
+        return applicationContext;
+    }
+
+    @Autowired
+    private LookupService lookupService;
+
+    @RequestMapping("/getapps")
+    public Object getApp(){
+        System.out.println();
+        return lookupService.getApplications();
+    }
+
+
 
     @Resource
     private Environment environment;
