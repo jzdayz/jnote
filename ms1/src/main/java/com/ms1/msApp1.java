@@ -1,16 +1,12 @@
 package com.ms1;
 
-import com.netflix.appinfo.ApplicationInfoManager;
-import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.shared.LookupService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -25,13 +21,12 @@ import org.springframework.web.method.HandlerMethod;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collections;
 
 @RestController
 @SpringBootApplication
 @EnableFeignClients
-public class msApp1 extends  SpringApplication{
+public class msApp1{
     public static void main(String[] args) {
         SpringApplication sa = new SpringApplication();
         sa.addPrimarySources(Collections.singletonList(msApp1.class));
@@ -39,19 +34,6 @@ public class msApp1 extends  SpringApplication{
         TestSingleton bean = context.getBean(TestSingleton.class);
         System.out.println(bean);
 
-    }
-
-    @Override
-    protected ConfigurableApplicationContext createApplicationContext() {
-        ConfigurableApplicationContext applicationContext = super.createApplicationContext();
-        AnnotationConfigServletWebServerApplicationContext applicationContext1 = (AnnotationConfigServletWebServerApplicationContext) applicationContext;
-        Jsr330ScopeMetadataResolver jsr = new Jsr330ScopeMetadataResolver();
-        AnnotationScopeMetadataResolver annotationScopeMetadataResolver = new AnnotationScopeMetadataResolver();
-        applicationContext1.setScopeMetadataResolver(definition ->{
-            System.out.println();
-            return null;
-        });
-        return applicationContext;
     }
 
     @Autowired
@@ -85,10 +67,6 @@ public class msApp1 extends  SpringApplication{
         return name;
     }
 
-
-
-
-
     @GetMapping("/ping")
     public Object ping(){
         return "pong";
@@ -105,7 +83,6 @@ public class msApp1 extends  SpringApplication{
         summary.record(1);
         return "AA";
     }
-
 
     @Autowired
     private  Ms2 ms2;
