@@ -164,16 +164,6 @@ public class JnoteApplication implements InitializingBean {
     }
 
 
-    @PostMapping(value = "/test_form")
-    public Object testForm(String name) {
-        return name;
-    }
-
-    @PostMapping(value = "/test")
-    public Object test(String name, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return "HELLO";
-    }
-
     @Bean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {
         return new OptimisticLockerInterceptor();
@@ -335,78 +325,6 @@ public class JnoteApplication implements InitializingBean {
             }
         }
     }
-
-    @Test
-    public void testShell() throws Exception {
-        String shell = "\n" +
-                "REPOSITORY_PATH=/Users/huqingfeng/.m2/repository\n" +
-                "echo 正在搜索...\n" +
-                "find $REPOSITORY_PATH -name \"*lastUpdated*\" | xargs rm -fr\n";
-        System.out.println(shell);
-//		final Process exec = Runtime.getRuntime().exec(shell);
-//		try (
-//				Closer closer = Closer.create()
-//				){
-//			final InputStream inputStream = closer.register(exec.getInputStream());
-//			System.out.println(StreamUtils.copyToString(inputStream, Charset.defaultCharset())+"\n OVER");
-//		}
-
-    }
-
-    @RequestMapping("/tt")
-    public String tt() {
-        return "TT";
-    }
-
-    @Test
-    public void testResolverable() {
-        Map<String, Integer> map = new HashMap<>();
-        final ResolvableType resolvableType = ResolvableType.forClass(TestMap.class);
-        System.out.println();
-    }
-
-
-    private static class TestMap extends AbstractMap<String, Object> {
-
-        @Override
-        public Set<Entry<String, Object>> entrySet() {
-            return null;
-        }
-    }
-
-
-    public static class Student {
-        @NotEmpty(message = "用户名不可以为空")
-        private String name;
-        @NotNull(message = "年龄不可以为空")
-        private Integer age;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Integer getAge() {
-            return age;
-        }
-
-        public void setAge(Integer age) {
-            this.age = age;
-        }
-    }
-
-    @RequestMapping("/")
-    public Object testMvc(String[] str) {
-        try {
-            return new ObjectMapper().writeValueAsString(str);
-        } catch (JsonProcessingException e) {
-            return "NONE";
-        }
-    }
-
     @Test
     public void testJsonP() {
         // Create Json and serialize
@@ -452,17 +370,6 @@ public class JnoteApplication implements InitializingBean {
     public void testUri() {
         final String s = UriComponentsBuilder.fromUriString("/get/performance?shop={0}&person={0}").buildAndExpand("\t", 123).toUriString();
         System.out.println(s);
-    }
-
-    @Test
-    public void testA() {
-        Map<String, Map<String, Object>> aa = new HashMap<>();
-        final Map<String, Object> aa1 = aa(aa);
-        System.out.println(aa1);
-    }
-
-    private Map<String, Object> aa(Map<?, ?> aa) {
-        return (Map<String, Object>) aa;
     }
 
     @EnableConfigurationProperties(A.class)
@@ -637,102 +544,6 @@ public class JnoteApplication implements InitializingBean {
         Request request = new Request.Builder().get().url("http://baidu.com").build();
         final Call call = client.newCall(request);
         final Response res = call.execute();
-    }
-
-    @Test
-    public void test() {
-        String flag = "record.";
-        StringBuilder str = new StringBuilder("<set >\n" +
-                "      <if test=\"sid != null\" >\n" +
-                "        sid = #{sid,jdbcType=VARCHAR},\n" +
-                "      </if>\n" +
-                "      <if test=\"shopId != null\" >\n" +
-                "        shop_id = #{shopId,jdbcType=BIGINT},\n" +
-                "      </if>\n" +
-                "      <if test=\"date != null\" >\n" +
-                "        date = #{date,jdbcType=DATE},\n" +
-                "      </if>\n" +
-                "      <if test=\"csNick != null\" >\n" +
-                "        cs_nick = #{csNick,jdbcType=VARCHAR},\n" +
-                "      </if>\n" +
-                "      <if test=\"customer != null\" >\n" +
-                "        customer = #{customer,jdbcType=VARCHAR},\n" +
-                "      </if>\n" +
-                "      <if test=\"beginDatetime != null\" >\n" +
-                "        begin_datetime = #{beginDatetime,jdbcType=TIMESTAMP},\n" +
-                "      </if>\n" +
-                "      <if test=\"endDatetime != null\" >\n" +
-                "        end_datetime = #{endDatetime,jdbcType=TIMESTAMP},\n" +
-                "      </if>\n" +
-                "      <if test=\"replyDatetime != null\" >\n" +
-                "        reply_datetime = #{replyDatetime,jdbcType=TIMESTAMP},\n" +
-                "      </if>\n" +
-                "      <if test=\"sessionType != null\" >\n" +
-                "        session_type = #{sessionType,jdbcType=INTEGER},\n" +
-                "      </if>\n" +
-                "      <if test=\"isTransfer != null\" >\n" +
-                "        is_transfer = #{isTransfer,jdbcType=BIT},\n" +
-                "      </if>\n" +
-                "      <if test=\"isNonReply != null\" >\n" +
-                "        is_non_reply = #{isNonReply,jdbcType=BIT},\n" +
-                "      </if>\n" +
-                "      <if test=\"isSlowResp != null\" >\n" +
-                "        is_slow_resp = #{isSlowResp,jdbcType=BIT},\n" +
-                "      </if>\n" +
-                "      <if test=\"isLongReceive != null\" >\n" +
-                "        is_long_receive = #{isLongReceive,jdbcType=BIT},\n" +
-                "      </if>\n" +
-                "      <if test=\"sendEvalNum != null\" >\n" +
-                "        send_eval_num = #{sendEvalNum,jdbcType=INTEGER},\n" +
-                "      </if>\n" +
-                "      <if test=\"evalNum != null\" >\n" +
-                "        eval_num = #{evalNum,jdbcType=INTEGER},\n" +
-                "      </if>\n" +
-                "      <if test=\"evalCode != null\" >\n" +
-                "        eval_code = #{evalCode,jdbcType=INTEGER},\n" +
-                "      </if>\n" +
-                "      <if test=\"satisfiedEvalNum != null\" >\n" +
-                "        satisfied_eval_num = #{satisfiedEvalNum,jdbcType=INTEGER},\n" +
-                "      </if>\n" +
-                "      <if test=\"isConsult != null\" >\n" +
-                "        is_consult = #{isConsult,jdbcType=BIT},\n" +
-                "      </if>\n" +
-                "      <if test=\"isReceive != null\" >\n" +
-                "        is_receive = #{isReceive,jdbcType=BIT},\n" +
-                "      </if>\n" +
-                "      <if test=\"isAssign != null\" >\n" +
-                "        is_assign = #{isAssign,jdbcType=BIT},\n" +
-                "      </if>\n" +
-                "      <if test=\"sessionDurationTime != null\" >\n" +
-                "        session_duration_time = #{sessionDurationTime,jdbcType=DOUBLE},\n" +
-                "      </if>\n" +
-                "      <if test=\"avgRespTimeFirst != null\" >\n" +
-                "        avg_resp_time_first = #{avgRespTimeFirst,jdbcType=DOUBLE},\n" +
-                "      </if>\n" +
-                "      <if test=\"avgRespTime != null\" >\n" +
-                "        avg_resp_time = #{avgRespTime,jdbcType=DOUBLE},\n" +
-                "      </if>\n" +
-                "      <if test=\"csChatNum != null\" >\n" +
-                "        cs_chat_num = #{csChatNum,jdbcType=INTEGER},\n" +
-                "      </if>\n" +
-                "      <if test=\"custChatNum != null\" >\n" +
-                "        cust_chat_num = #{custChatNum,jdbcType=INTEGER},\n" +
-                "      </if>\n" +
-                "      <if test=\"receiveStartType != null\" >\n" +
-                "        receive_start_type = #{receiveStartType,jdbcType=BIT},\n" +
-                "      </if>\n" +
-                "      <if test=\"forwardType != null\" >\n" +
-                "        forward_type = #{forwardType,jdbcType=BIT},\n" +
-                "      </if>\n" +
-                "    </set>");
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == '#' && str.charAt(i + 1) == '{') {
-                str.insert(i + 2, flag);
-            }
-        }
-        System.out.println("\n\n\n");
-        System.out.println(str);
-        System.out.println("\n\n\n");
     }
 
 
