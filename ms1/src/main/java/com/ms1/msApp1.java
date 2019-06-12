@@ -31,7 +31,7 @@ public class msApp1{
         SpringApplication sa = new SpringApplication();
         sa.addPrimarySources(Collections.singletonList(msApp1.class));
         ConfigurableApplicationContext context = sa.run(args);
-        TestSingleton bean = context.getBean(TestSingleton.class);
+        TestResolver bean = context.getBean(TestResolver.class);
         System.out.println(bean);
 
     }

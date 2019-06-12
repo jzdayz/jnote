@@ -25,3 +25,5 @@ target
 /nbdist/
 /.nb-gradle/
 /build/
+
+log.log

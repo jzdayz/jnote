@@ -44,6 +44,6 @@ public class StringUtils {
                 "      #{sessionBoutTimeCount,jdbcType=DOUBLE}, #{sessionBoutCount,jdbcType=DOUBLE})";
 
 
-        System.out.println(addStr(txt,"#{","record."));
+        System.out.println(addStr(txt,"#{","item."));
     }
 }

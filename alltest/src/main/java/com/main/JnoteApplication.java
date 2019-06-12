@@ -104,7 +104,7 @@ public class JnoteApplication implements InitializingBean {
     public static void main(String[] args) {
         args = new String[]{"--aa.bb=1"};
         final SpringApplication springApplication = new SpringApplication(JnoteApplication.class);
-		springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
+//		springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
         final ConfigurableApplicationContext context = springApplication.run(args);
 
         final ConfigurableEnvironment environment = context.getEnvironment();
