@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
@@ -11,6 +12,7 @@ import com.codahale.metrics.servlets.AdminServlet;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pes.jd.mapper.PesMenuResourceMapper;
+import com.pes.jd.model.DO.PesMenuResource;
 import com.pes.jd.model.DO.PesMenuResourceExample;
 import okhttp3.*;
 import okhttp3.EventListener;
@@ -139,17 +141,17 @@ public class JnoteApplication implements InitializingBean {
 //		System.out.println("update : "+b);
 
 
-//        final CsChatSessionMapper bean = context.getBean(CsChatSessionMapper.class);
+        final PesMenuResourceMapper bean = context.getBean(PesMenuResourceMapper.class);
+
+        IPage<PesMenuResource> iPage = new Page<>();
+        iPage.setCurrent(1);
+        iPage.setPages(1);
+        bean.selectMapsPage(iPage, null);
+
+        System.out.println(iPage.getRecords());
 //
-//        IPage<CsChatSession> iPage = new Page<>();
-//        iPage.setCurrent(1);
-//        iPage.setPages(1);
-//        bean.selectPage(iPage, null,"pes_jd_sub_01.pes_cs_chat_session_2019_05");
-
-//        System.out.println(iPage.getRecords());
-
-        JnoteApplication bean = context.getBean(JnoteApplication.class);
-        bean.testTransaction();
+//        JnoteApplication bean = context.getBean(JnoteApplication.class);
+//        bean.testTransaction();
 
 
 
