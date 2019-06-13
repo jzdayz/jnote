@@ -1,7 +1,5 @@
 package com.util;
 
-import java.util.stream.IntStream;
-
 /**
  * @author ☞ 🏀 huqingfeng
  * @date 2019-06-10
