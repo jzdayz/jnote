@@ -1,11 +1,12 @@
 package com.pes.jd.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pes.jd.model.DO.PesMenuResource;
 import com.pes.jd.model.DO.PesMenuResourceExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface PesMenuResourceMapper {
+public interface PesMenuResourceMapper extends BaseMapper<PesMenuResource> {
     long countByExample(PesMenuResourceExample example);
 
     int deleteByExample(PesMenuResourceExample example);
