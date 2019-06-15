@@ -45,7 +45,7 @@ public class AddField extends ClassVisitor {
     }
 
     public static void main(String[] args) throws Exception {
-        String output = "/Users/huqingfeng/Documents/doc/jnote/alltest/src/main/resources";
+        String output = "/Users/huqingfeng/Documents/doc/jnote/alltest/src/web/resources";
         String classDir = "/Users/huqingfeng/Documents/doc/jnote/alltest/target/classes/com/example/jnote/A.class";
         ClassReader classReader = new ClassReader(new FileInputStream(classDir));
         ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS);

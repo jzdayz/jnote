@@ -25,9 +25,9 @@ public class HelloClass {
 			mv.visitEnd();
 		}
 		
-		//main method
+		//web method
 		{
-			MethodVisitor mv=cw.visitMethod(ACC_PUBLIC+ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null);
+			MethodVisitor mv=cw.visitMethod(ACC_PUBLIC+ACC_STATIC, "web", "([Ljava/lang/String;)V", null, null);
 			mv.visitCode();
 			mv.visitFieldInsn(GETSTATIC,"java/lang/System", "out", "Ljava/io/PrintStream;"); //put System.out to operand stack
 			mv.visitLdcInsn("Hello"); //load const "Hello" from const_pool, and put onto the operand stack

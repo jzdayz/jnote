@@ -39,7 +39,7 @@
         </sqlMapGenerator>
 
         <!-- sub com.pes.jd.mapper-->
-        <!-- sub com.pes.jd.mapper.main-->
+        <!-- sub com.pes.jd.mapper.web-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.pes.jd.mapper"  targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>

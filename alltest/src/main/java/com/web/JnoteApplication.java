@@ -1,15 +1,12 @@
-package com.main;
+package com.web;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.codahale.metrics.servlets.AdminServlet;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableMap;
 import com.pes.jd.mapper.PesMenuResourceMapper;
 import com.pes.jd.model.DO.PesMenuResourceExample;
 import okhttp3.*;
@@ -34,11 +31,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -52,8 +47,6 @@ import javax.json.stream.JsonParser;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.PushBuilder;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
@@ -85,74 +78,12 @@ public class JnoteApplication implements InitializingBean {
         return performanceInterceptor;
     }
 
-//    @Bean
-//    public PaginationInterceptor paginationInterceptor(DynamicTableParser dynamicTableParser) {
-//        final PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-//        paginationInterceptor.setSqlParserList(Arrays.asList(dynamicTableParser));
-//        return paginationInterceptor;
-//    }
-
-    @Bean
-    public Object aa(ObjectProvider<Interceptor[]> interceptors){
-        interceptors.getObject();
-        return new Object();
-    }
-
     /**
      * test condition
      */
     public static void main(String[] args) {
-        args = new String[]{"--aa.bb=1"};
         final SpringApplication springApplication = new SpringApplication(JnoteApplication.class);
-//		springApplication.setApplicationContextClass(AnnotationConfigApplicationContext.class);
         final ConfigurableApplicationContext context = springApplication.run(args);
-
-        final ConfigurableEnvironment environment = context.getEnvironment();
-//        Binder binder = Binder.get(environment);
-//
-//        Bindable<Map<String, Map>> bin = Bindable
-//                .mapOf(String.class, Map.class);
-//        ConfigurationPropertyName md = ConfigurationPropertyName
-//                .of("class");
-//
-//
-//        final Map<String, Map> bind = binder.bind(md, bin).orElseGet(Collections::emptyMap);
-//
-//        System.out.println(bind);
-
-//		final ShopGoodsSkuAssociativeMapper bean = context.getBean(ShopGoodsSkuAssociativeMapper.class);
-//
-//
-//		final List<ShopGoodsSkuAssociativeDTO> res = bean.selectList(null);
-//		System.out.println(res);
-
-//
-//		final UserMapper mapper = context.getBean(UserMapper.class);
-//
-//		final List<UserDO> userDOS = mapper.selectList(null);
-//
-//		final UserDO userDO = userDOS.get(0);
-//		userDO.setName("BBBB");
-//
-//
-//		boolean b = userDO.updateById();
-//		System.out.println("update : "+b);
-
-
-//        final CsChatSessionMapper bean = context.getBean(CsChatSessionMapper.class);
-//
-//        IPage<CsChatSession> iPage = new Page<>();
-//        iPage.setCurrent(1);
-//        iPage.setPages(1);
-//        bean.selectPage(iPage, null,"pes_jd_sub_01.pes_cs_chat_session_2019_05");
-
-//        System.out.println(iPage.getRecords());
-
-        JnoteApplication bean = context.getBean(JnoteApplication.class);
-        bean.testTransaction();
-
-
-
     }
 
     @Autowired
@@ -264,19 +195,6 @@ public class JnoteApplication implements InitializingBean {
         return new ServletRegistrationBean(new MetricsUIServlet(), "/admin/*");
     }
 
-//	@Bean
-//	public ServletRegistrationBean servletRegistrationBean(
-//			ServletContext servletContext,
-//			HealthCheckRegistry healthCheckRegistry,
-//			MetricRegistry metricRegistry){
-//		servletContext.setAttribute(HealthCheckServlet.HEALTH_CHECK_REGISTRY,healthCheckRegistry);
-//		servletContext.setAttribute(MetricsServlet.METRICS_REGISTRY,metricRegistry);
-//		final ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
-//		servletRegistrationBean.setServlet(new AdminServlet());
-//		servletRegistrationBean.addUrlMappings("/sys/*");
-//		return servletRegistrationBean;
-//	}
-
     @GetMapping(AdminServlet.DEFAULT_HEALTHCHECK_URI)
     public void health(HttpServletResponse response, HttpServletRequest request) {
         response.setStatus(302);
@@ -368,7 +286,7 @@ public class JnoteApplication implements InitializingBean {
 
     @Test
     public void testUri() {
-        final String s = UriComponentsBuilder.fromUriString("/get/performance?shop={0}&person={0}").buildAndExpand("\t", 123).toUriString();
+        final String s = UriComponentsBuilder.fromUriString("/get/performance").queryParam("a","b").toUriString();
         System.out.println(s);
     }
 

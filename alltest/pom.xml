@@ -219,7 +219,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>compile</goal>       <!-- use this goal to weave all your main classes -->
+                            <goal>compile</goal>       <!-- use this goal to weave all your web classes -->
                             <goal>test-compile</goal>  <!-- use this goal to weave all your test classes -->
                         </goals>
                     </execution>

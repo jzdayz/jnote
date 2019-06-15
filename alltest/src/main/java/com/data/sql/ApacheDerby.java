@@ -6,7 +6,7 @@ public class ApacheDerby {
     public static void main(String[] args)throws  Exception{
         try (
                 final Connection connection = DriverManager.getConnection(
-                        "jdbc:derby:/Users/huqingfeng/Documents/doc/jnote/alltest/src/main/resources/db;create=true;user=sa;password=123")
+                        "jdbc:derby:/Users/huqingfeng/Documents/doc/jnote/alltest/src/web/resources/db;create=true;user=sa;password=123")
                 ){
             Statement st = connection.createStatement();
 //            st.execute("create table foo (FOOID INT NOT NULL,FOONAME VARCHAR(30) NOT NULL)");//创建foo表
