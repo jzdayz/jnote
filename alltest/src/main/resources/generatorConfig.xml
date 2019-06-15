@@ -45,7 +45,7 @@
         </javaClientGenerator>
 
         <!--<table tableName="pes_cs_chat_session_service_index" domainObjectName="CsChatSessionServiceIndex"/>-->
-        <table tableName="pes_cs_chat_session_service_index" domainObjectName="pes_cs_chat_session_service_index"/>
+        <table tableName="pes_shop_team_hour_index_2019_06" domainObjectName="ShopTeamHourIndex"/>
 <!--        <table  tableName="pes_cs_type_day_2019" />-->
 <!--        <table  tableName="pes_report_category" />-->
 
