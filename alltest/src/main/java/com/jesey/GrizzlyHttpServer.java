@@ -2,10 +2,12 @@ package com.jesey;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.URI;
@@ -16,7 +18,7 @@ import java.util.logging.Logger;
  * @author ${projectAuthor}
  */
 @Path("/test")
-public class App {
+public class GrizzlyHttpServer {
 
     private static final URI BASE_URI = URI.create("http://localhost:8080/base/");
 
@@ -26,7 +28,7 @@ public class App {
         try {
             System.out.println("jersey-example-java8-webapp");
 
-            final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, new MyApplication(), false);
+            final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, new ResourceConfig(GrizzlyHttpServer.class), false);
             Runtime.getRuntime().addShutdownHook(new Thread(server::shutdownNow));
             server.start();
 
@@ -38,7 +40,7 @@ public class App {
 
             Thread.currentThread().join();
         } catch (IOException | InterruptedException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GrizzlyHttpServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
