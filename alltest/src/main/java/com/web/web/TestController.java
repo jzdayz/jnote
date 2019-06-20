@@ -37,4 +37,13 @@ public class TestController {
         return null;
     }
 
+    @RequestMapping("/test/testGetJackson")
+    public Object testJackSon(){
+        ImmutableMap<String, String> of = ImmutableMap.of("11", "22");
+        ImmutableMap<String, Object> of1 = ImmutableMap.of("22", of);
+        ImmutableMap<String, Object> of2 = ImmutableMap.of("22", of);
+
+        return ImmutableMap.of("result",ImmutableMap.of("of1",of1,"of2",of2));
+    }
+
 }
