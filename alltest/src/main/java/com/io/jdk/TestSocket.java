@@ -2,11 +2,13 @@ package com.io.jdk;
 
 import com.google.common.io.Closer;
 import okhttp3.*;
+import org.junit.Test;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 public class TestSocket {
@@ -55,4 +57,11 @@ public class TestSocket {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void test1(){
+        URL resource = Thread.currentThread().getClass().getResource("a.yml");
+        System.out.println(resource);
+    }
+
 }
