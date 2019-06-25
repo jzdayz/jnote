@@ -28,11 +28,14 @@ public class TestSharding {
         DataSource dataSource = createDataSource(new File(resource.toURI()));
         HintManager instance = HintManager.getInstance();
 
-        instance.addDatabaseShardingValue("pes_cs", 17173L);
+        instance.addDatabaseShardingValue("pes_cs", 81477L);
         instance.addTableShardingValue("pes_cs", DateUtils.parseDate("2019-05-23","yyyy-MM-dd"));
 
+        instance.addDatabaseShardingValue("pes_name", 81477L);
+        instance.addTableShardingValue("pes_name", DateUtils.parseDate("2019-04-23","yyyy-MM-dd"));
+
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from pes_cs");
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from pes_cs a , pes_name b where a.shop_id = b.cs_id");
         System.out.println(maps);
 
         instance.close();

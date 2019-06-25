@@ -19,6 +19,7 @@ shardingRule:
       algorithmClassName: com.jdbc.sharding.TableSharding
   bindingTables:
     - pes_cs
+    - pes_name
 
 props:
   sql.show: true
