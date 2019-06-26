@@ -8,9 +8,6 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.codahale.metrics.servlets.AdminServlet;
 import com.google.common.collect.ImmutableMap;
-import com.pes.jd.mapper.PesMenuResourceMapper;
-import com.pes.jd.model.DO.PesMenuResource;
-import com.pes.jd.model.DO.PesMenuResourceExample;
 import okhttp3.*;
 import okhttp3.EventListener;
 import org.apache.ibatis.ognl.MemberAccess;
@@ -87,15 +84,6 @@ public class JnoteApplication implements InitializingBean {
         final SpringApplication springApplication = new SpringApplication(JnoteApplication.class);
         final ConfigurableApplicationContext context = springApplication.run(args);
     }
-
-    @Autowired
-    private PesMenuResourceMapper pesMenuResourceMapper;
-
-    @Transactional(rollbackFor = Exception.class)
-    public void testTransaction(){
-        pesMenuResourceMapper.selectByExample(new PesMenuResourceExample());
-    }
-
 
     @Bean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {

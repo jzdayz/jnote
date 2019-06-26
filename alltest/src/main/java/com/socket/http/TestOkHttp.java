@@ -25,7 +25,6 @@ public class TestOkHttp {
             .readTimeout(1L,TimeUnit.DAYS)
             .build();
 
-    @Before
     public void before(){
         System.out.println("before");
     }
@@ -35,7 +34,6 @@ public class TestOkHttp {
         int amount = 15;
         TimeUnit timeUnit = TimeUnit.MINUTES;
 
-        int res = 0;
         String beginStr = "2019-06-23 00:00:00";
         String format = "yyyy-MM-dd HH:mm:ss";
         Date begin = DateUtils.parseDate(beginStr,format);
@@ -44,7 +42,9 @@ public class TestOkHttp {
         Date end = add(begin,timeUnit,amount);
         end = new Date(end.getTime()-1000);
         Date point = add(begin,TimeUnit.DAYS,1);
-        while (res == 0 && end.before(point)){
+
+        int amountTmp = amount;
+        while (end.before(point)){
             Request.Builder re = new Request.Builder();
             String url = "http://localhost:9600/hand/calCsPerformance" +
                     "?shopId=178287&startDate=" +
@@ -58,10 +58,16 @@ public class TestOkHttp {
             ResponseBody body = execute.body();
             JSONObject jsonObject = JSON.parseObject(body.string());
             Integer retCode = jsonObject.getInteger("retCode");
-            res = retCode;
-
-            begin = add(begin, timeUnit,amount);
-            end = add(end, timeUnit,amount);
+            // 模拟错误
+            if (retCode == 1){
+                amountTmp = amountTmp + amount;
+                System.out.println("发生错误了");
+                end = add(end, timeUnit,amount);
+                continue;
+            }
+            begin = add(begin, timeUnit,amountTmp);
+            amountTmp = amount;
+            end = add(end, timeUnit,amountTmp);
         }
     }
 
