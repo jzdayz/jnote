@@ -12,11 +12,11 @@
     <artifactId>alltest</artifactId>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis.spring.boot</groupId>-->
-<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--            <version>2.0.0</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.mybatis.spring.boot</groupId>-->
+        <!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
+        <!--            <version>2.0.0</version>-->
+        <!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-jackson -->
         <dependency>
@@ -44,8 +44,6 @@
             <artifactId>jersey-container-netty-http</artifactId>
             <version>2.28</version>
         </dependency>
-
-
 
 
         <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-server -->
@@ -138,7 +136,6 @@
         </dependency>
 
 
-
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
@@ -202,25 +199,32 @@
             <version>3.1.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.data</groupId>-->
+<!--            <artifactId>spring-data-redis</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.marmelo.dropwizard</groupId>
             <artifactId>dropwizard-metrics-ui</artifactId>
             <version>1.0</version>
         </dependency>
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.prometheus/simpleclient_pushgateway &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>io.prometheus</groupId>-->
+<!--            <artifactId>simpleclient_pushgateway</artifactId>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-tcnative-boringssl-static</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-tomcat</artifactId>-->
+        <!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
         <dependency>
@@ -245,6 +249,10 @@
             <groupId>io.undertow</groupId>
             <artifactId>undertow-servlet</artifactId>
             <version>2.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <dependency>
@@ -275,13 +283,22 @@
             <version>1.19.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
 
 
         <!--        <dependency>-->
-<!--            <groupId>io.dropwizard</groupId>-->
-<!--            <artifactId>dropwizard-core</artifactId>-->
-<!--            <version>2.0.0-rc1</version>-->
-<!--        </dependency>-->
+        <!--            <groupId>io.dropwizard</groupId>-->
+        <!--            <artifactId>dropwizard-core</artifactId>-->
+        <!--            <version>2.0.0-rc1</version>-->
+        <!--        </dependency>-->
 
 
     </dependencies>
@@ -325,19 +342,19 @@
                     </dependency>
                 </dependencies>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>aspectj-maven-plugin</artifactId>-->
-<!--                <version>1.11</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>compile</goal>       &lt;!&ndash; use this goal to weave all your web classes &ndash;&gt;-->
-<!--                            <goal>test-compile</goal>  &lt;!&ndash; use this goal to weave all your test classes &ndash;&gt;-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.codehaus.mojo</groupId>-->
+            <!--                <artifactId>aspectj-maven-plugin</artifactId>-->
+            <!--                <version>1.11</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <goals>-->
+            <!--                            <goal>compile</goal>       &lt;!&ndash; use this goal to weave all your web classes &ndash;&gt;-->
+            <!--                            <goal>test-compile</goal>  &lt;!&ndash; use this goal to weave all your test classes &ndash;&gt;-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 </project>

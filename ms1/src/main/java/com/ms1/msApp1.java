@@ -36,7 +36,7 @@ public class msApp1{
 
     }
 
-    @Autowired
+    @Autowired(required = false)
     private LookupService lookupService;
 
     @RequestMapping("/getapps")
@@ -46,14 +46,6 @@ public class msApp1{
     }
 
 
-
-    @Resource
-    private Environment environment;
-
-    @RequestMapping("/ms1")
-    public Object hello(String[] name){
-        return ms2.ms2();
-    }
 
     @Bean("/testbeanurl")
     public Object handler(msApp1 msApp1) throws Exception{
