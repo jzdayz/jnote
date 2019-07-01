@@ -5,7 +5,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>ms1</module>
-		<module>alltest</module>
+		<module>test</module>
 		<module>eureka</module>
         <module>ms2</module>
         <module>admin</module>
