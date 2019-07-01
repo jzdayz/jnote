@@ -34,7 +34,7 @@ public class TestOkHttp {
         int amount = 15;
         TimeUnit timeUnit = TimeUnit.MINUTES;
 
-        String beginStr = "2019-06-23 00:00:00";
+        String beginStr = "2019-06-27 00:00:00";
         String format = "yyyy-MM-dd HH:mm:ss";
         Date begin = DateUtils.parseDate(beginStr,format);
 
