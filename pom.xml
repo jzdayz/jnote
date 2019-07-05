@@ -5,13 +5,15 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>ms1</module>
-		<module>alltest</module>
+		<module>test</module>
 		<module>eureka</module>
         <module>ms2</module>
         <module>admin</module>
         <module>config</module>
         <module>gateway</module>
         <module>ms3flux</module>
+        <module>grpc-producer</module>
+        <module>grpc-consumer</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -175,6 +177,15 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -182,10 +193,11 @@
 		<profile>
 			<id>dev</id>
 			<properties>
-				<zipkin.enable>true</zipkin.enable>
-				<spring.boot.admin.enable>true</spring.boot.admin.enable>
+				<zipkin.enable>false</zipkin.enable>
+				<spring.boot.admin.enable>false</spring.boot.admin.enable>
 				<eureka.address>http://localhost:9001/eureka</eureka.address>
 				<eureka.port>9001</eureka.port>
+                <eureka.enable>false</eureka.enable>
 				<spring.boot.admin.address>http://localhost:9002</spring.boot.admin.address>
 				<spring.boot.admin.port>9002</spring.boot.admin.port>
 				<zipkin.address>http://localhost:9411</zipkin.address>

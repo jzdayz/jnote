@@ -1,15 +1,16 @@
 package com.ms1;
 
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.format.Formatter;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ☞ 🏀 huqingfeng
@@ -46,9 +47,20 @@ public class Controller {
         }
     }
 
+    @Autowired
+    private MeterRegistry meterRegistry;
+
 
     @RequestMapping("/test/date")
+    @Timed("请求时间")
     public Object test1(Date date){
+        meterRegistry.timer("test-date").record(()->{
+            try {
+                TimeUnit.SECONDS.sleep(2L);
+            }catch (Exception e){
+                System.out.println("错误");
+            }
+        });
         return date;
     }
 }

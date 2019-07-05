@@ -1,0 +1,25 @@
+dataSources:
+  test0: !!com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://auzblog.com:3306/test
+    username: root
+    password: auzblog
+  test1: !!com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://auzblog.com:3307/test
+    username: root
+    password: auzblog
+
+shardingRule:
+  defaultDatabaseStrategy:
+    hint:
+      algorithmClassName: com.jdbc.sharding.DbSharding
+  defaultTableStrategy:
+    hint:
+      algorithmClassName: com.jdbc.sharding.TableSharding
+  bindingTables:
+    - pes_cs
+    - pes_name
+
+props:
+  sql.show: true
