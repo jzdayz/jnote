@@ -5,6 +5,7 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collections;
 
@@ -27,12 +29,17 @@ import java.util.Collections;
 @SpringBootApplication
 @EnableFeignClients
 public class msApp1{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         SpringApplication sa = new SpringApplication();
         sa.addPrimarySources(Collections.singletonList(msApp1.class));
         ConfigurableApplicationContext context = sa.run(args);
         TestResolver bean = context.getBean(TestResolver.class);
         System.out.println(bean);
+
+        Field beanDefinitionMap = DefaultListableBeanFactory.class.getDeclaredField("beanDefinitionMap");
+        beanDefinitionMap.setAccessible(true);
+        Object o = beanDefinitionMap.get(context.getBeanFactory());
+        System.out.println(o);
 
     }
 
