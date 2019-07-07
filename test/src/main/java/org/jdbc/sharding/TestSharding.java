@@ -1,4 +1,4 @@
-package com.jdbc.sharding;
+package org.jdbc.sharding;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shardingsphere.api.hint.HintManager;

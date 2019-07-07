@@ -1,4 +1,4 @@
-package com.openfeign;
+package org.openfeign;
 
 import com.alibaba.fastjson.JSON;
 import feign.Feign;

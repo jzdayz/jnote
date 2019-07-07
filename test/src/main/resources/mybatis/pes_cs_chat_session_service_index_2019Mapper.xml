@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pes.jd.mapper.pes_cs_chat_session_service_index_2019Mapper">
-  <resultMap id="BaseResultMap" type="com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
+<mapper namespace="org.pes.jd.mapper.pes_cs_chat_session_service_index_2019Mapper">
+  <resultMap id="BaseResultMap" type="org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="shop_id" jdbcType="BIGINT" property="shopId" />
     <result column="date" jdbcType="DATE" property="date" />
@@ -102,7 +102,7 @@
     avg_session_duration_time, avg_resp_in_quick_time, session_num, chat_round_num, resp_time_first_count, 
     resp_time_count, session_duration_time_count
   </sql>
-  <select id="selectByExample" parameterType="com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019Example" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019Example" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -126,13 +126,13 @@
     delete from pes_cs_chat_session_service_index_2019
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019Example">
+  <delete id="deleteByExample" parameterType="org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019Example">
     delete from pes_cs_chat_session_service_index_2019
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
+  <insert id="insert" parameterType="org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
     insert into pes_cs_chat_session_service_index_2019 (id, shop_id, date, 
       cs_nick, consult_session_num, receive_session_num, 
       receive_session_duration_time, direct_receive_session_num, 
@@ -160,7 +160,7 @@
       #{sessionNum,jdbcType=INTEGER}, #{chatRoundNum,jdbcType=INTEGER}, #{respTimeFirstCount,jdbcType=DOUBLE}, 
       #{respTimeCount,jdbcType=DOUBLE}, #{sessionDurationTimeCount,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
+  <insert id="insertSelective" parameterType="org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
     insert into pes_cs_chat_session_service_index_2019
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -359,7 +359,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019Example" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019Example" resultType="java.lang.Long">
     select count(*) from pes_cs_chat_session_service_index_2019
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -507,7 +507,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
+  <update id="updateByPrimaryKeySelective" parameterType="org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
     update pes_cs_chat_session_service_index_2019
     <set>
       <if test="shopId != null">
@@ -606,7 +606,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
+  <update id="updateByPrimaryKey" parameterType="org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019">
     update pes_cs_chat_session_service_index_2019
     set shop_id = #{shopId,jdbcType=BIGINT},
       date = #{date,jdbcType=DATE},

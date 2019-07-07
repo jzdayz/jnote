@@ -1,4 +1,4 @@
-package com.util;
+package org.util;
 
 /**
  * @author ☞ 🏀 huqingfeng

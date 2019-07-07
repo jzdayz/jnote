@@ -1,4 +1,4 @@
-package com.ms1;
+package org.ms1;
 
 import com.netflix.discovery.shared.LookupService;
 import io.micrometer.core.instrument.Counter;
@@ -11,7 +11,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.util.Collections;
 
@@ -34,7 +32,7 @@ public class msApp1{
         TestResolver bean = context.getBean(TestResolver.class);
         System.out.println(bean);
 
-        Test.main(args);
+//        Test.main( args);
 
     }
 
@@ -51,7 +49,7 @@ public class msApp1{
 
     @Bean("/testbeanurl")
     public Object handler(msApp1 msApp1) throws Exception{
-        final Method testUrl = com.ms1.msApp1.class.getDeclaredMethod("testUrl", String.class);
+        final Method testUrl = org.ms1.msApp1.class.getDeclaredMethod("testUrl", String.class);
         ReflectionUtils.makeAccessible(testUrl);
         return new HandlerMethod(msApp1,testUrl);
     }
@@ -76,6 +74,11 @@ public class msApp1{
         final DistributionSummary summary = meterRegistry.summary("HTTP调用", "getStr", "QPS");
         summary.record(1);
         return "AA";
+    }
+
+    @GetMapping("ms1")
+    public Object test11(){
+        return ms2.ms2();
     }
 
     @Autowired

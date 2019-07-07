@@ -1,4 +1,4 @@
-package com.data.mbp;
+package org.data.mbp;
 
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import org.apache.ibatis.cursor.Cursor;

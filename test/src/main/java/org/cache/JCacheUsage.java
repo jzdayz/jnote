@@ -1,4 +1,4 @@
-package com.cache;
+package org.cache;
 
 import javax.cache.Cache;
 import javax.cache.CacheManager;

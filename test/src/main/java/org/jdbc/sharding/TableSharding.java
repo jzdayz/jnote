@@ -1,4 +1,4 @@
-package com.jdbc.sharding;
+package org.jdbc.sharding;
 
 import org.apache.shardingsphere.api.sharding.hint.HintShardingAlgorithm;
 import org.apache.shardingsphere.api.sharding.hint.HintShardingValue;

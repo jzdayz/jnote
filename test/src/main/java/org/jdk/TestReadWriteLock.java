@@ -1,4 +1,4 @@
-package com.jdk;
+package org.jdk;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;

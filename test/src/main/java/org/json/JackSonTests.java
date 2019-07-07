@@ -1,4 +1,4 @@
-package com.json;
+package org.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonMappingException;

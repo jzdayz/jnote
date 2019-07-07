@@ -22,3 +22,4 @@ spring:
   zipkin:
     base-url: @zipkin.address@
     enabled: '@zipkin.enable@'
+sw_agent_name: ${spring.application.name}

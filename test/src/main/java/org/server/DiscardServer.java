@@ -1,4 +1,4 @@
-package com.server;
+package org.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;

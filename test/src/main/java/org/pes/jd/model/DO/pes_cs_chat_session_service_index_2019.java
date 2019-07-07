@@ -1,4 +1,4 @@
-package com.pes.jd.model.DO;
+package org.pes.jd.model.DO;
 
 import java.util.Date;
 

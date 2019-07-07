@@ -1,4 +1,4 @@
-package com.ms1;
+package org.ms1;
 
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;

@@ -1,4 +1,4 @@
-package com.proxy;
+package org.proxy;
 
 import java.lang.reflect.Field;
 import org.springframework.aop.framework.AdvisedSupport;  

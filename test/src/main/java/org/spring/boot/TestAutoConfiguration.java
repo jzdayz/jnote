@@ -1,4 +1,4 @@
-package com.spring.boot;
+package org.spring.boot;
 
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;

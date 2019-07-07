@@ -1,4 +1,4 @@
-package com.jdk;
+package org.jdk;
 
 import org.junit.Test;
 

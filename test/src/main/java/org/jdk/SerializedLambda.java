@@ -22,7 +22,7 @@
  *
  *
  */
-package com.jdk;
+package org.jdk;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;

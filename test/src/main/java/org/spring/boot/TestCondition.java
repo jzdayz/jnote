@@ -1,4 +1,4 @@
-package com.spring.boot;
+package org.spring.boot;
 
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;

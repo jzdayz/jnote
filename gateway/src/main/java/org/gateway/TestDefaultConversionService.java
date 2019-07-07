@@ -1,4 +1,4 @@
-package com.gateway;
+package org.gateway;
 
 import org.springframework.core.convert.support.DefaultConversionService;
 

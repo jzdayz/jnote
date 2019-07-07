@@ -1,4 +1,4 @@
-package com.spring.retry;
+package org.spring.retry;
 
 
 import org.junit.Test;
@@ -6,6 +6,7 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.aop.framework.autoproxy.target.QuickTargetSourceCreator;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.cglib.core.DebuggingClassWriter;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.annotation.EnableRetry;
@@ -18,20 +19,20 @@ public class SpringRetry {
 
     @Test
     public void test1(){
-        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-        DefaultAdvisorAutoProxyCreator beanPostProcessor = new DefaultAdvisorAutoProxyCreator();
-        beanPostProcessor.setCustomTargetSourceCreators(new QuickTargetSourceCreator());
-        beanPostProcessor.setBeanFactory(beanFactory);
-        beanFactory.addBeanPostProcessor(beanPostProcessor);
-        beanFactory.registerBeanDefinition("a",new RootBeanDefinition(SpringRetry.class));
-        SpringRetry bean = beanFactory.getBean(SpringRetry.class);
-        System.out.println(bean);
-        bean.test();
+
     }
+
 
     @Test
     public void test2(){
-        AnnotationConfigApplicationContext con = new AnnotationConfigApplicationContext();
+
+        String dirName = "cglib";
+        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY,System.getProperty("user.dir")+System.getProperty("file.separator")+dirName);
+
+        AnnotationConfigApplicationContext con = new AnnotationConfigApplicationContext(SpringRetry.class);
+        SpringRetry springRetry = con.getBean(SpringRetry.class);
+        System.out.println(springRetry);
+        springRetry.test();
     }
 
     @Retryable

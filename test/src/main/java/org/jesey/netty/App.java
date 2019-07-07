@@ -1,4 +1,4 @@
-package com.jesey.netty;
+package org.jesey.netty;
 
 import java.net.URI;
 import java.util.logging.Level;

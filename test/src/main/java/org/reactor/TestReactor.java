@@ -1,4 +1,4 @@
-package com.reactor;
+package org.reactor;
 
 import org.apache.ibatis.javassist.tools.reflect.Metaobject;
 import org.apache.ibatis.reflection.DefaultReflectorFactory;

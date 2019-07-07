@@ -1,4 +1,4 @@
-package com.gateway;
+package org.gateway;
 
 import org.junit.Test;
 import org.springframework.cloud.gateway.handler.predicate.PathRoutePredicateFactory;

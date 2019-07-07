@@ -1,4 +1,4 @@
-package com.data.sql;
+package org.data.sql;
 
 public class A implements AMXBean {
 

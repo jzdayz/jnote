@@ -1,4 +1,4 @@
-package com.web.web;
+package org.web.web;
 
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.common.collect.ImmutableMap;

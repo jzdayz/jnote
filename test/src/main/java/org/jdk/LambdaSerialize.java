@@ -1,7 +1,6 @@
-package com.jdk;
+package org.jdk;
 
 
-import com.jdk.SerializedLambda;
 import org.springframework.util.ClassUtils;
 
 import java.io.*;

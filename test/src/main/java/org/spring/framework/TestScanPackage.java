@@ -1,4 +1,4 @@
-package com.spring.framework;
+package org.spring.framework;
 
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;

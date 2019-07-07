@@ -1,4 +1,4 @@
-package com.ms1;
+package org.ms1;
 
 import org.springframework.context.EmbeddedValueResolverAware;
 import org.springframework.stereotype.Component;

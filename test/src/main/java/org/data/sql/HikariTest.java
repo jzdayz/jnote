@@ -1,4 +1,4 @@
-package com.data.sql;
+package org.data.sql;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheck;
@@ -166,7 +166,7 @@ public class HikariTest {
         Hello hello = new Hello();
         hello.setHello(100);
         hello.show();
-        final ObjectName beanPoolName = new ObjectName("com.data.sql.HikariTest.Hello:type=Hello ( AA )");
+        final ObjectName beanPoolName = new ObjectName("HikariTest.Hello:type=Hello ( AA )");
         mBeanServer.registerMBean(hello,beanPoolName);
         while (true){
             Thread.sleep(10000);

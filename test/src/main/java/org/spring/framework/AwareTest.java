@@ -1,4 +1,4 @@
-package com.spring.framework;
+package org.spring.framework;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.jdbc.DatabaseDriver;

@@ -1,4 +1,4 @@
-package com.metrics;
+package org.metrics;
 
 import io.micrometer.core.annotation.Incubating;
 import io.micrometer.core.annotation.Timed;

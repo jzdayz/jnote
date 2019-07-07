@@ -16,7 +16,7 @@
  *  limitations under the License.
  */
 
-package com.io.undertow;
+package org.io.undertow;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;

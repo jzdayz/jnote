@@ -1,4 +1,4 @@
-package com.io.undertow;
+package org.io.undertow;
 import io.undertow.Undertow;
 import io.undertow.server.handlers.resource.ClassPathResourceManager;
 import io.undertow.websockets.core.AbstractReceiveListener;

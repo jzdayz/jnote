@@ -1,4 +1,4 @@
-package com.data.sql;
+package org.data.sql;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;

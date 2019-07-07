@@ -1,4 +1,4 @@
-package com.io.netty;
+package org.io.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.Unpooled;

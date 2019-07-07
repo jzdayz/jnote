@@ -1,4 +1,4 @@
-package com.reactor;
+package org.reactor;
 
 import org.junit.Test;
 import reactor.core.publisher.Flux;

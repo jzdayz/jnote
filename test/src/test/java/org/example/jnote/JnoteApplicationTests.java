@@ -1,4 +1,4 @@
-package com.example.jnote;
+package org.example.jnote;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

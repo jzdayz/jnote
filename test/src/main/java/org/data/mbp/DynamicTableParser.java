@@ -2,7 +2,7 @@
 //
 //import com.baomidou.mybatisplus.core.parser.ISqlParser;
 //import com.baomidou.mybatisplus.core.parser.SqlInfo;
-//import com.data.sql.TableNameParser;
+//import TableNameParser;
 //import com.pes.jd.mapper.BaseMapper;
 //import org.apache.ibatis.executor.parameter.ParameterHandler;
 //import org.apache.ibatis.mapping.MappedStatement;

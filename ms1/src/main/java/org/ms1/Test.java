@@ -1,4 +1,4 @@
-package com.ms1;
+package org.ms1;
 
 import javax.management.MBeanServer;
 import java.lang.management.ManagementFactory;

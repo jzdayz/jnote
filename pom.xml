@@ -12,8 +12,6 @@
         <module>config</module>
         <module>gateway</module>
         <module>ms3flux</module>
-        <module>grpc-producer</module>
-        <module>grpc-consumer</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

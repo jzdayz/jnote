@@ -1,4 +1,4 @@
-package com.asm;
+package org.asm;
 
 import org.springframework.asm.*;
 

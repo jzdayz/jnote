@@ -1,4 +1,4 @@
-package com.socket.http;
+package org.socket.http;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

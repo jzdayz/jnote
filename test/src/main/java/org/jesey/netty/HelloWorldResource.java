@@ -1,4 +1,4 @@
-package com.jesey.netty;
+package org.jesey.netty;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.ImmutableMap;

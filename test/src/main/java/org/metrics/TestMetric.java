@@ -1,4 +1,4 @@
-package com.metrics;
+package org.metrics;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.prometheus.client.CollectorRegistry;

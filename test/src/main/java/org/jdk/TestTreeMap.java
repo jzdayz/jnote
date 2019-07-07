@@ -1,4 +1,4 @@
-package com.jdk;
+package org.jdk;
 
 import java.util.TreeMap;
 

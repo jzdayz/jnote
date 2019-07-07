@@ -1,4 +1,4 @@
-package com.grpc;
+package org.grpc;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;  

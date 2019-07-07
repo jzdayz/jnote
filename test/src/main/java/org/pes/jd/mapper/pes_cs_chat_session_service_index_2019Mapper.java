@@ -1,7 +1,7 @@
-package com.pes.jd.mapper;
+package org.pes.jd.mapper;
 
-import com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019;
-import com.pes.jd.model.DO.pes_cs_chat_session_service_index_2019Example;
+import org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019;
+import org.pes.jd.model.DO.pes_cs_chat_session_service_index_2019Example;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

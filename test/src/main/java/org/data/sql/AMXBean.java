@@ -1,4 +1,4 @@
-package com.data.sql;
+package org.data.sql;
 
 public interface AMXBean {
     Integer get();
