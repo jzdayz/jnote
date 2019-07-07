@@ -76,6 +76,8 @@ public class JnoteApplication implements InitializingBean {
     public static void main(String[] args) {
         final SpringApplication springApplication = new SpringApplication(JnoteApplication.class);
         final ConfigurableApplicationContext context = springApplication.run(args);
+
+        JnoteApplication bean = context.getBean(JnoteApplication.class);
     }
 
     @Bean
