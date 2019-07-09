@@ -26,5 +26,5 @@ target
 /.nb-gradle/
 /build/
 
-log.log
+*.log
 *.log.*.gz
