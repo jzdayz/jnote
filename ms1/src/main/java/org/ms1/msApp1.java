@@ -1,6 +1,7 @@
 package org.ms1;
 
 import com.netflix.discovery.shared.LookupService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -77,6 +78,7 @@ public class msApp1{
     }
 
     @GetMapping("ms1")
+    @HystrixCommand
     public Object test11(){
         return ms2.ms2();
     }

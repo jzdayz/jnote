@@ -16,6 +16,13 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.skywalking/apm-hystrix-1.x-plugin -->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-hystrix-1.x-plugin</artifactId>
+            <version>5.0.0-RC2</version>
+        </dependency>
+
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
