@@ -196,14 +196,18 @@
 		<profile>
 			<id>dev</id>
 			<properties>
+
 				<zipkin.enable>true</zipkin.enable>
-				<spring.boot.admin.enable>false</spring.boot.admin.enable>
+                <zipkin.address>http://auzblog.com:9411</zipkin.address>
+
 				<eureka.address>http://localhost:9001/eureka</eureka.address>
-				<eureka.port>9001</eureka.port>
                 <eureka.enable>true</eureka.enable>
+                <eureka.port>9001</eureka.port>
+
+                <spring.boot.admin.enable>true</spring.boot.admin.enable>
 				<spring.boot.admin.address>http://localhost:9002</spring.boot.admin.address>
 				<spring.boot.admin.port>9002</spring.boot.admin.port>
-				<zipkin.address>http://auzblog.com:9411</zipkin.address>
+
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>

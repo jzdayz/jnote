@@ -8,6 +8,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -25,6 +26,7 @@ import java.util.Collections;
 @RestController
 @SpringBootApplication
 @EnableFeignClients
+@EnableHystrix
 public class msApp1{
     public static void main(String[] args) throws Exception{
         SpringApplication sa = new SpringApplication();
