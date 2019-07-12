@@ -85,6 +85,12 @@ public class msApp1{
         return ms2.ms2();
     }
 
+    @GetMapping("test_hystrix")
+    @HystrixCommand(commandKey = "Test",threadPoolKey = "testThreads")
+    public Object testHystrix(){
+        return "hah ";
+    }
+
     @Autowired
     private  Ms2 ms2;
 

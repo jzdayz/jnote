@@ -12,6 +12,7 @@
         <module>config</module>
         <module>gateway</module>
         <module>ms3flux</module>
+        <module>hystrix-dashboard</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

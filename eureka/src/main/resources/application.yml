@@ -17,9 +17,9 @@ spring:
   boot:
     admin:
       client:
-        enabled: '@spring.boot.admin.enable@'
+        enabled: @spring.boot.admin.enable@
         url: @spring.boot.admin.address@
   zipkin:
     base-url: @zipkin.address@
-    enabled: '@zipkin.enable@'
+    enabled: @zipkin.enable@
 sw_agent_name: ${spring.application.name}
