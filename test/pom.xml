@@ -35,6 +35,12 @@
             <version>4.0.0-RC1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.5.5</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-jdk-http -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
