@@ -13,6 +13,7 @@
         <module>gateway</module>
         <module>ms3flux</module>
         <module>hystrix-dashboard</module>
+        <module>kotlin</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
